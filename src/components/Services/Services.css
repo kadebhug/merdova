@@ -1,25 +1,39 @@
 .services-section {
-    padding: 100px 20px;
-    background-color: var(--bg-color);
     position: relative;
+    height: 300vh;
+    /* Height determines scroll length */
+    background-color: var(--bg-color);
 }
 
-.services-container {
-    max-width: 1200px;
-    margin: 0 auto;
+.sticky-container {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
 }
 
 .section-title {
     text-align: center;
     font-size: 3rem;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
     font-weight: 700;
+    padding-top: 20px;
 }
 
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+.services-overflow {
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+.services-track {
+    display: flex;
+    gap: 40px;
+    padding-left: 5vw;
+    /* Start slightly off-screen or centered */
 }
 
 .service-card {
@@ -31,6 +45,13 @@
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    min-width: 350px;
+    /* Fixed width for horizontal scroll */
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .service-card::before {
@@ -52,12 +73,13 @@
 .service-card:hover {
     border-color: var(--primary-color);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transform: translateY(-10px);
 }
 
 .service-icon {
-    font-size: 3rem;
+    font-size: 4rem;
     color: var(--primary-color);
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     transition: transform 0.3s ease;
 }
 
@@ -67,19 +89,39 @@
 }
 
 .service-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
     color: #fff;
 }
 
 .service-card p {
     color: #ccc;
     line-height: 1.6;
-    font-size: 1rem;
+    font-size: 1.1rem;
 }
 
 @media screen and (max-width: 768px) {
-    .section-title {
-        font-size: 2.5rem;
+    .services-section {
+        height: auto;
+        /* Disable horizontal scroll on mobile if preferred, or keep it */
+    }
+
+    .sticky-container {
+        position: relative;
+        height: auto;
+        display: block;
+    }
+
+    .services-track {
+        flex-direction: column;
+        transform: none !important;
+        /* Disable framer motion transform on mobile via CSS override if needed, but JS handles it better usually. For now, let's keep it simple or use media query in JS. */
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .service-card {
+        min-width: 100%;
+        height: auto;
     }
 }
