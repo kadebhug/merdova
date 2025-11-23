@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Outfit:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
 
 :root {
   /* Trustworthy & Classy Palette */
@@ -18,7 +18,7 @@
   /* Gold tint border */
 
   --font-main: 'Outfit', sans-serif;
-  --font-heading: 'Playfair Display', serif;
+  --font-heading: 'League Spartan', sans-serif;
 }
 
 html {

@@ -32,6 +32,7 @@
     letter-spacing: 2px;
     color: var(--text-color);
     background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     cursor: pointer;
@@ -46,6 +47,7 @@
 .nav-links {
     color: var(--text-color);
     font-size: 1rem;
+    font-family: 'League Spartan', sans-serif;
     font-weight: 500;
     transition: color 0.3s ease;
     position: relative;
