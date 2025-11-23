@@ -266,10 +266,9 @@ select.error {
     width: 100%;
 }
 
-/* Review Step */
+/* Review Step - Wider layout */
 .review-step {
-    max-width: 100%;
-    margin: 0 auto;
+    width: 100%;
 }
 
 .review-section {

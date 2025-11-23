@@ -304,6 +304,7 @@ const SurveyWizard = () => {
                                     <div className="field-wrapper">
                                         <label>Industry/Sector <span className="optional">(optional)</span></label>
                                         <select
+                                            className="dropdwn"
                                             name="industry"
                                             value={formData.industry}
                                             onChange={handleChange}
