@@ -1,0 +1,66 @@
+.sanaflower-container {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, #87CEEB 0%, #E0F7FA 100%);
+    /* Sky blue gradient */
+    position: relative;
+    overflow: hidden;
+}
+
+.sanaflower-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    border: 2px solid #eab308;
+}
+
+.modal-content h2 {
+    color: #78350f;
+    margin-bottom: 1rem;
+    font-family: 'League Spartan', sans-serif;
+}
+
+.modal-content p {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.close-btn {
+    background: #eab308;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+.close-btn:hover {
+    transform: scale(1.05);
+    background: #ca8a04;
+}
