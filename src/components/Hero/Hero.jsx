@@ -144,12 +144,21 @@ const Hero = () => {
         };
     }, []);
 
+    const underlineRef = React.useRef(null);
+
     const handleHighlightHover = () => {
         gsap.to(highlightRef.current, {
             backgroundSize: "200% 100%",
             duration: 0.5,
             ease: "power2.out"
         });
+
+        if (underlineRef.current) {
+            gsap.fromTo(underlineRef.current,
+                { strokeDasharray: 300, strokeDashoffset: 300 },
+                { strokeDashoffset: 0, duration: 0.6, ease: "power2.out" }
+            );
+        }
     };
 
     const handleHighlightLeave = () => {
@@ -158,6 +167,12 @@ const Hero = () => {
             duration: 0.5,
             ease: "power2.out"
         });
+
+        if (underlineRef.current) {
+            gsap.to(underlineRef.current,
+                { strokeDashoffset: 300, duration: 0.4, ease: "power2.in" }
+            );
+        }
     };
 
     return (
@@ -173,12 +188,35 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
                 >
-                    We Build <span
-                        className="highlight"
-                        ref={highlightRef}
-                        onMouseEnter={handleHighlightHover}
-                        onMouseLeave={handleHighlightLeave}
-                    >Digital Realities</span>
+                    We Build <span className="highlight-container">
+                        <span
+                            className="highlight"
+                            ref={highlightRef}
+                            onMouseEnter={handleHighlightHover}
+                            onMouseLeave={handleHighlightLeave}
+                        >Digital Realities</span>
+                        <svg
+                            className="underline-svg"
+                            viewBox="0 0 300 15"
+                            preserveAspectRatio="none"
+                        >
+                            <path
+                                ref={underlineRef}
+                                d="M5 8 Q 75 15 150 8 T 295 8"
+                                stroke="url(#underline-gradient)"
+                                strokeWidth="3"
+                                fill="none"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                            <defs>
+                                <linearGradient id="underline-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stopColor="#C0A062" />
+                                    <stop offset="100%" stopColor="#EAB308" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </span>
                 </motion.h1>
 
                 <motion.p
