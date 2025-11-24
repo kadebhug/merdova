@@ -3,6 +3,7 @@
     height: 300vh;
     /* Height determines scroll length */
     background-color: var(--bg-color);
+    z-index: 2;
 }
 
 .sticky-container {

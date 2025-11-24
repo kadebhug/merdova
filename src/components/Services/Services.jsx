@@ -1,7 +1,11 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useLayoutEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { FaLaptopCode, FaMobileAlt, FaCloud, FaBullhorn, FaNetworkWired, FaHandshake } from 'react-icons/fa';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Services.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const servicesData = [
     {
@@ -37,15 +41,40 @@ const servicesData = [
 ];
 
 const Services = () => {
-    const targetRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: targetRef,
-    });
+    const sectionRef = useRef(null);
+    const trackRef = useRef(null);
 
-    const x = useTransform(scrollYProgress, [0, 1], ["1%", "-55%"]);
+    useLayoutEffect(() => {
+        const ctx = gsap.context(() => {
+            const track = trackRef.current;
+
+            // Calculate total width to scroll
+            // We want to scroll the track to the left
+            // Distance = track width - viewport width (or container width)
+
+            // Note: In React, we might need to wait for render or use a function to get width
+            // But with useLayoutEffect it should be fine.
+
+            // Horizontal Scroll
+            gsap.to(track, {
+                x: () => -(track.scrollWidth - window.innerWidth + 100), // +100 for some padding
+                ease: "none",
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 1,
+                    invalidateOnRefresh: true,
+                }
+            });
+
+        }, sectionRef);
+
+        return () => ctx.revert();
+    }, []);
 
     return (
-        <section ref={targetRef} id="services" className="services-section">
+        <section ref={sectionRef} id="services" className="services-section">
             <div className="sticky-container">
                 <motion.h2
                     className="section-title"
@@ -56,7 +85,7 @@ const Services = () => {
                     Our <span className="highlight">Services</span>
                 </motion.h2>
                 <div className="services-overflow">
-                    <motion.div style={{ x }} className="services-track">
+                    <div ref={trackRef} className="services-track">
                         {servicesData.map((service, index) => (
                             <div className="service-card" key={index}>
                                 <div className="service-icon">{service.icon}</div>
@@ -64,7 +93,7 @@ const Services = () => {
                                 <p>{service.description}</p>
                             </div>
                         ))}
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </section>

@@ -24,7 +24,7 @@
     border-radius: 50%;
     filter: blur(80px);
     opacity: 0.6;
-    animation: float 10s infinite ease-in-out;
+    /* animation: float 10s infinite ease-in-out; */
 }
 
 .blob-1 {
@@ -33,7 +33,6 @@
     width: 500px;
     height: 500px;
     background: var(--primary-color);
-    animation-delay: 0s;
 }
 
 .blob-2 {
@@ -42,7 +41,6 @@
     width: 600px;
     height: 600px;
     background: var(--secondary-color);
-    animation-delay: 5s;
 }
 
 @keyframes float {
@@ -75,9 +73,11 @@
 
 .highlight {
     background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    background-size: 100% 100%;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    transition: background-size 0.5s ease;
 }
 
 .hero-content p {
