@@ -3,10 +3,12 @@ import { motion } from 'framer-motion';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import './Navbar.css';
 import logo from '../../assets/logo.png';
+import { useLenis } from './ScrollManager';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const lenis = useLenis();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +19,25 @@ const Navbar = () => {
   }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const handleNavClick = (e, targetId) => {
+    e.preventDefault();
+    if (isOpen) toggleMenu();
+
+    if (lenis) {
+      if (targetId === '#hero') {
+        lenis.scrollTo(0, { immediate: true });
+      } else {
+        lenis.scrollTo(targetId);
+      }
+    } else {
+      // Fallback if lenis isn't ready
+      const element = document.querySelector(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
 
   return (
     <motion.nav
@@ -36,16 +57,16 @@ const Navbar = () => {
 
         <ul className={`nav-menu ${isOpen ? 'active' : ''}`}>
           <li className="nav-item">
-            <a href="#hero" className="nav-links" onClick={toggleMenu}>Home</a>
+            <a href="#hero" className="nav-links" onClick={(e) => handleNavClick(e, '#hero')}>Home</a>
           </li>
           <li className="nav-item">
-            <a href="#services" className="nav-links" onClick={toggleMenu}>Services</a>
+            <a href="#services" className="nav-links" onClick={(e) => handleNavClick(e, '#services')}>Services</a>
           </li>
           <li className="nav-item">
-            <a href="#survey" className="nav-links" onClick={toggleMenu}>Get Started</a>
+            <a href="#survey" className="nav-links" onClick={(e) => handleNavClick(e, '#survey')}>Get Started</a>
           </li>
           <li className="nav-item">
-            <a href="#contact" className="nav-links" onClick={toggleMenu}>Contact</a>
+            <a href="#contact" className="nav-links" onClick={(e) => handleNavClick(e, '#contact')}>Contact</a>
           </li>
         </ul>
       </div>

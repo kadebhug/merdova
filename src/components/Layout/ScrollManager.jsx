@@ -1,15 +1,19 @@
-import React, { useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, createContext, useContext, useState } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const LenisContext = createContext(null);
+
+export const useLenis = () => useContext(LenisContext);
+
 const ScrollManager = ({ children }) => {
-    const lenisRef = useRef(null);
+    const [lenis, setLenis] = useState(null);
 
     useLayoutEffect(() => {
-        const lenis = new Lenis({
+        const lenisInstance = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             direction: 'vertical',
@@ -20,29 +24,31 @@ const ScrollManager = ({ children }) => {
             touchMultiplier: 2,
         });
 
-        lenisRef.current = lenis;
+        setLenis(lenisInstance);
 
         // Synchronize Lenis with GSAP ScrollTrigger
-        lenis.on('scroll', ScrollTrigger.update);
+        lenisInstance.on('scroll', ScrollTrigger.update);
 
         gsap.ticker.add((time) => {
-            lenis.raf(time * 1000);
+            lenisInstance.raf(time * 1000);
         });
 
         gsap.ticker.lagSmoothing(0);
 
         return () => {
-            lenis.destroy();
+            lenisInstance.destroy();
             gsap.ticker.remove((time) => {
-                lenis.raf(time * 1000);
+                lenisInstance.raf(time * 1000);
             });
         };
     }, []);
 
     return (
-        <div className="scroll-container">
-            {children}
-        </div>
+        <LenisContext.Provider value={lenis}>
+            <div className="scroll-container">
+                {children}
+            </div>
+        </LenisContext.Provider>
     );
 };
 
