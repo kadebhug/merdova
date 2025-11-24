@@ -8,9 +8,25 @@ const Sanaflower = () => {
     const sunflowersRef = useRef([]);
     const animationFrameRef = useRef(null);
 
+    // Mock data source - in the future, this can be replaced with an API call
+    const mockFlowerData = [
+        { id: 1, name: 'Sunny', type: 'Classic Sunflower', color: '#eab308', description: 'A bright and cheerful sunflower' },
+        { id: 2, name: 'Golden', type: 'Golden Sunflower', color: '#f59e0b', description: 'Radiates warmth and joy' },
+        { id: 3, name: 'Amber', type: 'Amber Sunflower', color: '#d97706', description: 'Deep golden hues' },
+        { id: 4, name: 'Honey', type: 'Honey Sunflower', color: '#fbbf24', description: 'Sweet as honey' },
+        { id: 5, name: 'Sunset', type: 'Sunset Sunflower', color: '#f97316', description: 'Captures the beauty of sunset' },
+        { id: 6, name: 'Citrus', type: 'Citrus Sunflower', color: '#fb923c', description: 'Bright and zesty' },
+        { id: 7, name: 'Marigold', type: 'Marigold Sunflower', color: '#fde047', description: 'Vibrant and lively' },
+        { id: 8, name: 'Buttercup', type: 'Buttercup Sunflower', color: '#facc15', description: 'Soft and delicate' },
+        { id: 9, name: 'Tangerine', type: 'Tangerine Sunflower', color: '#fb923c', description: 'Fresh and energetic' },
+        { id: 10, name: 'Saffron', type: 'Saffron Sunflower', color: '#f59e0b', description: 'Rich and precious' },
+        { id: 11, name: 'Dandelion', type: 'Dandelion Sunflower', color: '#fde68a', description: 'Light and airy' },
+        { id: 12, name: 'Topaz', type: 'Topaz Sunflower', color: '#fbbf24', description: 'Gemstone beauty' },
+    ];
+
     // Sunflower Class/Structure
     class Sunflower {
-        constructor(x, y, height) {
+        constructor(x, y, height, data) {
             this.x = x;
             this.y = y;
             this.height = height;
@@ -18,6 +34,9 @@ const Sanaflower = () => {
             this.phase = Math.random() * Math.PI * 2;
             this.swaySpeed = 0.0005 + Math.random() * 0.0005;
             this.swayAmplitude = 10 + Math.random() * 10;
+            // Store data from the data source
+            this.data = data;
+            this.petalColor = data.color;
         }
 
         draw(ctx, time) {
@@ -39,8 +58,8 @@ const Sanaflower = () => {
             ctx.fillRect(this.baseX + sway * 0.3 - 10, this.y - this.height * 0.4, 10, 6);
             ctx.fillRect(this.baseX + sway * 0.3 + 4, this.y - this.height * 0.6, 10, 6);
 
-            // Draw Petals (Pixel Art Style)
-            ctx.fillStyle = '#eab308'; // Yellow
+            // Draw Petals (Pixel Art Style) - use color from data
+            ctx.fillStyle = this.petalColor;
             const petalSize = 20;
             ctx.fillRect(headX - petalSize, headY - petalSize, petalSize * 2, petalSize * 2);
 
@@ -67,16 +86,17 @@ const Sanaflower = () => {
 
         const initSunflowers = () => {
             sunflowersRef.current = [];
-            const numberOfFlowers = Math.floor(window.innerWidth / 60); // Density
+            const numberOfFlowers = mockFlowerData.length;
+            const spacing = window.innerWidth / (numberOfFlowers + 1);
 
-            for (let i = 0; i < numberOfFlowers; i++) {
-                const x = Math.random() * window.innerWidth;
+            // Create a sunflower for each item in the mock data
+            mockFlowerData.forEach((flowerData, index) => {
+                // Distribute flowers evenly across the screen with some randomness
+                const x = spacing * (index + 1) + (Math.random() - 0.5) * 40;
                 const y = window.innerHeight; // Bottom of screen
                 const height = 150 + Math.random() * 200; // Random height
-                sunflowersRef.current.push(new Sunflower(x, y, height));
-            }
-            // Sort by y (though all are at bottom, height effectively determines layer order if we varied y)
-            // For now, simple draw order is fine.
+                sunflowersRef.current.push(new Sunflower(x, y, height, flowerData));
+            });
         };
 
         let time = 0;
@@ -148,9 +168,9 @@ const Sanaflower = () => {
                             exit={{ scale: 0.8, opacity: 0 }}
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <h2>Sunflower Details</h2>
-                            <p>You clicked a beautiful sunflower!</p>
-                            <p>Height: {Math.round(selectedSunflower.height)}px</p>
+                            <h2>{selectedSunflower.data.name}</h2>
+                            <p><strong>Type:</strong> {selectedSunflower.data.type}</p>
+                            <p><strong>Description:</strong> {selectedSunflower.data.description}</p>
                             <button className="close-btn" onClick={() => setSelectedSunflower(null)}>Close</button>
                         </motion.div>
                     </motion.div>
