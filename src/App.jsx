@@ -21,7 +21,7 @@ const Home = () => (
 
 function App() {
   return (
-    <Router>
+    <Router basename="/merdova">
       <ScrollManager>
         <Routes>
           <Route path="/" element={<Home />} />
