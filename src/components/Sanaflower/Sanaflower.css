@@ -14,6 +14,35 @@
     cursor: pointer;
 }
 
+/* Add Entry Button */
+.add-entry-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #1a1a2e;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+    transition: all 0.3s ease;
+    font-family: 'League Spartan', sans-serif;
+}
+
+.add-entry-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(251, 191, 36, 0.6);
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.add-entry-btn:active {
+    transform: translateY(-1px);
+}
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -29,13 +58,15 @@
 }
 
 .modal-content {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     padding: 2rem;
     border-radius: 15px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     text-align: center;
-    max-width: 400px;
+    max-width: 600px;
     width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
     border: 2px solid #eab308;
 }
 
@@ -47,8 +78,53 @@
 
 .modal-content p {
     color: #333;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     font-family: 'Outfit', sans-serif;
+}
+
+.entry-date {
+    color: #666;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+}
+
+/* Entry Content Styles */
+.entry-content {
+    margin: 1.5rem 0;
+    text-align: left;
+}
+
+.content-item {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(251, 191, 36, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.content-item:last-child {
+    margin-bottom: 0;
+}
+
+.content-text {
+    color: #1a1a2e;
+    line-height: 1.8;
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.content-image {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.content-audio {
+    width: 100%;
+    margin-top: 0.5rem;
 }
 
 .close-btn {
@@ -58,9 +134,31 @@
     border-radius: 25px;
     font-weight: bold;
     transition: transform 0.2s;
+    border: none;
+    cursor: pointer;
+    margin-top: 1rem;
 }
 
 .close-btn:hover {
     transform: scale(1.05);
     background: #ca8a04;
+}
+
+/* Scrollbar styling for modal */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: rgba(251, 191, 36, 0.5);
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(251, 191, 36, 0.7);
 }

@@ -1,10 +1,14 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './Sanaflower.css';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '../../config/supabaseClient';
+import EntryModal from './EntryModal';
 
 const Sanaflower = () => {
     const canvasRef = useRef(null);
     const [selectedSunflower, setSelectedSunflower] = useState(null);
+    const [entries, setEntries] = useState([]);
+    const [isEntryModalOpen, setIsEntryModalOpen] = useState(false);
     const sunflowersRef = useRef([]);
     const animationFrameRef = useRef(null);
 
@@ -74,6 +78,30 @@ const Sanaflower = () => {
         }
     }
 
+    // Fetch entries from Supabase
+    useEffect(() => {
+        fetchEntries();
+    }, []);
+
+    const fetchEntries = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('flower_entries')
+                .select('*')
+                .order('created_at', { ascending: true });
+
+            if (error) throw error;
+            setEntries(data || []);
+        } catch (error) {
+            console.error('Error fetching entries:', error);
+            // Fallback to mockFlowerData if Supabase fails
+        }
+    };
+
+    const handleEntryCreated = () => {
+        fetchEntries();
+    };
+
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
@@ -86,16 +114,28 @@ const Sanaflower = () => {
 
         const initSunflowers = () => {
             sunflowersRef.current = [];
-            const numberOfFlowers = mockFlowerData.length;
+            // Use entries if available, otherwise use mockFlowerData
+            const dataSource = entries.length > 0 ? entries : mockFlowerData;
+            const numberOfFlowers = dataSource.length;
             const spacing = window.innerWidth / (numberOfFlowers + 1);
 
-            // Create a sunflower for each item in the mock data
-            mockFlowerData.forEach((flowerData, index) => {
+            // Create a sunflower for each item in the data source
+            dataSource.forEach((flowerData, index) => {
                 // Distribute flowers evenly across the screen with some randomness
                 const x = spacing * (index + 1) + (Math.random() - 0.5) * 40;
                 const y = window.innerHeight; // Bottom of screen
                 const height = 150 + Math.random() * 200; // Random height
-                sunflowersRef.current.push(new Sunflower(x, y, height, flowerData));
+
+                // If using entries, combine with random mock data for visual variety
+                const visualData = entries.length > 0
+                    ? {
+                        ...flowerData,
+                        ...mockFlowerData[index % mockFlowerData.length],
+                        color: flowerData.flower_color || mockFlowerData[index % mockFlowerData.length].color
+                    }
+                    : flowerData;
+
+                sunflowersRef.current.push(new Sunflower(x, y, height, visualData));
             });
         };
 
@@ -121,7 +161,7 @@ const Sanaflower = () => {
             window.removeEventListener('resize', resizeCanvas);
             cancelAnimationFrame(animationFrameRef.current);
         };
-    }, []);
+    }, [entries]);
 
     const handleCanvasClick = (e) => {
         const rect = canvasRef.current.getBoundingClientRect();
@@ -146,12 +186,32 @@ const Sanaflower = () => {
 
     return (
         <div className="sanaflower-container">
+            {/* Add Entry Button */}
+            <button
+                className="add-entry-btn"
+                onClick={() => setIsEntryModalOpen(true)}
+            >
+                + Add Entry
+            </button>
+
             <canvas
                 ref={canvasRef}
                 onClick={handleCanvasClick}
                 className="sanaflower-canvas"
             />
 
+            {/* Entry Creation Modal */}
+            <AnimatePresence>
+                {isEntryModalOpen && (
+                    <EntryModal
+                        isOpen={isEntryModalOpen}
+                        onClose={() => setIsEntryModalOpen(false)}
+                        onEntryCreated={handleEntryCreated}
+                    />
+                )}
+            </AnimatePresence>
+
+            {/* Flower Details Modal */}
             <AnimatePresence>
                 {selectedSunflower && (
                     <motion.div
@@ -168,9 +228,51 @@ const Sanaflower = () => {
                             exit={{ scale: 0.8, opacity: 0 }}
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <h2>{selectedSunflower.data.name}</h2>
-                            <p><strong>Type:</strong> {selectedSunflower.data.type}</p>
-                            <p><strong>Description:</strong> {selectedSunflower.data.description}</p>
+                            <h2>{selectedSunflower.data.name || 'My Entry'}</h2>
+
+                            {/* Display entry date if available */}
+                            {selectedSunflower.data.entry_date && (
+                                <p className="entry-date">
+                                    <strong>Date:</strong> {new Date(selectedSunflower.data.entry_date).toLocaleDateString()}
+                                </p>
+                            )}
+
+                            {/* Display content items if available */}
+                            {selectedSunflower.data.content_items && selectedSunflower.data.content_items.length > 0 ? (
+                                <div className="entry-content">
+                                    {selectedSunflower.data.content_items
+                                        .sort((a, b) => a.order - b.order)
+                                        .map((item, index) => (
+                                            <div key={index} className="content-item">
+                                                {item.type === 'text' && (
+                                                    <p className="content-text">{item.content}</p>
+                                                )}
+                                                {item.type === 'image' && (
+                                                    <img
+                                                        src={item.url}
+                                                        alt={`Entry content ${index + 1}`}
+                                                        className="content-image"
+                                                    />
+                                                )}
+                                                {item.type === 'audio' && (
+                                                    <audio
+                                                        src={item.url}
+                                                        controls
+                                                        className="content-audio"
+                                                    />
+                                                )}
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            ) : (
+                                <>
+                                    {/* Fallback to mock data display */}
+                                    <p><strong>Type:</strong> {selectedSunflower.data.type}</p>
+                                    <p><strong>Description:</strong> {selectedSunflower.data.description}</p>
+                                </>
+                            )}
+
                             <button className="close-btn" onClick={() => setSelectedSunflower(null)}>Close</button>
                         </motion.div>
                     </motion.div>
