@@ -140,6 +140,7 @@ const EntryModal = ({ isOpen, onClose, onEntryCreated }) => {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
                 onClick={(e) => e.stopPropagation()}
+                onWheel={(e) => e.stopPropagation()}
             >
                 <h2>Create New Entry</h2>
 

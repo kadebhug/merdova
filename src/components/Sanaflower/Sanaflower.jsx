@@ -3,12 +3,14 @@ import './Sanaflower.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../../config/supabaseClient';
 import EntryModal from './EntryModal';
+import ImageLightbox from './ImageLightbox';
 
 const Sanaflower = () => {
     const canvasRef = useRef(null);
     const [selectedSunflower, setSelectedSunflower] = useState(null);
     const [entries, setEntries] = useState([]);
     const [isEntryModalOpen, setIsEntryModalOpen] = useState(false);
+    const [lightboxImage, setLightboxImage] = useState(null);
     const sunflowersRef = useRef([]);
     const animationFrameRef = useRef(null);
 
@@ -227,6 +229,7 @@ const Sanaflower = () => {
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.8, opacity: 0 }}
                             onClick={(e) => e.stopPropagation()}
+                            onWheel={(e) => e.stopPropagation()}
                         >
                             <h2>{selectedSunflower.data.name || 'My Entry'}</h2>
 
@@ -248,11 +251,14 @@ const Sanaflower = () => {
                                                     <p className="content-text">{item.content}</p>
                                                 )}
                                                 {item.type === 'image' && (
-                                                    <img
-                                                        src={item.url}
-                                                        alt={`Entry content ${index + 1}`}
-                                                        className="content-image"
-                                                    />
+                                                    <div className="image-link-container">
+                                                        <button
+                                                            className="image-link"
+                                                            onClick={() => setLightboxImage(item.url)}
+                                                        >
+                                                            📷 View Image {index + 1}
+                                                        </button>
+                                                    </div>
                                                 )}
                                                 {item.type === 'audio' && (
                                                     <audio
@@ -278,6 +284,13 @@ const Sanaflower = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            {/* Image Lightbox */}
+            <ImageLightbox
+                imageUrl={lightboxImage}
+                isOpen={!!lightboxImage}
+                onClose={() => setLightboxImage(null)}
+            />
         </div>
     );
 };

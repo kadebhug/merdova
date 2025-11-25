@@ -10,6 +10,7 @@
     justify-content: center;
     z-index: 1000;
     backdrop-filter: blur(4px);
+    overflow-y: auto;
 }
 
 .entry-modal-content {
@@ -20,6 +21,7 @@
     width: 90%;
     max-height: 80vh;
     overflow-y: auto;
+    overscroll-behavior: contain;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
