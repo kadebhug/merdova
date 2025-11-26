@@ -6,6 +6,7 @@ import './EntryModal.css';
 const EntryModal = ({ isOpen, onClose, onEntryCreated }) => {
     const [contentItems, setContentItems] = useState([]);
     const [currentText, setCurrentText] = useState('');
+    const [title, setTitle] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
 
@@ -103,6 +104,7 @@ const EntryModal = ({ isOpen, onClose, onEntryCreated }) => {
                 .from('flower_entries')
                 .insert([
                     {
+                        title: title,
                         content_items: contentItems,
                         flower_color: randomColor,
                         entry_date: new Date().toISOString().split('T')[0]
@@ -115,6 +117,7 @@ const EntryModal = ({ isOpen, onClose, onEntryCreated }) => {
             // Reset form
             setContentItems([]);
             setCurrentText('');
+            setTitle('');
             onEntryCreated();
             onClose();
         } catch (err) {
@@ -147,6 +150,18 @@ const EntryModal = ({ isOpen, onClose, onEntryCreated }) => {
                 {error && <div className="error-message">{error}</div>}
 
                 <div className="entry-form">
+                    {/* Title Input */}
+                    <div className="form-section">
+                        <label>Title</label>
+                        <input
+                            type="text"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            placeholder="Give your entry a title..."
+                            className="title-input"
+                        />
+                    </div>
+
                     {/* Text Input */}
                     <div className="form-section">
                         <label>Add Text</label>

@@ -87,16 +87,13 @@
 .file-input {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 0.75rem;
-    color: #e5e7eb;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
 
-.file-input:hover {
-    border-color: #fbbf24;
-    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    align-self: flex-start;
 }
 
 .add-content-btn {
@@ -109,6 +106,7 @@
     font-weight: 600;
     transition: all 0.3s ease;
     align-self: flex-start;
+    margin-top: 0.5rem;
 }
 
 .add-content-btn:hover {
