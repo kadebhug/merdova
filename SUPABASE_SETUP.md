@@ -31,6 +31,7 @@ create table flower_entries (
   id uuid default gen_random_uuid() primary key,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null,
   entry_date date default current_date not null,
+  title text,
   content_items jsonb not null default '[]'::jsonb,
   flower_color text default '#eab308'
 );
@@ -44,6 +45,13 @@ create policy "Allow all operations"
   for all
   using (true)
   with check (true);
+```
+
+### Updating Existing Table
+If you already created the table, run this command to add the `title` column:
+
+```sql
+alter table flower_entries add column title text;
 ```
 
 ## Step 5: Create Storage Buckets

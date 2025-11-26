@@ -231,7 +231,7 @@ const Sanaflower = () => {
                             onClick={(e) => e.stopPropagation()}
                             onWheel={(e) => e.stopPropagation()}
                         >
-                            <h2>{selectedSunflower.data.name || 'My Entry'}</h2>
+                            <h2>{selectedSunflower.data.title || selectedSunflower.data.name || 'My Entry'}</h2>
 
                             {/* Display entry date if available */}
                             {selectedSunflower.data.entry_date && (
