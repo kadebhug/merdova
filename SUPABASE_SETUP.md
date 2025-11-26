@@ -33,7 +33,8 @@ create table flower_entries (
   entry_date date default current_date not null,
   title text,
   content_items jsonb not null default '[]'::jsonb,
-  flower_color text default '#eab308'
+  flower_color text default '#eab308',
+  height numeric
 );
 
 -- Enable Row Level Security (optional but recommended)
@@ -48,10 +49,11 @@ create policy "Allow all operations"
 ```
 
 ### Updating Existing Table
-If you already created the table, run this command to add the `title` column:
+If you already created the table, run these commands to add the `title` and `height` columns:
 
 ```sql
 alter table flower_entries add column title text;
+alter table flower_entries add column height numeric;
 ```
 
 ## Step 5: Create Storage Buckets

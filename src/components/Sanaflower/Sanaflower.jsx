@@ -126,7 +126,8 @@ const Sanaflower = () => {
                 // Distribute flowers evenly across the screen with some randomness
                 const x = spacing * (index + 1) + (Math.random() - 0.5) * 40;
                 const y = window.innerHeight; // Bottom of screen
-                const height = 150 + Math.random() * 200; // Random height
+                // Use saved height if available, otherwise generate random
+                const height = flowerData.height || (150 + Math.random() * 200);
 
                 // If using entries, combine with random mock data for visual variety
                 const visualData = entries.length > 0
@@ -240,6 +241,14 @@ const Sanaflower = () => {
                                 </p>
                             )}
 
+                            {/* Always display type and description if available */}
+                            {(selectedSunflower.data.type || selectedSunflower.data.description) && (
+                                <div className="flower-details" style={{ marginBottom: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.05)', borderRadius: '8px' }}>
+                                    {selectedSunflower.data.type && <p><strong>Type:</strong> {selectedSunflower.data.type}</p>}
+                                    {selectedSunflower.data.description && <p><strong>Description:</strong> {selectedSunflower.data.description}</p>}
+                                </div>
+                            )}
+
                             {/* Display content items if available */}
                             {selectedSunflower.data.content_items && selectedSunflower.data.content_items.length > 0 ? (
                                 <div className="entry-content">
@@ -272,11 +281,7 @@ const Sanaflower = () => {
                                     }
                                 </div>
                             ) : (
-                                <>
-                                    {/* Fallback to mock data display */}
-                                    <p><strong>Type:</strong> {selectedSunflower.data.type}</p>
-                                    <p><strong>Description:</strong> {selectedSunflower.data.description}</p>
-                                </>
+                                <p className="no-content-message">No additional content for this flower.</p>
                             )}
 
                             <button className="close-btn" onClick={() => setSelectedSunflower(null)}>Close</button>

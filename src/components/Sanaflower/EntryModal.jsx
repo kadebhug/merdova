@@ -99,6 +99,7 @@ const EntryModal = ({ isOpen, onClose, onEntryCreated }) => {
             // Get a random color from the mock data
             const colors = ['#eab308', '#f59e0b', '#d97706', '#fbbf24', '#f97316', '#fb923c', '#fde047', '#facc15'];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            const randomHeight = 150 + Math.random() * 200; // Random height between 150 and 350
 
             const { data, error } = await supabase
                 .from('flower_entries')
@@ -107,6 +108,7 @@ const EntryModal = ({ isOpen, onClose, onEntryCreated }) => {
                         title: title,
                         content_items: contentItems,
                         flower_color: randomColor,
+                        height: randomHeight,
                         entry_date: new Date().toISOString().split('T')[0]
                     }
                 ])
