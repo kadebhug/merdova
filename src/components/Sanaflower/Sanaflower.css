@@ -5,6 +5,8 @@
     /* Sky blue gradient */
     position: relative;
     overflow: hidden;
+    touch-action: none;
+    /* Prevent scrolling/zooming on mobile */
 }
 
 .sanaflower-canvas {
@@ -12,6 +14,10 @@
     width: 100%;
     height: 100%;
     cursor: pointer;
+    touch-action: none;
+    /* Prevent default touch actions */
+    -webkit-tap-highlight-color: transparent;
+    /* Remove tap highlight */
 }
 
 /* Add Entry Button */

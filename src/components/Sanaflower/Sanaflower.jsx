@@ -166,25 +166,37 @@ const Sanaflower = () => {
         };
     }, [entries]);
 
-    const handleCanvasClick = (e) => {
-        const rect = canvasRef.current.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-        const clickY = e.clientY - rect.top;
-
+    const checkCollision = (x, y) => {
         // Check collision with flower heads (simple box check)
         const hitFlower = sunflowersRef.current.find(flower => {
-            const headSize = 25; // Approx radius including petals
+            const headSize = 35; // Increased hit area for better touch/click experience
             return (
-                clickX >= flower.currentHeadX - headSize &&
-                clickX <= flower.currentHeadX + headSize &&
-                clickY >= flower.currentHeadY - headSize &&
-                clickY <= flower.currentHeadY + headSize
+                x >= flower.currentHeadX - headSize &&
+                x <= flower.currentHeadX + headSize &&
+                y >= flower.currentHeadY - headSize &&
+                y <= flower.currentHeadY + headSize
             );
         });
 
         if (hitFlower) {
             setSelectedSunflower(hitFlower);
         }
+    };
+
+    const handleCanvasClick = (e) => {
+        const rect = canvasRef.current.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const clickY = e.clientY - rect.top;
+        checkCollision(clickX, clickY);
+    };
+
+    const handleCanvasTouch = (e) => {
+        e.preventDefault(); // Prevent default touch actions
+        const rect = canvasRef.current.getBoundingClientRect();
+        const touch = e.changedTouches[0];
+        const touchX = touch.clientX - rect.left;
+        const touchY = touch.clientY - rect.top;
+        checkCollision(touchX, touchY);
     };
 
     return (
@@ -200,6 +212,7 @@ const Sanaflower = () => {
             <canvas
                 ref={canvasRef}
                 onClick={handleCanvasClick}
+                onTouchStart={handleCanvasTouch}
                 className="sanaflower-canvas"
             />
 
