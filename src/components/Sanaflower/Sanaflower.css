@@ -1,8 +1,8 @@
 .sanaflower-container {
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(to bottom, #87CEEB 0%, #E0F7FA 100%);
-    /* Sky blue gradient */
+    /* Background removed - using DayNightCycle background instead */
+    background: transparent;
     position: relative;
     overflow: hidden;
     touch-action: none;
@@ -17,7 +17,8 @@
     width: 100%;
     height: 100%;
     z-index: 2000;
-    background: linear-gradient(to bottom, #87CEEB 0%, #E0F7FA 100%);
+    /* Background removed - using DayNightCycle background instead */
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
