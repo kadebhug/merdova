@@ -167,35 +167,56 @@ const Sanaflower = () => {
     }, [entries]);
 
     const checkCollision = (x, y) => {
-        // Check collision with flower heads (simple box check)
-        const hitFlower = sunflowersRef.current.find(flower => {
-            const headSize = 35; // Increased hit area for better touch/click experience
-            return (
-                x >= flower.currentHeadX - headSize &&
-                x <= flower.currentHeadX + headSize &&
-                y >= flower.currentHeadY - headSize &&
-                y <= flower.currentHeadY + headSize
-            );
+        // Improved collision detection for better mobile experience
+        const hitRadius = 50; // Increased hit area (approx 13mm on mobile)
+        let closestFlower = null;
+        let minDistance = Infinity;
+
+        // Iterate through all flowers to find the closest one within range
+        // We don't need to reverse iterate if we find the closest one, 
+        // but checking all ensures we get the best match.
+        sunflowersRef.current.forEach(flower => {
+            // Calculate distance between click/touch and flower head center
+            const dx = x - flower.currentHeadX;
+            const dy = y - flower.currentHeadY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            // Check if within hit radius
+            if (distance <= hitRadius) {
+                // If this flower is closer than the previous best match, keep it
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestFlower = flower;
+                }
+            }
         });
 
-        if (hitFlower) {
-            setSelectedSunflower(hitFlower);
+        if (closestFlower) {
+            setSelectedSunflower(closestFlower);
         }
     };
 
     const handleCanvasClick = (e) => {
-        const rect = canvasRef.current.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-        const clickY = e.clientY - rect.top;
+        const canvas = canvasRef.current;
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+
+        const clickX = (e.clientX - rect.left) * scaleX;
+        const clickY = (e.clientY - rect.top) * scaleY;
         checkCollision(clickX, clickY);
     };
 
     const handleCanvasTouch = (e) => {
         e.preventDefault(); // Prevent default touch actions
-        const rect = canvasRef.current.getBoundingClientRect();
+        const canvas = canvasRef.current;
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+
         const touch = e.changedTouches[0];
-        const touchX = touch.clientX - rect.left;
-        const touchY = touch.clientY - rect.top;
+        const touchX = (touch.clientX - rect.left) * scaleX;
+        const touchY = (touch.clientY - rect.top) * scaleY;
         checkCollision(touchX, touchY);
     };
 
