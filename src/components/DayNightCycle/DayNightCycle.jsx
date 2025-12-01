@@ -53,6 +53,22 @@ const DayNightCycle = ({ children }) => {
     return 0;
   };
 
+  // Calculate cloud opacity based on time
+  // Clouds visible during day time: 5:00 to 20:00
+  const getCloudOpacity = () => {
+    if (isManualMode) {
+      return manualIsDay ? 1 : 0;
+    }
+    
+    const hour = timeOfDay / 60;
+    
+    // Day time: 5:00 to 20:00
+    if (hour >= 5 && hour < 20) {
+      return 1;
+    }
+    return 0;
+  };
+
   // Get background gradient - only day or night
   const getBackgroundGradient = () => {
     // Day colors (sky blue)
@@ -96,6 +112,7 @@ const DayNightCycle = ({ children }) => {
   };
 
   const starOpacity = getStarOpacity();
+  const cloudOpacity = getCloudOpacity();
   const backgroundGradient = getBackgroundGradient();
 
   // Debug: log current time (remove in production)
@@ -127,6 +144,19 @@ const DayNightCycle = ({ children }) => {
             opacity: starOpacity
           }}
         />
+        <div 
+          className="clouds-overlay"
+          style={{
+            opacity: cloudOpacity
+          }}
+        >
+          <div className="cloud cloud-1"></div>
+          <div className="cloud cloud-2"></div>
+          <div className="cloud cloud-3"></div>
+          <div className="cloud cloud-4"></div>
+          <div className="cloud cloud-5"></div>
+          <div className="cloud cloud-6"></div>
+        </div>
       </div>
       <div className="day-night-content">
         {children}

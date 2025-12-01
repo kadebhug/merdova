@@ -157,6 +157,203 @@
   pointer-events: none;
 }
 
+/* Clouds overlay */
+.clouds-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 2s ease-in-out;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Cloud base styling */
+.cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.8);
+  opacity: 0.7;
+}
+
+.cloud:before,
+.cloud:after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Cloud 1 - Wide, flat stratus cloud */
+.cloud-1 {
+  width: 180px;
+  height: 30px;
+  top: 15%;
+  left: -200px;
+  border-radius: 15px;
+  animation: drift 90s linear infinite;
+}
+
+.cloud-1:before {
+  width: 80px;
+  height: 50px;
+  top: -25px;
+  left: 20px;
+  border-radius: 40px;
+}
+
+.cloud-1:after {
+  width: 100px;
+  height: 40px;
+  top: -20px;
+  right: 30px;
+  border-radius: 50px;
+}
+
+/* Cloud 2 - Tall, puffy cumulus cloud */
+.cloud-2 {
+  width: 90px;
+  height: 60px;
+  top: 25%;
+  left: -110px;
+  border-radius: 45px;
+  animation: drift 75s linear infinite;
+  animation-delay: -10s;
+}
+
+.cloud-2:before {
+  width: 70px;
+  height: 70px;
+  top: -35px;
+  left: 10px;
+  border-radius: 35px;
+}
+
+.cloud-2:after {
+  width: 65px;
+  height: 65px;
+  top: -30px;
+  right: 5px;
+  border-radius: 32px;
+}
+
+/* Cloud 3 - Small, compact cloud */
+.cloud-3 {
+  width: 70px;
+  height: 35px;
+  top: 35%;
+  left: -90px;
+  border-radius: 35px;
+  animation: drift 85s linear infinite;
+  animation-delay: -20s;
+}
+
+.cloud-3:before {
+  width: 45px;
+  height: 45px;
+  top: -22px;
+  left: 5px;
+  border-radius: 22px;
+}
+
+.cloud-3:after {
+  width: 40px;
+  height: 40px;
+  top: -18px;
+  right: 8px;
+  border-radius: 20px;
+}
+
+/* Cloud 4 - Very wide, thin elongated cloud */
+.cloud-4 {
+  width: 200px;
+  height: 25px;
+  top: 50%;
+  left: -220px;
+  border-radius: 12px;
+  animation: drift 100s linear infinite;
+  animation-delay: -30s;
+}
+
+.cloud-4:before {
+  width: 60px;
+  height: 45px;
+  top: -20px;
+  left: 40px;
+  border-radius: 30px;
+}
+
+.cloud-4:after {
+  width: 80px;
+  height: 35px;
+  top: -15px;
+  right: 50px;
+  border-radius: 40px;
+}
+
+/* Cloud 5 - Medium, scattered puffs */
+.cloud-5 {
+  width: 110px;
+  height: 40px;
+  top: 65%;
+  left: -130px;
+  border-radius: 20px;
+  animation: drift 80s linear infinite;
+  animation-delay: -15s;
+}
+
+.cloud-5:before {
+  width: 55px;
+  height: 55px;
+  top: -28px;
+  left: 15px;
+  border-radius: 27px;
+}
+
+.cloud-5:after {
+  width: 50px;
+  height: 50px;
+  top: -25px;
+  right: 20px;
+  border-radius: 25px;
+}
+
+/* Cloud 6 - Small, wispy cloud */
+.cloud-6 {
+  width: 60px;
+  height: 20px;
+  top: 75%;
+  left: -80px;
+  border-radius: 10px;
+  animation: drift 95s linear infinite;
+  animation-delay: -25s;
+}
+
+.cloud-6:before {
+  width: 35px;
+  height: 35px;
+  top: -18px;
+  left: 8px;
+  border-radius: 17px;
+}
+
+.cloud-6:after {
+  width: 30px;
+  height: 30px;
+  top: -15px;
+  right: 10px;
+  border-radius: 15px;
+}
+
+/* Drift animation - clouds move from left to right */
+@keyframes drift {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(100vw + 200px));
+  }
+}
+
 .day-night-content {
   position: relative;
   z-index: 1;
