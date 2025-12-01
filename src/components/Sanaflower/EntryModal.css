@@ -126,6 +126,7 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     padding: 1rem;
+    padding-left: 3.5rem;
     margin-bottom: 0.75rem;
     position: relative;
 }
@@ -146,6 +147,41 @@
     font-weight: 700;
 }
 
+.preview-item-controls {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.move-btn {
+    background: rgba(251, 191, 36, 0.2);
+    border: 1px solid #fbbf24;
+    color: #fbbf24;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    min-width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.move-btn:hover:not(:disabled) {
+    background: rgba(251, 191, 36, 0.3);
+    transform: translateY(-1px);
+}
+
+.move-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
 .preview-text {
     color: #e5e7eb;
     line-height: 1.6;
@@ -154,7 +190,11 @@
 }
 
 .preview-image {
-    max-width: 100%;
+    max-width: 200px;
+    max-height: 150px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
     border-radius: 8px;
     margin-top: 0.5rem;
 }
@@ -321,6 +361,7 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     padding: 1rem;
+    padding-left: 3.5rem;
     margin-bottom: 0.75rem;
     position: relative;
 }
@@ -341,6 +382,41 @@
     font-weight: 700;
 }
 
+.preview-item-controls {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.move-btn {
+    background: rgba(251, 191, 36, 0.2);
+    border: 1px solid #fbbf24;
+    color: #fbbf24;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    min-width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.move-btn:hover:not(:disabled) {
+    background: rgba(251, 191, 36, 0.3);
+    transform: translateY(-1px);
+}
+
+.move-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
 .preview-text {
     color: #e5e7eb;
     line-height: 1.6;
@@ -349,7 +425,11 @@
 }
 
 .preview-image {
-    max-width: 100%;
+    max-width: 200px;
+    max-height: 150px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
     border-radius: 8px;
     margin-top: 0.5rem;
 }

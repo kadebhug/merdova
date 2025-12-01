@@ -86,6 +86,21 @@ const EntryModal = ({ isOpen, onClose, onEntryCreated, entryToEdit = null }) => 
         setContentItems(reorderedItems);
     };
 
+    const moveContentItem = (index, direction) => {
+        if (direction === 'up' && index === 0) return;
+        if (direction === 'down' && index === contentItems.length - 1) return;
+
+        const newItems = [...contentItems];
+        const targetIndex = direction === 'up' ? index - 1 : index + 1;
+        
+        // Swap items
+        [newItems[index], newItems[targetIndex]] = [newItems[targetIndex], newItems[index]];
+        
+        // Update order values
+        const reorderedItems = newItems.map((item, i) => ({ ...item, order: i }));
+        setContentItems(reorderedItems);
+    };
+
     const handleSubmit = async () => {
         if (contentItems.length === 0) {
             setError('Please add at least one content item');
@@ -222,6 +237,24 @@ const EntryModal = ({ isOpen, onClose, onEntryCreated, entryToEdit = null }) => 
                             {contentItems.map((item, index) => (
                                 <div key={index} className="preview-item">
                                     <span className="item-order">#{index + 1}</span>
+                                    <div className="preview-item-controls">
+                                        <button
+                                            onClick={() => moveContentItem(index, 'up')}
+                                            className="move-btn"
+                                            disabled={index === 0}
+                                            title="Move up"
+                                        >
+                                            ↑
+                                        </button>
+                                        <button
+                                            onClick={() => moveContentItem(index, 'down')}
+                                            className="move-btn"
+                                            disabled={index === contentItems.length - 1}
+                                            title="Move down"
+                                        >
+                                            ↓
+                                        </button>
+                                    </div>
                                     {item.type === 'text' && (
                                         <p className="preview-text">{item.content}</p>
                                     )}

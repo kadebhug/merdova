@@ -16,6 +16,7 @@ const Sanaflower = () => {
     const [lightboxImage, setLightboxImage] = useState(null);
     const sunflowersRef = useRef([]);
     const animationFrameRef = useRef(null);
+    const hoveredFlowerRef = useRef(null);
 
     // Mock data source - in the future, this can be replaced with an API call
     const mockFlowerData = [
@@ -48,7 +49,7 @@ const Sanaflower = () => {
             this.petalColor = data.color;
         }
 
-        draw(ctx, time) {
+        draw(ctx, time, isHovered = false) {
             // Calculate sway
             const sway = Math.sin(time * this.swaySpeed + this.phase) * this.swayAmplitude;
             const headX = this.baseX + sway;
@@ -67,9 +68,25 @@ const Sanaflower = () => {
             ctx.fillRect(this.baseX + sway * 0.3 - 10, this.y - this.height * 0.4, 10, 6);
             ctx.fillRect(this.baseX + sway * 0.3 + 4, this.y - this.height * 0.6, 10, 6);
 
+            const petalSize = 20;
+            
+            // Draw glow effect if hovered (draw before petals for better visibility)
+            if (isHovered) {
+                ctx.save();
+                ctx.shadowBlur = 35;
+                ctx.shadowColor = this.petalColor;
+                ctx.globalAlpha = 0.3;
+                ctx.fillStyle = this.petalColor;
+                // Draw a single glow layer
+                const glowSize = petalSize + 30;
+                ctx.fillRect(headX - glowSize, headY - glowSize, glowSize * 2, glowSize * 2);
+                ctx.restore();
+            }
+
             // Draw Petals (Pixel Art Style) - use color from data
             ctx.fillStyle = this.petalColor;
-            const petalSize = 20;
+            ctx.globalAlpha = 1;
+            ctx.shadowBlur = 0; // Reset shadow for petals
             ctx.fillRect(headX - petalSize, headY - petalSize, petalSize * 2, petalSize * 2);
 
             // Draw Center
@@ -164,7 +181,8 @@ const Sanaflower = () => {
             // Draw background/sky if needed, or rely on CSS
 
             sunflowersRef.current.forEach(flower => {
-                flower.draw(ctx, time);
+                const isHovered = hoveredFlowerRef.current === flower;
+                flower.draw(ctx, time, isHovered);
             });
 
             animationFrameRef.current = requestAnimationFrame(animate);
@@ -210,6 +228,34 @@ const Sanaflower = () => {
         }
     };
 
+    const checkHover = (x, y) => {
+        // Check which flower is being hovered
+        const hitRadius = 50; // Same hit area as click detection
+        let closestFlower = null;
+        let minDistance = Infinity;
+
+        sunflowersRef.current.forEach(flower => {
+            // Calculate distance between mouse and flower head center
+            const dx = x - flower.currentHeadX;
+            const dy = y - flower.currentHeadY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            // Check if within hit radius
+            if (distance <= hitRadius) {
+                // If this flower is closer than the previous best match, keep it
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestFlower = flower;
+                }
+            }
+        });
+
+        // Only update if the hovered flower actually changed
+        if (hoveredFlowerRef.current !== closestFlower) {
+            hoveredFlowerRef.current = closestFlower;
+        }
+    };
+
     const handleCanvasClick = (e) => {
         const canvas = canvasRef.current;
         const rect = canvas.getBoundingClientRect();
@@ -219,6 +265,21 @@ const Sanaflower = () => {
         const clickX = (e.clientX - rect.left) * scaleX;
         const clickY = (e.clientY - rect.top) * scaleY;
         checkCollision(clickX, clickY);
+    };
+
+    const handleCanvasMouseMove = (e) => {
+        const canvas = canvasRef.current;
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+
+        const mouseX = (e.clientX - rect.left) * scaleX;
+        const mouseY = (e.clientY - rect.top) * scaleY;
+        checkHover(mouseX, mouseY);
+    };
+
+    const handleCanvasMouseLeave = () => {
+        hoveredFlowerRef.current = null;
     };
 
     const handleCanvasTouch = (e) => {
@@ -260,6 +321,8 @@ const Sanaflower = () => {
             <canvas
                 ref={canvasRef}
                 onClick={handleCanvasClick}
+                onMouseMove={handleCanvasMouseMove}
+                onMouseLeave={handleCanvasMouseLeave}
                 className="sanaflower-canvas"
             />
 

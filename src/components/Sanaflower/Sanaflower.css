@@ -75,8 +75,10 @@
     width: 90%;
     max-height: 80vh;
     overflow-y: auto;
+    overflow-x: hidden;
     overscroll-behavior: contain;
     border: 2px solid #eab308;
+    box-sizing: border-box;
 }
 
 .modal-content h2 {
@@ -110,6 +112,9 @@
     background: rgba(251, 191, 36, 0.05);
     border-radius: 10px;
     border: 1px solid rgba(251, 191, 36, 0.2);
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .content-item:last-child {
@@ -122,6 +127,9 @@
     margin: 0;
     white-space: pre-wrap;
     word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .content-image {
@@ -210,4 +218,22 @@
 
 .modal-content::-webkit-scrollbar-thumb:hover {
     background: rgba(251, 191, 36, 0.7);
+}
+
+/* Mobile responsive fixes */
+@media screen and (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+    }
+    
+    .entry-content {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .content-audio {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
 }
