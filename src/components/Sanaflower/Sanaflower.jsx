@@ -14,6 +14,7 @@ const Sanaflower = () => {
     const [isPinModalOpen, setIsPinModalOpen] = useState(false);
     const [entryToEdit, setEntryToEdit] = useState(null);
     const [lightboxImage, setLightboxImage] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const sunflowersRef = useRef([]);
     const animationFrameRef = useRef(null);
     const hoveredFlowerRef = useRef(null);
@@ -106,6 +107,7 @@ const Sanaflower = () => {
     }, []);
 
     const fetchEntries = async () => {
+        setIsLoading(true);
         try {
             const { data, error } = await supabase
                 .from('flower_entries')
@@ -117,6 +119,11 @@ const Sanaflower = () => {
         } catch (error) {
             console.error('Error fetching entries:', error);
             // Fallback to mockFlowerData if Supabase fails
+        } finally {
+            // Add a small delay to ensure smooth transition
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 500);
         }
     };
 
@@ -136,6 +143,8 @@ const Sanaflower = () => {
     };
 
     useEffect(() => {
+        if (isLoading || !canvasRef.current) return;
+        
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
 
@@ -196,7 +205,7 @@ const Sanaflower = () => {
             window.removeEventListener('resize', resizeCanvas);
             cancelAnimationFrame(animationFrameRef.current);
         };
-    }, [entries]);
+    }, [entries, isLoading]);
 
     const checkCollision = (x, y) => {
         // Improved collision detection for better mobile experience
@@ -310,13 +319,26 @@ const Sanaflower = () => {
 
     return (
         <div className="sanaflower-container">
+            {/* Wind Loader */}
+            {isLoading && (
+                <div className="wind-loader">
+                    <div className="wind-line wind-line-1"></div>
+                    <div className="wind-line wind-line-2"></div>
+                    <div className="wind-line wind-line-3"></div>
+                    <div className="wind-line wind-line-4"></div>
+                    <div className="wind-line wind-line-5"></div>
+                </div>
+            )}
+
             {/* Add Entry Button */}
-            <button
-                className="add-entry-btn"
-                onClick={() => setIsEntryModalOpen(true)}
-            >
-                + Add Entry
-            </button>
+            {!isLoading && (
+                <button
+                    className="add-entry-btn"
+                    onClick={() => setIsEntryModalOpen(true)}
+                >
+                    + Add Entry
+                </button>
+            )}
 
             <canvas
                 ref={canvasRef}
@@ -324,6 +346,7 @@ const Sanaflower = () => {
                 onMouseMove={handleCanvasMouseMove}
                 onMouseLeave={handleCanvasMouseLeave}
                 className="sanaflower-canvas"
+                style={{ display: isLoading ? 'none' : 'block' }}
             />
 
             {/* Entry Creation Modal */}
