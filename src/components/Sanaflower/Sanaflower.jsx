@@ -3,6 +3,7 @@ import './Sanaflower.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../../config/supabaseClient';
 import EntryModal from './EntryModal';
+import PinModal from './PinModal';
 import ImageLightbox from './ImageLightbox';
 
 const Sanaflower = () => {
@@ -10,6 +11,8 @@ const Sanaflower = () => {
     const [selectedSunflower, setSelectedSunflower] = useState(null);
     const [entries, setEntries] = useState([]);
     const [isEntryModalOpen, setIsEntryModalOpen] = useState(false);
+    const [isPinModalOpen, setIsPinModalOpen] = useState(false);
+    const [entryToEdit, setEntryToEdit] = useState(null);
     const [lightboxImage, setLightboxImage] = useState(null);
     const sunflowersRef = useRef([]);
     const animationFrameRef = useRef(null);
@@ -102,6 +105,17 @@ const Sanaflower = () => {
 
     const handleEntryCreated = () => {
         fetchEntries();
+        setEntryToEdit(null);
+    };
+
+    const handleEditClick = () => {
+        setIsPinModalOpen(true);
+    };
+
+    const handlePinSuccess = () => {
+        setEntryToEdit(selectedSunflower.data);
+        setIsEntryModalOpen(true);
+        setSelectedSunflower(null); // Close details modal
     };
 
     useEffect(() => {
@@ -132,8 +146,8 @@ const Sanaflower = () => {
                 // If using entries, combine with random mock data for visual variety
                 const visualData = entries.length > 0
                     ? {
-                        ...flowerData,
                         ...mockFlowerData[index % mockFlowerData.length],
+                        ...flowerData,
                         color: flowerData.flower_color || mockFlowerData[index % mockFlowerData.length].color
                     }
                     : flowerData;
@@ -220,6 +234,19 @@ const Sanaflower = () => {
         checkCollision(touchX, touchY);
     };
 
+    // Add non-passive touch listener to allow preventDefault
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (canvas) {
+            canvas.addEventListener('touchstart', handleCanvasTouch, { passive: false });
+        }
+        return () => {
+            if (canvas) {
+                canvas.removeEventListener('touchstart', handleCanvasTouch);
+            }
+        };
+    }, []);
+
     return (
         <div className="sanaflower-container">
             {/* Add Entry Button */}
@@ -233,7 +260,6 @@ const Sanaflower = () => {
             <canvas
                 ref={canvasRef}
                 onClick={handleCanvasClick}
-                onTouchStart={handleCanvasTouch}
                 className="sanaflower-canvas"
             />
 
@@ -242,8 +268,23 @@ const Sanaflower = () => {
                 {isEntryModalOpen && (
                     <EntryModal
                         isOpen={isEntryModalOpen}
-                        onClose={() => setIsEntryModalOpen(false)}
+                        onClose={() => {
+                            setIsEntryModalOpen(false);
+                            setEntryToEdit(null);
+                        }}
                         onEntryCreated={handleEntryCreated}
+                        entryToEdit={entryToEdit}
+                    />
+                )}
+            </AnimatePresence>
+
+            {/* PIN Modal */}
+            <AnimatePresence>
+                {isPinModalOpen && (
+                    <PinModal
+                        isOpen={isPinModalOpen}
+                        onClose={() => setIsPinModalOpen(false)}
+                        onSuccess={handlePinSuccess}
                     />
                 )}
             </AnimatePresence>
@@ -266,6 +307,14 @@ const Sanaflower = () => {
                             onClick={(e) => e.stopPropagation()}
                             onWheel={(e) => e.stopPropagation()}
                         >
+                            <button
+                                className="modal-close-x"
+                                onClick={() => setSelectedSunflower(null)}
+                                aria-label="Close"
+                            >
+                                ✕
+                            </button>
+
                             <h2>{selectedSunflower.data.title || selectedSunflower.data.name || 'My Entry'}</h2>
 
                             {/* Display entry date if available */}
@@ -318,7 +367,35 @@ const Sanaflower = () => {
                                 <p className="no-content-message">No additional content for this flower.</p>
                             )}
 
-                            <button className="close-btn" onClick={() => setSelectedSunflower(null)}>Close</button>
+                            {/* Edit Button for most recent entry */}
+                            {entries.length > 0 && selectedSunflower.data.id === entries[entries.length - 1].id && (
+                                <button
+                                    className="edit-btn"
+                                    onClick={handleEditClick}
+                                    style={{
+                                        marginTop: '1rem',
+                                        background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+                                        color: '#1a1a2e',
+                                        border: 'none',
+                                        padding: '0.5rem 1rem',
+                                        borderRadius: '8px',
+                                        cursor: 'pointer',
+                                        fontWeight: '600',
+                                        transition: 'all 0.3s ease',
+                                        boxShadow: '0 2px 8px rgba(251, 191, 36, 0.3)'
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        e.target.style.transform = 'translateY(-2px)';
+                                        e.target.style.boxShadow = '0 4px 12px rgba(251, 191, 36, 0.5)';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.target.style.transform = 'translateY(0)';
+                                        e.target.style.boxShadow = '0 2px 8px rgba(251, 191, 36, 0.3)';
+                                    }}
+                                >
+                                    ✏️ Edit Entry
+                                </button>
+                            )}
                         </motion.div>
                     </motion.div>
                 )}

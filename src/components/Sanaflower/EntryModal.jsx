@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import { supabase } from '../../config/supabaseClient';
 import './EntryModal.css';
 
-const EntryModal = ({ isOpen, onClose, onEntryCreated }) => {
-    const [contentItems, setContentItems] = useState([]);
+const EntryModal = ({ isOpen, onClose, onEntryCreated, entryToEdit = null }) => {
+    const [contentItems, setContentItems] = useState(entryToEdit ? entryToEdit.content_items : []);
     const [currentText, setCurrentText] = useState('');
-    const [title, setTitle] = useState('');
+    const [title, setTitle] = useState(entryToEdit ? entryToEdit.title : '');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
 
@@ -96,23 +96,38 @@ const EntryModal = ({ isOpen, onClose, onEntryCreated }) => {
         setError(null);
 
         try {
-            // Get a random color from the mock data
-            const colors = ['#eab308', '#f59e0b', '#d97706', '#fbbf24', '#f97316', '#fb923c', '#fde047', '#facc15'];
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            const randomHeight = 150 + Math.random() * 200; // Random height between 150 and 350
+            let error;
 
-            const { data, error } = await supabase
-                .from('flower_entries')
-                .insert([
-                    {
+            if (entryToEdit) {
+                // Update existing entry
+                const { error: updateError } = await supabase
+                    .from('flower_entries')
+                    .update({
                         title: title,
                         content_items: contentItems,
-                        flower_color: randomColor,
-                        height: randomHeight,
-                        entry_date: new Date().toISOString().split('T')[0]
-                    }
-                ])
-                .select();
+                    })
+                    .eq('id', entryToEdit.id);
+                error = updateError;
+            } else {
+                // Create new entry
+                // Get a random color from the mock data
+                const colors = ['#eab308', '#f59e0b', '#d97706', '#fbbf24', '#f97316', '#fb923c', '#fde047', '#facc15'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                const randomHeight = 150 + Math.random() * 200; // Random height between 150 and 350
+
+                const { error: insertError } = await supabase
+                    .from('flower_entries')
+                    .insert([
+                        {
+                            title: title,
+                            content_items: contentItems,
+                            flower_color: randomColor,
+                            height: randomHeight,
+                            entry_date: new Date().toISOString().split('T')[0]
+                        }
+                    ]);
+                error = insertError;
+            }
 
             if (error) throw error;
 
@@ -123,7 +138,7 @@ const EntryModal = ({ isOpen, onClose, onEntryCreated }) => {
             onEntryCreated();
             onClose();
         } catch (err) {
-            setError('Failed to create entry: ' + err.message);
+            setError('Failed to save entry: ' + err.message);
         } finally {
             setIsSubmitting(false);
         }
@@ -147,7 +162,7 @@ const EntryModal = ({ isOpen, onClose, onEntryCreated }) => {
                 onClick={(e) => e.stopPropagation()}
                 onWheel={(e) => e.stopPropagation()}
             >
-                <h2>Create New Entry</h2>
+                <h2>{entryToEdit ? 'Edit Entry' : 'Create New Entry'}</h2>
 
                 {error && <div className="error-message">{error}</div>}
 
@@ -237,7 +252,7 @@ const EntryModal = ({ isOpen, onClose, onEntryCreated }) => {
                         className="submit-btn"
                         disabled={isSubmitting || contentItems.length === 0}
                     >
-                        {isSubmitting ? 'Creating...' : 'Create Entry'}
+                        {isSubmitting ? 'Saving...' : (entryToEdit ? 'Save Changes' : 'Create Entry')}
                     </button>
                 </div>
             </motion.div>
