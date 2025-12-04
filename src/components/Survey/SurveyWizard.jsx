@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowRight, FaCheck, FaEdit } from 'react-icons/fa';
@@ -143,11 +145,71 @@ const SurveyWizard = () => {
         setStep(targetStep);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateStep()) {
-            console.log('Form Submitted:', formData);
-            nextStep();
+            try {
+                // Format email content
+                const emailText = `
+New Project Inquiry from ${formData.name}
+
+Services: ${formData.projectType.join(', ')}
+Timeline: ${timelineOptions.find(t => t.value === formData.timeline)?.label}
+Budget: ${budgetOptions.find(b => b.value === formData.budget)?.label}
+Industry: ${formData.industry || 'Not specified'}
+
+Project Description:
+${formData.description}
+
+Contact Information:
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone || 'Not provided'}
+Company: ${formData.company || 'Not provided'}
+                `.trim();
+
+                const emailHtml = `
+<h2>New Project Inquiry</h2>
+<p><strong>From:</strong> ${formData.name}${formData.company ? ` (${formData.company})` : ''}</p>
+<p><strong>Email:</strong> ${formData.email}</p>
+${formData.phone ? `<p><strong>Phone:</strong> ${formData.phone}</p>` : ''}
+
+<h3>Project Details</h3>
+<p><strong>Services:</strong> ${formData.projectType.join(', ')}</p>
+<p><strong>Timeline:</strong> ${timelineOptions.find(t => t.value === formData.timeline)?.label}</p>
+<p><strong>Budget:</strong> ${budgetOptions.find(b => b.value === formData.budget)?.label}</p>
+${formData.industry ? `<p><strong>Industry:</strong> ${formData.industry}</p>` : ''}
+
+<h3>Project Description</h3>
+<p>${formData.description.replace(/\n/g, '<br>')}</p>
+                `;
+
+                // Send email via API
+                const response = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        to: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hello@merdova.com',
+                        subject: `New Project Inquiry from ${formData.name}`,
+                        text: emailText,
+                        html: emailHtml,
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to send email');
+                }
+
+                console.log('Form Submitted and email sent:', formData);
+                nextStep();
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                // Still proceed to success step even if email fails
+                // You might want to show an error message instead
+                nextStep();
+            }
         }
     };
 

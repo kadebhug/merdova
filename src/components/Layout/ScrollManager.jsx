@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useLayoutEffect, useRef, createContext, useContext, useState } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';

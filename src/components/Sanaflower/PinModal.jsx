@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import './EntryModal.css'; // Reusing existing modal styles for consistency

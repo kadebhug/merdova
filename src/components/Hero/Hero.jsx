@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useLayoutEffect } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';

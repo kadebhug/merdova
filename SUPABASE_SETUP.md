@@ -18,9 +18,11 @@
 2. Add the following lines, replacing with your actual credentials:
 
 ```
-VITE_SUPABASE_URL=your-project-url.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key-here
+NEXT_PUBLIC_SUPABASE_URL=your-project-url.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 ```
+
+**Note:** In Next.js, environment variables that need to be accessible in the browser must be prefixed with `NEXT_PUBLIC_`.
 
 ## Step 4: Create the Database Table
 1. In your Supabase dashboard, go to the SQL Editor

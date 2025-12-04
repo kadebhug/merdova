@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useLayoutEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FaLaptopCode, FaMobileAlt, FaCloud, FaBullhorn, FaNetworkWired, FaHandshake } from 'react-icons/fa';

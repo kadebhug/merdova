@@ -1,6 +1,8 @@
+'use client';
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { supabase } from '../../config/supabaseClient';
+import { supabase } from '@/src/config/supabaseClient';
 import './EntryModal.css';
 
 const EntryModal = ({ isOpen, onClose, onEntryCreated, entryToEdit = null }) => {

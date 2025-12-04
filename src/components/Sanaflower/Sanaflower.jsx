@@ -1,7 +1,9 @@
+'use client';
+
 import React, { useRef, useEffect, useState } from 'react';
 import './Sanaflower.css';
 import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from '../../config/supabaseClient';
+import { supabase } from '@/src/config/supabaseClient';
 import EntryModal from './EntryModal';
 import PinModal from './PinModal';
 import ImageLightbox from './ImageLightbox';

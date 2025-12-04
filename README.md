@@ -1,16 +1,122 @@
-# React + Vite
+# Merdova v2
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern Next.js application built with React, featuring smooth animations, Supabase integration, and email functionality.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🚀 Next.js 15 with App Router
+- 🎨 Beautiful UI with Framer Motion animations
+- 📧 Email sending with Nodemailer
+- 🗄️ Supabase integration
+- 📱 Responsive design
+- 🌙 Day/Night cycle component
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js 18+ 
+- npm or yarn
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Installation
+
+1. Clone the repository
+```bash
+git clone <repository-url>
+cd merdova_v2
+```
+
+2. Install dependencies
+```bash
+npm install
+```
+
+3. Set up environment variables
+```bash
+cp .env.example .env.local
+```
+
+Edit `.env.local` with your configuration:
+- Supabase URL and keys
+- SMTP email settings (for nodemailer)
+- Contact email address
+
+### Email Configuration
+
+For Gmail:
+1. Enable 2-factor authentication
+2. Generate an App Password: https://myaccount.google.com/apppasswords
+3. Use the app password in `SMTP_PASSWORD`
+
+For other email providers, adjust the SMTP settings accordingly.
+
+### Development
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Build
+
+Build for production:
+
+```bash
+npm run build
+```
+
+Start production server:
+
+```bash
+npm start
+```
+
+## Project Structure
+
+```
+merdova_v2/
+├── app/                    # Next.js app directory
+│   ├── api/               # API routes
+│   │   └── send-email/    # Email API endpoint
+│   ├── layout.jsx         # Root layout
+│   ├── page.jsx           # Home page
+│   └── sanaflower/        # Sanaflower page
+├── src/
+│   ├── components/        # React components
+│   └── config/            # Configuration files
+└── public/                # Static assets
+```
+
+## API Routes
+
+### POST /api/send-email
+
+Send emails using nodemailer.
+
+**Request Body:**
+```json
+{
+  "to": "recipient@example.com",
+  "subject": "Email Subject",
+  "text": "Plain text email body",
+  "html": "<p>HTML email body</p>",
+  "from": "sender@example.com" // optional
+}
+```
+
+## Technologies
+
+- Next.js 15
+- React 19
+- Framer Motion
+- GSAP
+- Lenis (smooth scrolling)
+- Nodemailer
+- Supabase
+
+## License
+
+MIT

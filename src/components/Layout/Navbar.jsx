@@ -1,8 +1,10 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import './Navbar.css';
-import logo from '../../assets/logo.png';
+import logo from '@/src/assets/logo.png';
 import { useLenis } from './ScrollManager';
 
 const Navbar = () => {
@@ -48,7 +50,7 @@ const Navbar = () => {
     >
       <div className="navbar-container">
         <div className="logo">
-          <img src={logo} alt="Merdova Logo" />
+          <img src={logo.src || logo} alt="Merdova Logo" />
         </div>
 
         <div className="menu-icon" onClick={toggleMenu}>
