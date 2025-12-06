@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { supabase } from '../../config/supabaseClient';
 import './EntryModal.css';
@@ -9,6 +9,13 @@ const EntryModal = ({ isOpen, onClose, onEntryCreated, entryToEdit = null }) => 
     const [title, setTitle] = useState(entryToEdit ? entryToEdit.title : '');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
+
+    // Prevent editing compliments
+    useEffect(() => {
+        if (entryToEdit && entryToEdit.is_compliment && isOpen) {
+            onClose();
+        }
+    }, [entryToEdit, isOpen, onClose]);
 
     const addTextContent = () => {
         if (currentText.trim()) {
@@ -102,6 +109,12 @@ const EntryModal = ({ isOpen, onClose, onEntryCreated, entryToEdit = null }) => 
     };
 
     const handleSubmit = async () => {
+        // Prevent editing compliments
+        if (entryToEdit && entryToEdit.is_compliment) {
+            setError('Compliments cannot be edited');
+            return;
+        }
+
         if (contentItems.length === 0) {
             setError('Please add at least one content item');
             return;

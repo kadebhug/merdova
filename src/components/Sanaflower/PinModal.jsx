@@ -2,15 +2,22 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import './EntryModal.css'; // Reusing existing modal styles for consistency
 
-const PinModal = ({ isOpen, onClose, onSuccess }) => {
+const PinModal = ({ isOpen, onClose, onSuccess, message, isPageLevel = false }) => {
     const [pin, setPin] = useState('');
     const [error, setError] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (pin === '0203' || pin === '1809') {
-            onSuccess();
-            onClose();
+            // Pass the PIN to onSuccess for page-level auth
+            if (isPageLevel) {
+                onSuccess(pin);
+            } else {
+                onSuccess();
+            }
+            if (!isPageLevel) {
+                onClose();
+            }
             setPin('');
             setError('');
         } else {
@@ -21,13 +28,17 @@ const PinModal = ({ isOpen, onClose, onSuccess }) => {
 
     if (!isOpen) return null;
 
+    const defaultMessage = isPageLevel 
+        ? 'Please enter the 4-digit PIN to access the Sanaflower page.'
+        : 'Please enter the 4-digit PIN to edit this sunflower.';
+
     return (
         <motion.div
             className="entry-modal-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={isPageLevel ? undefined : onClose}
             style={{ zIndex: 1100 }}
         >
             <motion.div
@@ -40,7 +51,7 @@ const PinModal = ({ isOpen, onClose, onSuccess }) => {
             >
                 <h2>Enter PIN</h2>
                 <p style={{ marginBottom: '1rem', color: '#ccc' }}>
-                    Please enter the 4-digit PIN to edit this sunflower.
+                    {message || defaultMessage}
                 </p>
 
                 <form onSubmit={handleSubmit}>

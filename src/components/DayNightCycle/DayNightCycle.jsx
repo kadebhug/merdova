@@ -99,18 +99,6 @@ const DayNightCycle = ({ children }) => {
     }
   };
 
-  const handleToggle = () => {
-    if (isManualMode) {
-      setManualIsDay(!manualIsDay);
-    } else {
-      // Switch to manual mode and set opposite of current time
-      const hour = timeOfDay / 60;
-      const currentlyDay = hour >= 5 && hour < 20;
-      setIsManualMode(true);
-      setManualIsDay(!currentlyDay);
-    }
-  };
-
   const starOpacity = getStarOpacity();
   const cloudOpacity = getCloudOpacity();
   const backgroundGradient = getBackgroundGradient();
@@ -124,14 +112,6 @@ const DayNightCycle = ({ children }) => {
 
   return (
     <div className="day-night-container">
-      <button 
-        className="day-night-toggle"
-        onClick={handleToggle}
-        aria-label="Toggle day/night"
-        title={isManualMode ? (manualIsDay ? 'Switch to night' : 'Switch to day') : 'Toggle day/night mode'}
-      >
-        {isManualMode ? (manualIsDay ? '🌙' : '☀️') : '🔄'}
-      </button>
       <div 
         className="day-night-background"
         style={{

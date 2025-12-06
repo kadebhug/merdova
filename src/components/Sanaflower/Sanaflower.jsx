@@ -6,7 +6,7 @@ import EntryModal from './EntryModal';
 import PinModal from './PinModal';
 import ImageLightbox from './ImageLightbox';
 
-const Sanaflower = () => {
+const Sanaflower = ({ currentUserPin }) => {
     const canvasRef = useRef(null);
     const [selectedSunflower, setSelectedSunflower] = useState(null);
     const [entries, setEntries] = useState([]);
@@ -15,6 +15,7 @@ const Sanaflower = () => {
     const [entryToEdit, setEntryToEdit] = useState(null);
     const [lightboxImage, setLightboxImage] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSendingCompliment, setIsSendingCompliment] = useState(false);
     const sunflowersRef = useRef([]);
     const animationFrameRef = useRef(null);
     const hoveredFlowerRef = useRef(null);
@@ -35,6 +36,27 @@ const Sanaflower = () => {
         { id: 12, name: 'Topaz', type: 'Topaz Sunflower', color: '#fbbf24', description: 'Gemstone beauty' },
     ];
 
+    // Compliment messages
+    const complimentMessages = [
+        'You brighten my day!',
+        'You are amazing!',
+        'You bring so much joy!',
+        'You are wonderful!',
+        'You make everything better!',
+        'You are beautiful inside and out!',
+        'You inspire me!',
+        'You are a ray of sunshine!',
+        'You are so special!',
+        'You make the world brighter!'
+    ];
+
+    // Vibrant color palette for compliments
+    const complimentColors = [
+        '#ff6b9d', '#c44569', '#f8b500', '#ff9ff3', '#54a0ff',
+        '#5f27cd', '#00d2d3', '#ff6348', '#ffa502', '#ff3838',
+        '#ff9ff3', '#feca57', '#48dbfb', '#ff6b81', '#a55eea'
+    ];
+
     // Sunflower Class/Structure
     class Sunflower {
         constructor(x, y, height, data) {
@@ -48,6 +70,7 @@ const Sanaflower = () => {
             // Store data from the data source
             this.data = data;
             this.petalColor = data.color;
+            this.isCompliment = data.is_compliment || false;
         }
 
         draw(ctx, time, isHovered = false) {
@@ -56,20 +79,25 @@ const Sanaflower = () => {
             const headX = this.baseX + sway;
             const headY = this.y - this.height;
 
+            // Adjust sizes for compliment flowers
+            const stemWidth = this.isCompliment ? 2 : 4;
+            const leafSize = this.isCompliment ? 5 : 10;
+            const leafHeight = this.isCompliment ? 4 : 6;
+            const petalSize = this.isCompliment ? 12 : 20;
+            const centerSize = this.isCompliment ? 5 : 8;
+
             // Draw Stem
             ctx.beginPath();
             ctx.moveTo(this.baseX, this.y);
             ctx.quadraticCurveTo(this.baseX + sway / 2, this.y - this.height / 2, headX, headY);
             ctx.strokeStyle = '#4ade80'; // Green stem
-            ctx.lineWidth = 4;
+            ctx.lineWidth = stemWidth;
             ctx.stroke();
 
             // Draw Leaves (Simplified as rects/pixels)
             ctx.fillStyle = '#22c55e';
-            ctx.fillRect(this.baseX + sway * 0.3 - 10, this.y - this.height * 0.4, 10, 6);
-            ctx.fillRect(this.baseX + sway * 0.3 + 4, this.y - this.height * 0.6, 10, 6);
-
-            const petalSize = 20;
+            ctx.fillRect(this.baseX + sway * 0.3 - leafSize, this.y - this.height * 0.4, leafSize, leafHeight);
+            ctx.fillRect(this.baseX + sway * 0.3 + 4, this.y - this.height * 0.6, leafSize, leafHeight);
             
             // Draw glow effect if hovered (draw before petals for better visibility)
             if (isHovered) {
@@ -92,7 +120,6 @@ const Sanaflower = () => {
 
             // Draw Center
             ctx.fillStyle = '#78350f'; // Brown
-            const centerSize = 8;
             ctx.fillRect(headX - centerSize, headY - centerSize, centerSize * 2, centerSize * 2);
 
             // Store current head position for click detection
@@ -132,11 +159,70 @@ const Sanaflower = () => {
         setEntryToEdit(null);
     };
 
+    const handleSendCompliment = async () => {
+        if (!currentUserPin) {
+            alert('Please enter your PIN first');
+            return;
+        }
+
+        setIsSendingCompliment(true);
+        try {
+            // Determine recipient PIN (0203 -> 1809, 1809 -> 0203)
+            const recipientPin = currentUserPin === '0203' ? '1809' : '0203';
+            
+            // Get random compliment message
+            const randomCompliment = complimentMessages[Math.floor(Math.random() * complimentMessages.length)];
+            
+            // Get random color from vibrant palette
+            const randomColor = complimentColors[Math.floor(Math.random() * complimentColors.length)];
+            
+            // Generate smaller height for compliment flowers (80-140px)
+            const randomHeight = 80 + Math.random() * 60;
+
+            // Create compliment entry
+            const { error } = await supabase
+                .from('flower_entries')
+                .insert([
+                    {
+                        title: randomCompliment,
+                        content_items: [
+                            {
+                                type: 'text',
+                                content: randomCompliment,
+                                order: 0
+                            }
+                        ],
+                        flower_color: randomColor,
+                        height: randomHeight,
+                        entry_date: new Date().toISOString().split('T')[0],
+                        is_compliment: true,
+                        recipient_pin: recipientPin
+                    }
+                ]);
+
+            if (error) throw error;
+
+            // Refresh entries to show the new compliment
+            fetchEntries();
+        } catch (err) {
+            console.error('Error sending compliment:', err);
+            alert('Failed to send compliment: ' + err.message);
+        } finally {
+            setIsSendingCompliment(false);
+        }
+    };
+
     const handleEditClick = () => {
         setIsPinModalOpen(true);
     };
 
     const handlePinSuccess = () => {
+        // Prevent editing compliments
+        if (selectedSunflower.data.is_compliment) {
+            alert('Compliments cannot be edited.');
+            setIsPinModalOpen(false);
+            return;
+        }
         setEntryToEdit(selectedSunflower.data);
         setIsEntryModalOpen(true);
         setSelectedSunflower(null); // Close details modal
@@ -167,14 +253,16 @@ const Sanaflower = () => {
                 const x = spacing * (index + 1) + (Math.random() - 0.5) * 40;
                 const y = window.innerHeight; // Bottom of screen
                 // Use saved height if available, otherwise generate random
+                // Compliment flowers already have smaller heights set
                 const height = flowerData.height || (150 + Math.random() * 200);
 
                 // If using entries, combine with random mock data for visual variety
+                // But don't add type/description for compliment flowers
                 const visualData = entries.length > 0
                     ? {
-                        ...mockFlowerData[index % mockFlowerData.length],
+                        ...(flowerData.is_compliment ? {} : mockFlowerData[index % mockFlowerData.length]),
                         ...flowerData,
-                        color: flowerData.flower_color || mockFlowerData[index % mockFlowerData.length].color
+                        color: flowerData.flower_color || (flowerData.is_compliment ? flowerData.flower_color : mockFlowerData[index % mockFlowerData.length].color)
                     }
                     : flowerData;
 
@@ -332,12 +420,50 @@ const Sanaflower = () => {
 
             {/* Add Entry Button */}
             {!isLoading && (
-                <button
-                    className="add-entry-btn"
-                    onClick={() => setIsEntryModalOpen(true)}
-                >
-                    + Add Entry
-                </button>
+                <>
+                    <button
+                        className="add-entry-btn"
+                        onClick={() => setIsEntryModalOpen(true)}
+                    >
+                        + Add Entry
+                    </button>
+                    {/* Compliment Button */}
+                    <button
+                        className="compliment-btn"
+                        onClick={handleSendCompliment}
+                        disabled={isSendingCompliment}
+                        style={{
+                            position: 'fixed',
+                            top: '20px',
+                            right: '180px',
+                            background: 'linear-gradient(135deg, #ff6b9d 0%, #c44569 100%)',
+                            color: 'white',
+                            padding: '12px 24px',
+                            borderRadius: '25px',
+                            fontWeight: '700',
+                            fontSize: '1rem',
+                            border: 'none',
+                            cursor: isSendingCompliment ? 'not-allowed' : 'pointer',
+                            zIndex: 100,
+                            boxShadow: '0 4px 15px rgba(255, 107, 157, 0.4)',
+                            transition: 'all 0.3s ease',
+                            fontFamily: "'League Spartan', sans-serif",
+                            opacity: isSendingCompliment ? 0.6 : 1
+                        }}
+                        onMouseEnter={(e) => {
+                            if (!isSendingCompliment) {
+                                e.target.style.transform = 'translateY(-3px)';
+                                e.target.style.boxShadow = '0 6px 20px rgba(255, 107, 157, 0.6)';
+                            }
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.transform = 'translateY(0)';
+                            e.target.style.boxShadow = '0 4px 15px rgba(255, 107, 157, 0.4)';
+                        }}
+                    >
+                        {isSendingCompliment ? 'Sending...' : '💝 Send Compliment'}
+                    </button>
+                </>
             )}
 
             <canvas
@@ -410,8 +536,8 @@ const Sanaflower = () => {
                                 </p>
                             )}
 
-                            {/* Always display type and description if available */}
-                            {(selectedSunflower.data.type || selectedSunflower.data.description) && (
+                            {/* Always display type and description if available (but not for compliments) */}
+                            {!selectedSunflower.data.is_compliment && (selectedSunflower.data.type || selectedSunflower.data.description) && (
                                 <div className="flower-details" style={{ marginBottom: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.05)', borderRadius: '8px' }}>
                                     {selectedSunflower.data.type && <p><strong>Type:</strong> {selectedSunflower.data.type}</p>}
                                     {selectedSunflower.data.description && <p><strong>Description:</strong> {selectedSunflower.data.description}</p>}
@@ -453,8 +579,10 @@ const Sanaflower = () => {
                                 <p className="no-content-message">No additional content for this flower.</p>
                             )}
 
-                            {/* Edit Button for most recent entry */}
-                            {entries.length > 0 && selectedSunflower.data.id === entries[entries.length - 1].id && (
+                            {/* Edit Button for most recent entry (not for compliments) */}
+                            {entries.length > 0 && 
+                             selectedSunflower.data.id === entries[entries.length - 1].id && 
+                             !selectedSunflower.data.is_compliment && (
                                 <button
                                     className="edit-btn"
                                     onClick={handleEditClick}
