@@ -6,6 +6,8 @@ import './Survey.css';
 const SurveyWizard = () => {
     const [step, setStep] = useState(0);
     const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState(null);
     const [formData, setFormData] = useState({
         projectType: [],
         timeline: '',
@@ -143,11 +145,42 @@ const SurveyWizard = () => {
         setStep(targetStep);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (validateStep()) {
-            console.log('Form Submitted:', formData);
+        if (!validateStep()) {
+            return;
+        }
+
+        setIsSubmitting(true);
+        setSubmitError(null);
+
+        try {
+            // Call the email endpoint
+            const response = await fetch('/api/send-wizard-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                // Handle error responses (400, 500, etc.)
+                throw new Error(data.error || data.details || 'Failed to submit your request');
+            }
+
+            // Success - move to success step
+            console.log('Form submitted successfully:', data);
             nextStep();
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            setSubmitError(
+                error.message || 'Failed to submit your request. Please try again or contact us directly.'
+            );
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -478,10 +511,28 @@ const SurveyWizard = () => {
                                     </div>
                                 </div>
 
+                                {submitError && (
+                                    <div className="error-message" style={{ 
+                                        background: '#fee', 
+                                        color: '#c33', 
+                                        padding: '15px', 
+                                        borderRadius: '5px', 
+                                        marginBottom: '20px',
+                                        border: '1px solid #fcc'
+                                    }}>
+                                        {submitError}
+                                    </div>
+                                )}
                                 <div className="step-actions">
-                                    <button className="btn-prev" onClick={prevStep}>Back</button>
-                                    <button className="btn-submit" onClick={handleSubmit}>
-                                        Submit Request <FaCheck />
+                                    <button className="btn-prev" onClick={prevStep} disabled={isSubmitting}>
+                                        Back
+                                    </button>
+                                    <button 
+                                        className="btn-submit" 
+                                        onClick={handleSubmit}
+                                        disabled={isSubmitting}
+                                    >
+                                        {isSubmitting ? 'Sending...' : 'Submit Request'} <FaCheck />
                                     </button>
                                 </div>
                             </motion.div>
