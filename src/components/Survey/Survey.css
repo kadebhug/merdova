@@ -357,8 +357,11 @@ select.error {
 .step-actions {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: auto;
     padding-top: 30px;
+    padding-bottom: 0;
+    min-height: 48px;
 }
 
 .btn-next,
