@@ -56,6 +56,25 @@ alter table flower_entries add column title text;
 alter table flower_entries add column height numeric;
 ```
 
+### Adding Apology Bouquet Support
+To add support for apology bouquets, run this migration:
+
+```sql
+-- Add the is_apology column (boolean, defaults to false)
+ALTER TABLE flower_entries 
+ADD COLUMN IF NOT EXISTS is_apology boolean DEFAULT false;
+
+-- Add the recipient_pin column if it doesn't exist (for consistency with is_compliment)
+ALTER TABLE flower_entries 
+ADD COLUMN IF NOT EXISTS recipient_pin text;
+
+-- Add the is_compliment column if it doesn't exist (for consistency)
+ALTER TABLE flower_entries 
+ADD COLUMN IF NOT EXISTS is_compliment boolean DEFAULT false;
+```
+
+Or run the migration file: `sql/add_is_apology_column.sql`
+
 ## Step 5: Create Storage Buckets
 1. In your Supabase dashboard, go to Storage
 2. Create a new bucket called `flower-images`
