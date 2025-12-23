@@ -155,7 +155,8 @@ const SurveyWizard = () => {
         setSubmitError(null);
 
         try {
-            // Call the email endpoint
+            // Call the Firebase Cloud Function email endpoint
+            // This is routed via firebase.json to the sendWizardEmail function
             const response = await fetch('/api/send-wizard-email', {
                 method: 'POST',
                 headers: {
@@ -164,12 +165,20 @@ const SurveyWizard = () => {
                 body: JSON.stringify(formData)
             });
 
-            const data = await response.json();
-
+            // Handle non-JSON responses (e.g., network errors)
             if (!response.ok) {
-                // Handle error responses (400, 500, etc.)
-                throw new Error(data.error || data.details || 'Failed to submit your request');
+                let errorMessage = 'Failed to submit your request';
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.error || errorData.details || errorMessage;
+                } catch {
+                    // If response is not JSON, use status text
+                    errorMessage = response.statusText || errorMessage;
+                }
+                throw new Error(errorMessage);
             }
+
+            const data = await response.json();
 
             // Success - move to success step
             console.log('Form submitted successfully:', data);
