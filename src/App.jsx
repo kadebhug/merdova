@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from './components/Layout/Navbar';
 import Hero from './components/Hero/Hero';
 import Services from './components/Services/Services';
+import Process from './components/Process/Process';
 import SurveyWizard from './components/Survey/SurveyWizard';
 import Contact from './components/Contact/Contact';
 import ScrollManager from './components/Layout/ScrollManager';
@@ -17,6 +18,7 @@ const Home = () => (
     <Navbar />
     <Hero />
     <Services />
+    <Process />
     <SurveyWizard />
     <Contact />
   </div>

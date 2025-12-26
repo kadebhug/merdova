@@ -176,3 +176,18 @@ firebase functions:config:export | firebase functions:secrets:set FUNCTIONS_CONF
   - Handles wizard form submissions and sends confirmation/notification emails
 
 For more details, see [FIREBASE_SETUP.md](./FIREBASE_SETUP.md).
+
+
+### Features
+6. CTA banner
+Sticky or scroll-triggered banner
+Gradient background with subtle animation
+Prominent call-to-action
+7. Tech stack showcase
+Animated logos of technologies you use
+Interactive hover effects
+Particle effects or connections between items
+8. Team section
+Team member cards with hover reveals
+Social links and brief bios
+Animated entrance effects
