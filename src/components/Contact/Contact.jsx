@@ -24,11 +24,11 @@ const Contact = () => {
                         </div>
                         <div className="info-item">
                             <FaPhone className="icon" />
-                            <span>+1 (555) 123-4567</span>
+                            <span>+27834653896</span>
                         </div>
                         <div className="info-item">
                             <FaMapMarkerAlt className="icon" />
-                            <span>123 Tech Plaza, Innovation City</span>
+                            <span>61 Berriedale road, Durban</span>
                         </div>
                     </div>
 

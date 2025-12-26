@@ -188,6 +188,7 @@ function generateConfirmationEmail(data: WizardFormData): string {
 
 /**
  * Generate notification email HTML for the business
+ * Contains ALL possible information from the wizard
  */
 function generateNotificationEmail(data: WizardFormData): string {
   const services = data.projectType.join(", ");
@@ -201,7 +202,7 @@ function generateNotificationEmail(data: WizardFormData): string {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Project Inquiry</title>
+  <title>New Project Inquiry - Complete Details</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4;">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f4f4f4;">
@@ -213,6 +214,7 @@ function generateNotificationEmail(data: WizardFormData): string {
             <td style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 30px 40px;">
               <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 600;">🎉 New Project Inquiry</h1>
               <p style="margin: 10px 0 0; color: rgba(255,255,255,0.9); font-size: 16px;">from ${data.name}</p>
+              <p style="margin: 5px 0 0; color: rgba(255,255,255,0.8); font-size: 14px;">Submitted: ${new Date().toLocaleString()}</p>
             </td>
           </tr>
           
@@ -224,29 +226,27 @@ function generateNotificationEmail(data: WizardFormData): string {
               </h2>
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
                 <tr>
-                  <td width="120" style="padding: 6px 0; color: #666;">Name:</td>
-                  <td style="padding: 6px 0; color: #333; font-weight: 500;">${data.name}</td>
+                  <td width="140" style="padding: 8px 0; color: #666; vertical-align: top; font-weight: 500;">Full Name:</td>
+                  <td style="padding: 8px 0; color: #333; font-weight: 600; font-size: 15px;">${data.name}</td>
                 </tr>
                 <tr>
-                  <td style="padding: 6px 0; color: #666;">Email:</td>
-                  <td style="padding: 6px 0;">
-                    <a href="mailto:${data.email}" style="color: #11998e; text-decoration: none;">${data.email}</a>
+                  <td style="padding: 8px 0; color: #666; vertical-align: top; font-weight: 500;">Email Address:</td>
+                  <td style="padding: 8px 0;">
+                    <a href="mailto:${data.email}" style="color: #11998e; text-decoration: none; font-weight: 500;">${data.email}</a>
                   </td>
                 </tr>
-                ${data.company ? `
                 <tr>
-                  <td style="padding: 6px 0; color: #666;">Company:</td>
-                  <td style="padding: 6px 0; color: #333;">${data.company}</td>
-                </tr>
-                ` : ""}
-                ${data.phone ? `
-                <tr>
-                  <td style="padding: 6px 0; color: #666;">Phone:</td>
-                  <td style="padding: 6px 0;">
-                    <a href="tel:${data.phone}" style="color: #11998e; text-decoration: none;">${data.phone}</a>
+                  <td style="padding: 8px 0; color: #666; vertical-align: top; font-weight: 500;">Phone Number:</td>
+                  <td style="padding: 8px 0; color: #333;">
+                    ${data.phone ? `<a href="tel:${data.phone}" style="color: #11998e; text-decoration: none;">${data.phone}</a>` : '<span style="color: #999; font-style: italic;">Not provided</span>'}
                   </td>
                 </tr>
-                ` : ""}
+                <tr>
+                  <td style="padding: 8px 0; color: #666; vertical-align: top; font-weight: 500;">Company Name:</td>
+                  <td style="padding: 8px 0; color: #333;">
+                    ${data.company ? data.company : '<span style="color: #999; font-style: italic;">Not provided</span>'}
+                  </td>
+                </tr>
               </table>
             </td>
           </tr>
@@ -259,23 +259,29 @@ function generateNotificationEmail(data: WizardFormData): string {
               </h2>
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
                 <tr>
-                  <td width="120" style="padding: 6px 0; color: #666; vertical-align: top;">Services:</td>
-                  <td style="padding: 6px 0; color: #11998e; font-weight: 500;">${services}</td>
+                  <td width="140" style="padding: 8px 0; color: #666; vertical-align: top; font-weight: 500;">Services Requested:</td>
+                  <td style="padding: 8px 0; color: #11998e; font-weight: 600;">
+                    ${services || '<span style="color: #999; font-style: italic;">Not specified</span>'}
+                  </td>
                 </tr>
                 <tr>
-                  <td style="padding: 6px 0; color: #666;">Timeline:</td>
-                  <td style="padding: 6px 0; color: #333;">${timeline}</td>
+                  <td style="padding: 8px 0; color: #666; vertical-align: top; font-weight: 500;">Project Timeline:</td>
+                  <td style="padding: 8px 0; color: #333; font-weight: 500;">
+                    ${timeline || '<span style="color: #999; font-style: italic;">Not specified</span>'}
+                  </td>
                 </tr>
                 <tr>
-                  <td style="padding: 6px 0; color: #666;">Budget:</td>
-                  <td style="padding: 6px 0; color: #333; font-weight: 500;">${budget}</td>
+                  <td style="padding: 8px 0; color: #666; vertical-align: top; font-weight: 500;">Budget Range:</td>
+                  <td style="padding: 8px 0; color: #333; font-weight: 500;">
+                    ${budget || '<span style="color: #999; font-style: italic;">Not specified</span>'}
+                  </td>
                 </tr>
-                ${data.industry ? `
                 <tr>
-                  <td style="padding: 6px 0; color: #666;">Industry:</td>
-                  <td style="padding: 6px 0; color: #333;">${data.industry}</td>
+                  <td style="padding: 8px 0; color: #666; vertical-align: top; font-weight: 500;">Industry/Sector:</td>
+                  <td style="padding: 8px 0; color: #333;">
+                    ${data.industry ? data.industry : '<span style="color: #999; font-style: italic;">Not provided</span>'}
+                  </td>
                 </tr>
-                ` : ""}
               </table>
             </td>
           </tr>
@@ -286,18 +292,33 @@ function generateNotificationEmail(data: WizardFormData): string {
               <h2 style="margin: 0 0 15px; color: #333333; font-size: 18px; font-weight: 600; border-bottom: 2px solid #11998e; padding-bottom: 10px;">
                 📝 Project Description
               </h2>
-              <div style="background-color: #f8f9fa; border-radius: 8px; padding: 20px; color: #333; line-height: 1.6;">
-                ${escapedDescription}
+              <div style="background-color: #f8f9fa; border-radius: 8px; padding: 20px; color: #333; line-height: 1.8; white-space: pre-wrap;">
+                ${escapedDescription || '<span style="color: #999; font-style: italic;">No description provided</span>'}
               </div>
             </td>
           </tr>
           
-          <!-- CTA Button -->
+          <!-- Quick Actions -->
           <tr>
-            <td style="padding: 0 40px 30px; text-align: center;">
-              <a href="mailto:${data.email}?subject=Re: Your Project Inquiry - Merdova" style="display: inline-block; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: #ffffff; text-decoration: none; padding: 15px 35px; border-radius: 8px; font-weight: 600; font-size: 16px;">
-                Reply to ${data.name}
-              </a>
+            <td style="padding: 0 40px 30px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td align="center" style="padding-bottom: 15px;">
+                    <a href="mailto:${data.email}?subject=Re: Your Project Inquiry - Merdova" style="display: inline-block; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: #ffffff; text-decoration: none; padding: 15px 35px; border-radius: 8px; font-weight: 600; font-size: 16px; margin-right: 10px;">
+                      📧 Reply to ${data.name}
+                    </a>
+                  </td>
+                </tr>
+                ${data.phone ? `
+                <tr>
+                  <td align="center">
+                    <a href="tel:${data.phone}" style="display: inline-block; background: #f8f9fa; color: #11998e; text-decoration: none; padding: 12px 30px; border-radius: 8px; font-weight: 500; font-size: 14px; border: 2px solid #11998e;">
+                      📞 Call ${data.name}
+                    </a>
+                  </td>
+                </tr>
+                ` : ""}
+              </table>
             </td>
           </tr>
           
@@ -305,7 +326,8 @@ function generateNotificationEmail(data: WizardFormData): string {
           <tr>
             <td style="background-color: #f8f9fa; padding: 20px 40px; text-align: center; border-top: 1px solid #e9ecef;">
               <p style="margin: 0; color: #888888; font-size: 13px;">
-                This inquiry was submitted via the Merdova website wizard form.
+                This inquiry was submitted via the Merdova website wizard form.<br>
+                <span style="font-size: 12px; color: #aaa;">All information provided by the client is included above.</span>
               </p>
             </td>
           </tr>
@@ -349,6 +371,7 @@ The Merdova Team
 
 /**
  * Generate plain text version of notification email
+ * Contains ALL possible information from the wizard
  */
 function generateNotificationText(data: WizardFormData): string {
   const services = data.projectType.join(", ");
@@ -356,26 +379,31 @@ function generateNotificationText(data: WizardFormData): string {
   const budget = budgetLabels[data.budget] || data.budget;
 
   return `
-NEW PROJECT INQUIRY from ${data.name}
-${"=".repeat(40)}
+NEW PROJECT INQUIRY - COMPLETE DETAILS
+${"=".repeat(50)}
+Submitted: ${new Date().toLocaleString()}
 
 CONTACT INFORMATION
--------------------
-Name: ${data.name}
-Email: ${data.email}${data.company ? `\nCompany: ${data.company}` : ""}${data.phone ? `\nPhone: ${data.phone}` : ""}
+${"-".repeat(50)}
+Full Name: ${data.name}
+Email Address: ${data.email}
+Phone Number: ${data.phone || "Not provided"}
+Company Name: ${data.company || "Not provided"}
 
 PROJECT DETAILS
----------------
-Services: ${services}
-Timeline: ${timeline}
-Budget: ${budget}${data.industry ? `\nIndustry: ${data.industry}` : ""}
+${"-".repeat(50)}
+Services Requested: ${services || "Not specified"}
+Project Timeline: ${timeline || "Not specified"}
+Budget Range: ${budget || "Not specified"}
+Industry/Sector: ${data.industry || "Not provided"}
 
 PROJECT DESCRIPTION
--------------------
-${data.description}
+${"-".repeat(50)}
+${data.description || "No description provided"}
 
----
+${"=".repeat(50)}
 Reply directly to this email to contact ${data.name}.
+${data.phone ? `Or call: ${data.phone}` : ""}
 `;
 }
 

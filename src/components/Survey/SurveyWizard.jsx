@@ -156,8 +156,8 @@ const SurveyWizard = () => {
 
         try {
             // Call the Firebase Cloud Function email endpoint
-            // This is routed via firebase.json to the sendWizardEmail function
-            const response = await fetch('/api/send-wizard-email', {
+            // Direct Cloud Run URL for sendWizardEmail function
+            const response = await fetch('https://sendwizardemail-bgljpyzcqa-uc.a.run.app', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -247,9 +247,12 @@ const SurveyWizard = () => {
                                         </div>
                                     ))}
                                 </div>
-                                <button className="btn-next" onClick={nextStep} disabled={formData.projectType.length === 0}>
-                                    Next <FaArrowRight />
-                                </button>
+                                <div className="step-actions">
+                                    <div></div>
+                                    <button className="btn-next" onClick={nextStep} disabled={formData.projectType.length === 0}>
+                                        Next <FaArrowRight />
+                                    </button>
+                                </div>
                             </motion.div>
                         )}
 
@@ -454,84 +457,86 @@ const SurveyWizard = () => {
                                 <h3>Review Your Information</h3>
                                 <p className="step-subtitle">Please review your details before submitting</p>
 
-                                <div className="review-section">
-                                    <div className="review-item">
-                                        <div className="review-header">
-                                            <span className="review-title">Services</span>
-                                            <button className="btn-edit" onClick={() => goToStep(0)}>
-                                                <FaEdit /> Edit
-                                            </button>
+                                <div className="review-content-wrapper">
+                                    <div className="review-section">
+                                        <div className="review-item">
+                                            <div className="review-header">
+                                                <span className="review-title">Services</span>
+                                                <button className="btn-edit" onClick={() => goToStep(0)}>
+                                                    <FaEdit /> Edit
+                                                </button>
+                                            </div>
+                                            <div className="review-content">
+                                                {formData.projectType.join(', ')}
+                                            </div>
                                         </div>
-                                        <div className="review-content">
-                                            {formData.projectType.join(', ')}
+
+                                        <div className="review-item">
+                                            <div className="review-header">
+                                                <span className="review-title">Timeline</span>
+                                                <button className="btn-edit" onClick={() => goToStep(1)}>
+                                                    <FaEdit /> Edit
+                                                </button>
+                                            </div>
+                                            <div className="review-content">
+                                                {timelineOptions.find(t => t.value === formData.timeline)?.label}
+                                            </div>
+                                        </div>
+
+                                        <div className="review-item">
+                                            <div className="review-header">
+                                                <span className="review-title">Budget</span>
+                                                <button className="btn-edit" onClick={() => goToStep(2)}>
+                                                    <FaEdit /> Edit
+                                                </button>
+                                            </div>
+                                            <div className="review-content">
+                                                {budgetOptions.find(b => b.value === formData.budget)?.label}
+                                            </div>
+                                        </div>
+
+                                        <div className="review-item">
+                                            <div className="review-header">
+                                                <span className="review-title">Project Details</span>
+                                                <button className="btn-edit" onClick={() => goToStep(3)}>
+                                                    <FaEdit /> Edit
+                                                </button>
+                                            </div>
+                                            <div className="review-content">
+                                                <p>{formData.description}</p>
+                                                {formData.industry && <p className="review-meta">Industry: {formData.industry}</p>}
+                                            </div>
+                                        </div>
+
+                                        <div className="review-item">
+                                            <div className="review-header">
+                                                <span className="review-title">Contact Information</span>
+                                                <button className="btn-edit" onClick={() => goToStep(4)}>
+                                                    <FaEdit /> Edit
+                                                </button>
+                                            </div>
+                                            <div className="review-content">
+                                                <p><strong>{formData.name}</strong></p>
+                                                {formData.company && <p>{formData.company}</p>}
+                                                <p>{formData.email}</p>
+                                                {formData.phone && <p>{formData.phone}</p>}
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div className="review-item">
-                                        <div className="review-header">
-                                            <span className="review-title">Timeline</span>
-                                            <button className="btn-edit" onClick={() => goToStep(1)}>
-                                                <FaEdit /> Edit
-                                            </button>
+                                    {submitError && (
+                                        <div className="error-message" style={{ 
+                                            background: '#fee', 
+                                            color: '#c33', 
+                                            padding: '15px', 
+                                            borderRadius: '5px', 
+                                            marginTop: '20px',
+                                            border: '1px solid #fcc'
+                                        }}>
+                                            {submitError}
                                         </div>
-                                        <div className="review-content">
-                                            {timelineOptions.find(t => t.value === formData.timeline)?.label}
-                                        </div>
-                                    </div>
-
-                                    <div className="review-item">
-                                        <div className="review-header">
-                                            <span className="review-title">Budget</span>
-                                            <button className="btn-edit" onClick={() => goToStep(2)}>
-                                                <FaEdit /> Edit
-                                            </button>
-                                        </div>
-                                        <div className="review-content">
-                                            {budgetOptions.find(b => b.value === formData.budget)?.label}
-                                        </div>
-                                    </div>
-
-                                    <div className="review-item">
-                                        <div className="review-header">
-                                            <span className="review-title">Project Details</span>
-                                            <button className="btn-edit" onClick={() => goToStep(3)}>
-                                                <FaEdit /> Edit
-                                            </button>
-                                        </div>
-                                        <div className="review-content">
-                                            <p>{formData.description}</p>
-                                            {formData.industry && <p className="review-meta">Industry: {formData.industry}</p>}
-                                        </div>
-                                    </div>
-
-                                    <div className="review-item">
-                                        <div className="review-header">
-                                            <span className="review-title">Contact Information</span>
-                                            <button className="btn-edit" onClick={() => goToStep(4)}>
-                                                <FaEdit /> Edit
-                                            </button>
-                                        </div>
-                                        <div className="review-content">
-                                            <p><strong>{formData.name}</strong></p>
-                                            {formData.company && <p>{formData.company}</p>}
-                                            <p>{formData.email}</p>
-                                            {formData.phone && <p>{formData.phone}</p>}
-                                        </div>
-                                    </div>
+                                    )}
                                 </div>
-
-                                {submitError && (
-                                    <div className="error-message" style={{ 
-                                        background: '#fee', 
-                                        color: '#c33', 
-                                        padding: '15px', 
-                                        borderRadius: '5px', 
-                                        marginBottom: '20px',
-                                        border: '1px solid #fcc'
-                                    }}>
-                                        {submitError}
-                                    </div>
-                                )}
                                 <div className="step-actions">
                                     <button className="btn-prev" onClick={prevStep} disabled={isSubmitting}>
                                         Back
