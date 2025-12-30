@@ -86,7 +86,7 @@ const SanaflowerWithDayNight = () => {
 
 function App() {
   return (
-    <Router basename="/merdova">
+    <Router basename="/">
       <ScrollManager>
         <Routes>
           <Route path="/" element={<Home />} />
