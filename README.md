@@ -177,6 +177,58 @@ firebase functions:config:export | firebase functions:secrets:set FUNCTIONS_CONF
 
 For more details, see [FIREBASE_SETUP.md](./FIREBASE_SETUP.md).
 
+## FTP Deployment
+
+This project includes a script to build and deploy to an FTP server.
+
+### Prerequisites
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Set the FTP password as an environment variable:
+   - **Windows (PowerShell)**: `$env:FTP_PASSWORD="your_password"`
+   - **Windows (CMD)**: `set FTP_PASSWORD=your_password`
+   - **Linux/Mac**: `export FTP_PASSWORD=your_password`
+
+### Deploy to FTP
+
+```bash
+npm run deploy:ftp
+```
+
+This command will:
+1. Build the project (`npm run build`)
+2. Upload all files from the `dist` folder to the FTP server
+
+### FTP Configuration
+
+The FTP server details are configured in `deploy.mjs`:
+- **Server**: ftp.merdova.com
+- **Port**: 21
+- **Username**: info@merdova.com
+- **Password**: Set via `FTP_PASSWORD` environment variable
+- **Remote Directory**: `public_html` (default)
+
+### Optional: Custom Remote Directory
+
+By default, files are uploaded to the `public_html` directory. If you need to deploy to a different directory, set the `FTP_REMOTE_DIR` environment variable:
+
+```bash
+# Windows (PowerShell)
+$env:FTP_REMOTE_DIR="custom_folder"
+npm run deploy:ftp
+
+# Linux/Mac
+export FTP_REMOTE_DIR="custom_folder"
+npm run deploy:ftp
+```
+
+### Security Note
+
+⚠️ **Never commit your FTP password to version control.** Always use environment variables or a secure secrets management system.
 
 ### Features
 6. CTA banner
