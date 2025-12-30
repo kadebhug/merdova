@@ -1,27 +1,42 @@
-import React, { useState } from 'react';
-import Navbar from './components/Layout/Navbar';
-import Hero from './components/Hero/Hero';
-import Services from './components/Services/Services';
-import Process from './components/Process/Process';
-import SurveyWizard from './components/Survey/SurveyWizard';
-import Contact from './components/Contact/Contact';
+import React, { useState, Suspense, lazy } from 'react';
 import ScrollManager from './components/Layout/ScrollManager';
-import DayNightCycle from './components/DayNightCycle/DayNightCycle';
-
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import Sanaflower from './components/Sanaflower/Sanaflower';
-import PinModal from './components/Sanaflower/PinModal';
 import { AnimatePresence } from 'framer-motion';
 
-const Home = () => (
-  <div className="app">
-    <Navbar />
-    <Hero />
-    <Services />
-    <Process />
-    <SurveyWizard />
-    <Contact />
+// Lazy load components for code splitting
+const Navbar = lazy(() => import('./components/Layout/Navbar'));
+const Hero = lazy(() => import('./components/Hero/Hero'));
+const Services = lazy(() => import('./components/Services/Services'));
+const Process = lazy(() => import('./components/Process/Process'));
+const SurveyWizard = lazy(() => import('./components/Survey/SurveyWizard'));
+const Contact = lazy(() => import('./components/Contact/Contact'));
+const DayNightCycle = lazy(() => import('./components/DayNightCycle/DayNightCycle'));
+const Sanaflower = lazy(() => import('./components/Sanaflower/Sanaflower'));
+const PinModal = lazy(() => import('./components/Sanaflower/PinModal'));
+
+// Loading fallback component
+const LoadingFallback = () => (
+  <div style={{ 
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    minHeight: '100vh' 
+  }}>
+    <div>Loading...</div>
   </div>
+);
+
+const Home = () => (
+  <Suspense fallback={<LoadingFallback />}>
+    <div className="app">
+      <Navbar />
+      <Hero />
+      <Services />
+      <Process />
+      <SurveyWizard />
+      <Contact />
+    </div>
+  </Suspense>
 );
 
 const SanaflowerWithDayNight = () => {
@@ -43,25 +58,29 @@ const SanaflowerWithDayNight = () => {
   // Show PIN modal if not verified
   if (!isPinVerified) {
     return (
-      <AnimatePresence>
-        {isPinModalOpen && (
-          <PinModal
-            isOpen={isPinModalOpen}
-            onClose={handlePinCancel}
-            onSuccess={handlePinSuccess}
-            message="Please enter the 4-digit PIN to access the Sanaflower page."
-            isPageLevel={true}
-          />
-        )}
-      </AnimatePresence>
+      <Suspense fallback={<LoadingFallback />}>
+        <AnimatePresence>
+          {isPinModalOpen && (
+            <PinModal
+              isOpen={isPinModalOpen}
+              onClose={handlePinCancel}
+              onSuccess={handlePinSuccess}
+              message="Please enter the 4-digit PIN to access the Sanaflower page."
+              isPageLevel={true}
+            />
+          )}
+        </AnimatePresence>
+      </Suspense>
     );
   }
 
   // Render content only after PIN verification
   return (
-    <DayNightCycle>
-      <Sanaflower currentUserPin={currentUserPin} />
-    </DayNightCycle>
+    <Suspense fallback={<LoadingFallback />}>
+      <DayNightCycle>
+        <Sanaflower currentUserPin={currentUserPin} />
+      </DayNightCycle>
+    </Suspense>
   );
 };
 

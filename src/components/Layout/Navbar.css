@@ -7,7 +7,10 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    transition: all 0.3s ease;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background 0.3s ease, border-bottom 0.3s ease, height 0.3s ease;
+    will-change: background, border-bottom, height;
 }
 
 .navbar.scrolled {

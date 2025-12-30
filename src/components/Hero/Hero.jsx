@@ -2,6 +2,7 @@ import React, { useLayoutEffect } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useLenis } from '../Layout/ScrollManager';
 import './Hero.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -12,6 +13,7 @@ const Hero = () => {
     const blob1Ref = React.useRef(null);
     const blob2Ref = React.useRef(null);
     const highlightRef = React.useRef(null);
+    const lenis = useLenis();
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -175,6 +177,22 @@ const Hero = () => {
         }
     };
 
+    const handleStartProjectClick = (e) => {
+        e.preventDefault();
+        const surveyElement = document.getElementById('survey');
+        if (surveyElement && lenis) {
+            lenis.scrollTo(surveyElement, { offset: -100 });
+        }
+    };
+
+    const handleExploreServicesClick = (e) => {
+        e.preventDefault();
+        const servicesElement = document.getElementById('services');
+        if (servicesElement && lenis) {
+            lenis.scrollTo(servicesElement, { offset: -100 });
+        }
+    };
+
     return (
         <section id="hero" className="hero-section" ref={heroRef}>
             <div className="hero-background">
@@ -233,8 +251,8 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
                 >
-                    <a href="#survey" className="btn btn-primary">Start Your Project</a>
-                    <a href="#services" className="btn btn-secondary">Explore Services</a>
+                    <a href="#survey" className="btn btn-primary" onClick={handleStartProjectClick}>Start Your Project</a>
+                    <a href="#services" className="btn btn-secondary" onClick={handleExploreServicesClick}>Explore Services</a>
                 </motion.div>
             </div>
         </section>
