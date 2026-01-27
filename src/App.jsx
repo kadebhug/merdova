@@ -13,6 +13,7 @@ const Contact = lazy(() => import('./components/Contact/Contact'));
 const DayNightCycle = lazy(() => import('./components/DayNightCycle/DayNightCycle'));
 const Sanaflower = lazy(() => import('./components/Sanaflower/Sanaflower'));
 const PinModal = lazy(() => import('./components/Sanaflower/PinModal'));
+const Jolene = lazy(() => import('./components/Jolene/Jolene'));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -91,6 +92,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sanaflower" element={<SanaflowerWithDayNight />} />
+          <Route path="/jolene" element={
+            <Suspense fallback={<LoadingFallback />}>
+              <DayNightCycle>
+                <Jolene />
+              </DayNightCycle>
+            </Suspense>
+          } />
         </Routes>
       </ScrollManager>
     </Router>
