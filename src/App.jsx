@@ -14,6 +14,7 @@ const DayNightCycle = lazy(() => import('./components/DayNightCycle/DayNightCycl
 const Sanaflower = lazy(() => import('./components/Sanaflower/Sanaflower'));
 const PinModal = lazy(() => import('./components/Sanaflower/PinModal'));
 const Jolene = lazy(() => import('./components/Jolene/Jolene'));
+const Resume = lazy(() => import('./components/Resume/Resume'));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -97,6 +98,11 @@ function App() {
               <DayNightCycle>
                 <Jolene />
               </DayNightCycle>
+            </Suspense>
+          } />
+          <Route path="/resume" element={
+            <Suspense fallback={<LoadingFallback />}>
+              <Resume />
             </Suspense>
           } />
         </Routes>
