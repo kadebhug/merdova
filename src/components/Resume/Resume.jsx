@@ -16,7 +16,7 @@ const initialCvData = {
   skills: {
     "Mobile": ["Android", "Flutter", "React Native"],
     "Frontend": ["Angular", "React", "Svelte", "Next.js"],
-    "Backend": ["Node.js", "Python (FastAPI)", "Serverless"],
+    "Backend": ["Node.js", "Python (FastAPI)", "Serverless", "C#", "Java"],
     "Cloud & Data": ["AWS", "DynamoDB", "MongoDB", "Kafka", "Metabase"]
   },
   experience: [
@@ -180,7 +180,7 @@ export default function Resume() {
                 </div>
                 <p className="resume__job-company">{job.company}</p>
                 <ul className="resume__job-bullets">
-                  {(Array.isArray(job.bullets) ? job.bullets : []).map((b, j) => <li key={j}>• {b}</li>)}
+                  {(Array.isArray(job.bullets) ? job.bullets : []).map((b, j) => <li key={j}>{b}</li>)}
                 </ul>
               </article>
             ))}
