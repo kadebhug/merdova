@@ -6,7 +6,7 @@ import './Resume.css';
 const initialCvData = {
   name: "Shikaal Kade Bhugwathideen",
   title: "Software Developer",
-  avatar: "",
+  avatar: "/avatar.png",
   contact: {
     email: "kadeshikaal@gmail.com",
     phone: "+27 65 988 1690",
