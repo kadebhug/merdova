@@ -27,9 +27,12 @@ export default defineConfig({
             if (id.includes('lucide-react') || id.includes('react-icons')) {
               return 'ui-vendor';
             }
-            // Backend services
-            if (id.includes('@supabase') || id.includes('firebase')) {
-              return 'backend-vendor';
+            // Backend services - split to avoid circular init / TDZ in one chunk
+            if (id.includes('@supabase')) {
+              return 'supabase-vendor';
+            }
+            if (id.includes('firebase')) {
+              return 'firebase-vendor';
             }
             // Other node_modules
             return 'vendor';
