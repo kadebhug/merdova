@@ -122,10 +122,13 @@ export default function Resume() {
       <div ref={pdfRef} className="resume__container">
         <header>
           <div className="resume__header-content">
-            <div className="resume__avatar-wrapper">
-              {cvData?.avatar ? (
-                <img src={cvData.avatar} alt={`${cvData?.name ?? ''} avatar`} className="resume__avatar" />
-              ) : (
+            <div
+              className={`resume__avatar-wrapper${cvData?.avatar ? ' resume__avatar-wrapper--img' : ''}`}
+              style={cvData?.avatar ? { backgroundImage: `url(${cvData.avatar})` } : undefined}
+              role={cvData?.avatar ? 'img' : undefined}
+              aria-label={cvData?.avatar ? `${cvData?.name ?? ''} avatar` : undefined}
+            >
+              {!cvData?.avatar && (
                 <div className="resume__avatar resume__avatar--placeholder">
                   {cvData?.name ? cvData.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() : '—'}
                 </div>
