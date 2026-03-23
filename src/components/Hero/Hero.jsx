@@ -212,7 +212,7 @@ const Hero = () => {
                             ref={highlightRef}
                             onMouseEnter={handleHighlightHover}
                             onMouseLeave={handleHighlightLeave}
-                        >Digital Realities</span>
+                        >AI-Powered Solutions</span>
                         <svg
                             className="underline-svg"
                             viewBox="0 0 300 15"
@@ -242,7 +242,7 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                 >
-                    Merdova provides cutting-edge software, marketing, and cloud solutions to elevate your business.
+                    Merdova helps businesses implement and integrate AI to drive real outcomes — from intelligent platforms to automated workflows and data-driven growth.
                 </motion.p>
 
                 <motion.div
@@ -251,8 +251,8 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
                 >
-                    <a href="#survey" className="btn btn-primary" onClick={handleStartProjectClick}>Start Your Project</a>
-                    <a href="#services" className="btn btn-secondary" onClick={handleExploreServicesClick}>Explore Services</a>
+                    <a href="#survey" className="btn btn-primary" onClick={handleStartProjectClick}>Start Your Journey</a>
+                    <a href="#services" className="btn btn-secondary" onClick={handleExploreServicesClick}>Explore Solutions</a>
                 </motion.div>
             </div>
         </section>

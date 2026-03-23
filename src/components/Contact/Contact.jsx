@@ -219,7 +219,7 @@ const Contact = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <h2>Get in Touch</h2>
-                    <p>Ready to start your next project? Contact us directly or use the survey wizard.</p>
+                    <p>Ready to explore what AI can do for your business? Contact us directly or use our solutions wizard above.</p>
 
                     <div className="contact-info">
                         <div className="info-item">

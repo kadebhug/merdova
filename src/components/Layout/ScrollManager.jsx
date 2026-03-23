@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, createContext, useContext, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -11,6 +12,7 @@ export const useLenis = () => useContext(LenisContext);
 
 const ScrollManager = ({ children }) => {
     const [lenis, setLenis] = useState(null);
+    const location = useLocation();
 
     useLayoutEffect(() => {
         const lenisInstance = new Lenis({
@@ -42,6 +44,21 @@ const ScrollManager = ({ children }) => {
             });
         };
     }, []);
+
+    // Handle hash navigation on page load and URL changes
+    useEffect(() => {
+        if (lenis && location.hash) {
+            // Small delay to ensure DOM is ready and animations have settled
+            const timeoutId = setTimeout(() => {
+                const targetElement = document.querySelector(location.hash);
+                if (targetElement) {
+                    lenis.scrollTo(targetElement, { offset: -100 });
+                }
+            }, 500);
+            
+            return () => clearTimeout(timeoutId);
+        }
+    }, [lenis, location.hash]);
 
     return (
         <LenisContext.Provider value={lenis}>

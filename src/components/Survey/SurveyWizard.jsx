@@ -20,11 +20,12 @@ const SurveyWizard = () => {
         company: ''
     });
 
-    // Service options with descriptions
+    // Service options with descriptions (AI card first, then core offerings — matches Solutions section)
     const serviceOptions = [
+        { value: 'AI Implementation & Integration', label: 'AI Implementation & Integration', desc: 'Strategy, tooling & integration with SLAs' },
         { value: 'Web Development', label: 'Web Development', desc: 'Modern websites & web apps' },
         { value: 'Mobile Apps', label: 'Mobile Apps', desc: 'iOS & Android applications' },
-        { value: 'Custom Software', label: 'Custom Software', desc: 'Tailored business solutions' },
+        { value: 'System Architecture', label: 'System Architecture', desc: 'Scalable designs for enterprise ops' },
         { value: 'Digital Marketing', label: 'Digital Marketing', desc: 'SEO, ads, content strategy' },
         { value: 'Cloud Solutions', label: 'Cloud Solutions', desc: 'Infrastructure & migration' },
         { value: 'Consultation', label: 'Consultation', desc: 'Strategy & planning' }
@@ -60,7 +61,7 @@ const SurveyWizard = () => {
     ];
 
     const stepTitles = [
-        'Choose Your Service',
+        'Choose Your Solution',
         'Project Timeline',
         'Budget Range',
         'Project Details',
@@ -233,7 +234,7 @@ const SurveyWizard = () => {
                                 transition={{ duration: 0.3 }}
                                 className="survey-step"
                             >
-                                <h3>What are you looking to build?</h3>
+                                <h3>What solution are you looking for?</h3>
                                 <p className="step-subtitle">Select all that apply</p>
                                 <div className="options-grid">
                                     {serviceOptions.map(service => (

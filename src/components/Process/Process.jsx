@@ -2,8 +2,8 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion';
 import { 
     FaSearch, 
-    FaLightbulb, 
-    FaCode, 
+    FaDraftingCompass, 
+    FaCogs, 
     FaRocket
 } from 'react-icons/fa';
 import './Process.css';
@@ -11,26 +11,26 @@ import './Process.css';
 const processSteps = [
     {
         icon: FaSearch,
-        title: 'Discovery & Analysis',
-        description: 'We dive deep into your business needs, goals, and target audience to understand the full scope of your project.',
+        title: 'AI Readiness Assessment',
+        description: 'We evaluate your data, systems, and business processes to identify high-impact AI opportunities.',
         color: '#3B82F6'
     },
     {
-        icon: FaLightbulb,
-        title: 'Strategy & Planning',
-        description: 'Our team crafts a comprehensive strategy tailored to your objectives, outlining the roadmap for success.',
+        icon: FaDraftingCompass,
+        title: 'Solution Design & Roadmap',
+        description: 'We architect a tailored AI solution with clear milestones, SLAs, and measurable KPIs.',
         color: '#EAB308'
     },
     {
-        icon: FaCode,
-        title: 'Development & Design',
-        description: 'We bring your vision to life with cutting-edge design and robust development, ensuring quality at every step.',
+        icon: FaCogs,
+        title: 'Build & Integrate',
+        description: 'Our team develops, trains, and integrates AI models into your platforms — web, mobile, or cloud.',
         color: '#10B981'
     },
     {
         icon: FaRocket,
-        title: 'Launch & Optimization',
-        description: 'We launch your project with confidence and provide ongoing support to ensure optimal performance and growth.',
+        title: 'Deploy, Monitor & Optimize',
+        description: 'We deploy your AI solution with ongoing monitoring, SLA-backed support, and continuous model optimization.',
         color: '#C0A062'
     }
 ];
@@ -56,7 +56,7 @@ const Process = () => {
                         Our <span className="highlight">Process</span>
                     </h2>
                     <p className="process-subtitle">
-                        A proven methodology that transforms ideas into exceptional digital experiences
+                        A proven methodology that transforms your business with intelligent, AI-driven solutions
                     </p>
                 </motion.div>
 
