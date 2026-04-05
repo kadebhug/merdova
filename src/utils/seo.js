@@ -4,8 +4,8 @@
  */
 
 const defaultSEO = {
-  title: 'Merdova | Digital Solutions - Web Development, Mobile Apps & Cloud Services',
-  description: 'Merdova provides cutting-edge software, marketing, and cloud solutions to elevate your business. Expert web development, mobile apps, cloud infrastructure, and digital marketing services.',
+  title: 'Merdova | AI Solutions — Implement & Integrate AI For Your Business',
+  description: 'Merdova helps businesses implement and integrate AI to drive real outcomes. AI-powered web platforms, smart mobile solutions, cloud infrastructure, AI-driven marketing, and strategic consulting — all backed by transparent SLAs.',
   url: 'https://merdova.com/',
   image: 'https://merdova.com/og-image.png',
 };

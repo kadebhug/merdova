@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { FaLaptopCode, FaMobileAlt, FaCloud, FaBullhorn, FaNetworkWired, FaHandshake } from 'react-icons/fa';
+import { FaBrain, FaLaptopCode, FaMobileAlt, FaCloud, FaBullhorn, FaNetworkWired, FaHandshake } from 'react-icons/fa';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Services.css';
@@ -8,6 +8,11 @@ import './Services.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const servicesData = [
+    {
+        icon: <FaBrain />,
+        title: 'AI Implementation & Integration',
+        description: 'Help your business adopt AI responsibly — from strategy and tooling to integration with your existing systems, with clear SLAs on delivery and support.'
+    },
     {
         icon: <FaLaptopCode />,
         title: 'Web Development',
@@ -82,7 +87,7 @@ const Services = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                 >
-                    Our <span className="highlight">Services</span>
+                    Our <span className="highlight">Solutions</span>
                 </motion.h2>
                 <div className="services-overflow">
                     <div ref={trackRef} className="services-track">

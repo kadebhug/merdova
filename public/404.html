@@ -2,15 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="/favicon.png" />
-  <title>Merdova</title>
+  <title>Page Not Found - Merdova</title>
+  <meta name="description" content="The page you're looking for doesn't exist. Return to Merdova's homepage for digital solutions." />
+  <meta name="robots" content="noindex, follow" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .container {
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 { font-size: 4rem; color: #C0A062; margin-bottom: 1rem; }
+    p { font-size: 1.2rem; opacity: 0.8; margin-bottom: 2rem; }
+    .loader {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(192, 160, 98, 0.3);
+      border-top-color: #C0A062;
+      border-radius: 50%;
+      margin: 0 auto;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    a {
+      color: #C0A062;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    a:hover { text-decoration: underline; }
+  </style>
   <script>
     // Single Page Apps for GitHub Pages
     // https://github.com/rafgraph/spa-github-pages
     // This script takes the current url and converts the path and query
     // string into just a query string, and then redirects the browser
     // to the new url with the origin and the path as a query string
-    var pathSegmentsToKeep = 1;
+    var pathSegmentsToKeep = 0;
 
     var l = window.location;
     l.replace(
@@ -23,5 +60,17 @@
   </script>
 </head>
 <body>
+  <noscript>
+    <div class="container">
+      <h1>404</h1>
+      <p>Page not found</p>
+      <p>Please <a href="/">return to our homepage</a> to explore our digital solutions.</p>
+    </div>
+  </noscript>
+  <div class="container">
+    <h1>Redirecting...</h1>
+    <p>Taking you back to Merdova</p>
+    <div class="loader"></div>
+  </div>
 </body>
 </html>
