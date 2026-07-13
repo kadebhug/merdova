@@ -1,0 +1,1 @@
+const e=[{slug:"thinking-in-systems",title:"Thinking in Systems",description:"Interactive course · Chapters 1–2 — from Donella H. Meadows’ primer",htmlPath:"/courses/thinking-in-systems.html"}];function n(s){return e.find(t=>t.slug===s)??null}export{e as c,n as g};
