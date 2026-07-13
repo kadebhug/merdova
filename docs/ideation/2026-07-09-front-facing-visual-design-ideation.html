@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ideation: Front-Facing Visual Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f6f4ef;
+    --ink: #1a1f2e;
+    --muted: #5c6478;
+    --line: #d9d4c8;
+    --card: #fffdf8;
+    --accent: #8a6a2f;
+    --accent-soft: #f0e6d0;
+    --good: #2f6b4f;
+    --warn: #8a5a20;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.55;
+  }
+  .page {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+  header.doc-meta {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  header.doc-meta h1 {
+    font-family: "IBM Plex Serif", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.85rem;
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.02em;
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .meta-row strong { color: var(--ink); font-weight: 600; }
+  nav.toc {
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 1rem 1.25rem;
+    margin-bottom: 2rem;
+  }
+  nav.toc h2 {
+    margin: 0 0 0.5rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  nav.toc ol {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+  nav.toc a { color: var(--accent); text-decoration: none; }
+  nav.toc a:hover { text-decoration: underline; }
+  section { margin-bottom: 2.5rem; }
+  h2 {
+    font-family: "IBM Plex Serif", Georgia, serif;
+    font-size: 1.35rem;
+    margin: 0 0 0.85rem;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.4rem;
+  }
+  h3 {
+    font-size: 1.15rem;
+    margin: 0 0 0.6rem;
+  }
+  p, li { max-width: 70ch; }
+  .grounding p { margin: 0.4rem 0; color: var(--ink); }
+  .axes { list-style: none; padding: 0; margin: 0; }
+  .axes li {
+    padding: 0.45rem 0.75rem;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft);
+    margin-bottom: 0.4rem;
+    max-width: none;
+  }
+  .idea {
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 1.25rem 1.35rem 1.4rem;
+    margin-bottom: 1.25rem;
+  }
+  .idea-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .idea-head .rank {
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 0.85rem;
+  }
+  .badges { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .badge {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--muted);
+  }
+  .badge.conf-high { border-color: #b7d4c4; color: var(--good); background: #eef7f1; }
+  .badge.conf-med { border-color: #e2c9a0; color: var(--warn); background: #fbf4e8; }
+  .field { margin: 0.55rem 0; }
+  .field .label {
+    display: block;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+  }
+  .visual {
+    margin: 1rem 0;
+    border: 1px solid var(--line);
+    background: #faf8f3;
+    padding: 0.75rem;
+    overflow-x: auto;
+  }
+  .visual figcaption {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+  }
+  table.reject {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+  table.reject th, table.reject td {
+    border: 1px solid var(--line);
+    padding: 0.55rem 0.7rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  table.reject th { background: var(--accent-soft); font-weight: 600; }
+  footer.composition-signal {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  code { font-size: 0.9em; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="doc-meta">
+    <h1>Ideation: Front-Facing Visual Design</h1>
+    <div class="meta-row">
+      <span><strong>Date:</strong> <time datetime="2026-07-09">2026-07-09</time></span>
+      <span><strong>Topic:</strong> front-facing-visual-design</span>
+      <span><strong>Focus:</strong> visually appealing changes to the public UI</span>
+      <span><strong>Mode:</strong> repo-grounded</span>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="Document sections">
+    <h2>On this page</h2>
+    <ol>
+      <li><a href="#grounding">Grounding Context</a></li>
+      <li><a href="#axes">Topic Axes</a></li>
+      <li><a href="#ideas">Ranked Ideas</a></li>
+      <li><a href="#rejection">Rejection Summary</a></li>
+    </ol>
+  </nav>
+
+  <section id="grounding" class="grounding">
+    <h2>Grounding Context</h2>
+    <p><strong>Codebase context.</strong> React 19 + Vite SPA. Home scroll: Navbar → Hero → Services → Process → SurveyWizard → Contact. Brand core is midnight <code>#0B1121</code>, gold <code>#C0A062</code>, glass cards, Outfit + League Spartan. Motion stack (Lenis, GSAP, Framer) is already invested. Pain points: flat dark scroll, accent drift (gold/cyan/amber/emerald/neon), thin loading fallback, Navbar omits secondary tools, Services mobile kills the horizontal scrub, secondary routes diverge visually.</p>
+    <p><strong>Past learnings.</strong> None — <code>docs/solutions/</code> and <code>CONCEPTS.md</code> are absent.</p>
+    <p><strong>External context.</strong> 2025–2026 portfolio patterns favor expressive type, structural motion, one or two signature interactions, editorial section rhythm, and anti-generic composition (avoid centered soft-blob AI templates). Side tools work as exhibits/proof; surveys can become memorable conversion artifacts.</p>
+  </section>
+
+  <section id="axes">
+    <h2>Topic Axes</h2>
+    <ul class="axes">
+      <li>Hero / first-viewport composition &amp; brand presence</li>
+      <li>Section rhythm &amp; visual variety across the home scroll</li>
+      <li>Typography &amp; color token coherence</li>
+      <li>Motion / interaction polish</li>
+      <li>Cross-route brand unity</li>
+    </ul>
+  </section>
+
+  <section id="ideas">
+    <h2>Ranked Ideas</h2>
+    <nav class="toc" aria-label="Idea jump list">
+      <h2>Jump to idea</h2>
+      <ol>
+        <li><a href="#i1">Asymmetric Proof Hero</a></li>
+        <li><a href="#i2">Editorial Chapter Scroll</a></li>
+        <li><a href="#i3">Named Accent Legend</a></li>
+        <li><a href="#i4">Merdova Exhibit System</a></li>
+        <li><a href="#i5">Mobile Services Reel</a></li>
+        <li><a href="#i6">Branded Loading Ident</a></li>
+        <li><a href="#i7">Survey Review Ceremony</a></li>
+      </ol>
+    </nav>
+
+    <article class="idea" id="i1">
+      <div class="idea-head">
+        <span class="rank">1</span>
+        <h3>Asymmetric Proof Hero</h3>
+        <div class="badges">
+          <span class="badge">Hero / first-viewport</span>
+          <span class="badge conf-high">Confidence 88%</span>
+          <span class="badge">Complexity Medium</span>
+        </div>
+      </div>
+      <div class="field">
+        <span class="label">Description</span>
+        Break the centered headline/CTA stack. Compose the first viewport as an asymmetric proof stage: brand-forward claim on one side, a living “implementation stage” panel on the other (system nodes, inputs → outcomes) that reuses the existing magnetic blobs and SVG underline as visible signature interactions instead of soft wallpaper.
+      </div>
+      <figure class="visual">
+        <svg viewBox="0 0 640 220" width="100%" height="auto" role="img" aria-label="Before centered hero versus after asymmetric proof hero">
+          <rect x="8" y="16" width="300" height="188" fill="#0B1121" rx="4"/>
+          <circle cx="70" cy="70" r="36" fill="#C0A062" opacity="0.25"/>
+          <circle cx="250" cy="140" r="40" fill="#3B82F6" opacity="0.2"/>
+          <rect x="90" y="70" width="140" height="12" fill="#e8e4dc"/>
+          <rect x="110" y="95" width="100" height="8" fill="#888"/>
+          <rect x="120" y="125" width="50" height="16" fill="#C0A062"/>
+          <rect x="180" y="125" width="50" height="16" fill="none" stroke="#C0A062"/>
+          <text x="158" y="210" text-anchor="middle" fill="#5c6478" font-size="12" font-family="IBM Plex Sans, sans-serif">Before: centered stack</text>
+          <rect x="332" y="16" width="300" height="188" fill="#0B1121" rx="4"/>
+          <text x="352" y="58" fill="#C0A062" font-size="14" font-family="IBM Plex Sans, sans-serif" font-weight="600">MERDOVA</text>
+          <rect x="352" y="78" width="120" height="10" fill="#e8e4dc"/>
+          <rect x="352" y="98" width="100" height="7" fill="#888"/>
+          <rect x="352" y="130" width="48" height="14" fill="#C0A062"/>
+          <rect x="490" y="48" width="120" height="120" fill="none" stroke="#C0A062" stroke-width="1.5"/>
+          <circle cx="520" cy="80" r="8" fill="#3B82F6"/>
+          <circle cx="570" cy="110" r="8" fill="#C0A062"/>
+          <circle cx="540" cy="145" r="8" fill="#10B981"/>
+          <line x1="520" y1="80" x2="570" y2="110" stroke="#C0A062" stroke-width="1"/>
+          <line x1="570" y1="110" x2="540" y2="145" stroke="#3B82F6" stroke-width="1"/>
+          <text x="482" y="210" text-anchor="middle" fill="#5c6478" font-size="12" font-family="IBM Plex Sans, sans-serif">After: proof stage</text>
+        </svg>
+        <figcaption>Directional sketch — not a wireframe. Left: current centered template. Right: brand + proof panel.</figcaption>
+      </figure>
+      <div class="field">
+        <span class="label">Basis</span>
+        <code>direct:</code> Hero is full-viewport centered with radial blobs and max-width 800 copy (<code>Hero.css</code>); magnetic blob physics and SVG underline already exist in <code>Hero.jsx</code> but read as ambience. <code>external:</code> 2025–2026 portfolio critiques flag centered soft-blob AI heroes as generic; signature interactions win.
+      </div>
+      <div class="field">
+        <span class="label">Rationale</span>
+        Highest-visibility square inch on the site. Reusing built interactions means the change is compositional, not a net-new motion project — and it immediately answers “what does Merdova actually do?”
+      </div>
+      <div class="field">
+        <span class="label">Downsides</span>
+        Needs a clear visual metaphor for the proof panel (risk of becoming another abstract diagram). Mobile layout must stay brand-first without crowding the CTA.
+      </div>
+    </article>
+
+    <article class="idea" id="i2">
+      <div class="idea-head">
+        <span class="rank">2</span>
+        <h3>Editorial Chapter Scroll</h3>
+        <div class="badges">
+          <span class="badge">Section rhythm</span>
+          <span class="badge conf-high">Confidence 90%</span>
+          <span class="badge">Complexity High</span>
+        </div>
+      </div>
+      <div class="field">
+        <span class="label">Description</span>
+        Stop treating the home page as one continuous midnight slab of glass cards. Assign each section a chapter role with distinct background treatment, density, and geometry while keeping the gold/glass core: Services as exhibit shelf, Process as unboxed blueprint (lean on the existing scroll connectors), Survey as instrument stage, Contact as quiet close. Fold in Process’s unique structure instead of re-carding it.
+      </div>
+      <figure class="visual">
+        <svg viewBox="0 0 640 140" width="100%" height="auto" role="img" aria-label="Flat scroll versus chapter strata">
+          <rect x="20" y="20" width="90" height="70" fill="#0B1121"/>
+          <rect x="120" y="20" width="90" height="70" fill="#0B1121"/>
+          <rect x="220" y="20" width="90" height="70" fill="#0B1121"/>
+          <rect x="320" y="20" width="90" height="70" fill="#111"/>
+          <text x="215" y="115" text-anchor="middle" fill="#5c6478" font-size="12" font-family="IBM Plex Sans, sans-serif">Now: same stratum</text>
+          <rect x="20" y="20" width="0" height="0"/>
+          <g transform="translate(430,0)">
+            <rect x="0" y="20" width="40" height="70" fill="#0B1121"/>
+            <rect x="45" y="20" width="40" height="70" fill="#121a2e"/>
+            <rect x="90" y="20" width="40" height="70" fill="#f6f4ef"/>
+            <rect x="135" y="20" width="40" height="70" fill="#1a1520"/>
+            <text x="88" y="115" text-anchor="middle" fill="#5c6478" font-size="12" font-family="IBM Plex Sans, sans-serif">Chapters</text>
+          </g>
+        </svg>
+        <figcaption>Stratigraphy analogy: same material family, legibly different layers.</figcaption>
+      </figure>
+      <div class="field">
+        <span class="label">Basis</span>
+        <code>direct:</code> Services/Process/Contact share flat <code>var(--bg-color)</code>, repeated glass hover overlays, clustered 3rem headings, and similar subtitle recipes; Survey alone uses a gradient. Process already has scroll-linked connectors and per-step colors boxed inside the same card recipe.
+      </div>
+      <div class="field">
+        <span class="label">Rationale</span>
+        Fixes the “one reusable component five times” feeling without abandoning the brand. Makes each section identifiable from a cropped screenshot.
+      </div>
+      <div class="field">
+        <span class="label">Downsides</span>
+        Highest design effort of the set; easy to over-decorate. Needs a chapter grammar so future sections don’t invent one-offs again.
+      </div>
+    </article>
+
+    <article class="idea" id="i3">
+      <div class="idea-head">
+        <span class="rank">3</span>
+        <h3>Named Accent Legend</h3>
+        <div class="badges">
+          <span class="badge">Typography &amp; color</span>
+          <span class="badge conf-high">Confidence 92%</span>
+          <span class="badge">Complexity Medium</span>
+        </div>
+      </div>
+      <div class="field">
+        <span class="label">Description</span>
+        Don’t bleach the palette to “gold everywhere.” Formalize a transit-map legend: gold = brand/CTA, blue = technical, emerald = outcomes/success, amber = energy (if kept), with route accents as named spur lines (BusinessFinder neon stays intentional). Retire unused <code>--accent-color</code> ambiguity, kill accidental cyan hover shadows, and decide Playfair as either one deliberate editorial exception or delete the import.
+      </div>
+      <div class="field">
+        <span class="label">Basis</span>
+        <code>direct:</code> Process already assigns four step colors; global tokens define gold/blue/emerald but accents fragment across amber, cyan, hardcoded neutrals, and BusinessFinder’s parallel <code>--bf-*</code> system; Playfair is imported and unused.
+      </div>
+      <div class="field">
+        <span class="label">Rationale</span>
+        Color with jobs reads expensive; color without jobs reads accidental. This is leverage for every later page and hover state.
+      </div>
+      <div class="field">
+        <span class="label">Downsides</span>
+        Requires a disciplined pass across CSS/JSX. Temptation to over-systematize before shipping visible wins.
+      </div>
+    </article>
+
+    <article class="idea" id="i4">
+      <div class="idea-head">
+        <span class="rank">4</span>
+        <h3>Merdova Exhibit System</h3>
+        <div class="badges">
+          <span class="badge">Cross-route brand unity</span>
+          <span class="badge conf-high">Confidence 91%</span>
+          <span class="badge">Complexity Medium</span>
+        </div>
+      </div>
+      <div class="field">
+        <span class="label">Description</span>
+        Theme-park lands, not one skin: add a lightweight brand shell (mark, return/home, document titles, “artifact by Merdova”) plus an Exhibit/Labs rail on home that surfaces Courses, BusinessFinder, Resume, Sanaflower as proof objects. Keep each route’s personality; make the parent brand legible and discoverable.
+      </div>
+      <figure class="visual">
+        <svg viewBox="0 0 640 160" width="100%" height="auto" role="img" aria-label="Exhibit rail connecting home to side routes">
+          <rect x="20" y="50" width="140" height="60" fill="#0B1121" stroke="#C0A062"/>
+          <text x="90" y="85" text-anchor="middle" fill="#e8e4dc" font-size="13" font-family="IBM Plex Sans, sans-serif">Home</text>
+          <path d="M170 80 H210" stroke="#8a6a2f" stroke-width="2"/>
+          <rect x="220" y="20" width="90" height="40" fill="#111" stroke="#e8ff3b"/>
+          <text x="265" y="45" text-anchor="middle" fill="#e8ff3b" font-size="11" font-family="IBM Plex Sans, sans-serif">Finder</text>
+          <rect x="220" y="70" width="90" height="40" fill="#1a2332" stroke="#C0A062"/>
+          <text x="265" y="95" text-anchor="middle" fill="#C0A062" font-size="11" font-family="IBM Plex Sans, sans-serif">Courses</text>
+          <rect x="220" y="120" width="90" height="30" fill="#334155" stroke="#94a3b8"/>
+          <text x="265" y="140" text-anchor="middle" fill="#cbd5e1" font-size="11" font-family="IBM Plex Sans, sans-serif">Resume</text>
+          <rect x="340" y="55" width="120" height="50" fill="#2a1f14" stroke="#C0A062"/>
+          <text x="400" y="85" text-anchor="middle" fill="#C0A062" font-size="11" font-family="IBM Plex Sans, sans-serif">Sanaflower</text>
+          <text x="520" y="85" fill="#5c6478" font-size="12" font-family="IBM Plex Sans, sans-serif">shared shell</text>
+          <rect x="500" y="40" width="120" height="80" fill="none" stroke="#8a6a2f" stroke-dasharray="4 3"/>
+        </svg>
+        <figcaption>Shared cast-member signal; lands keep their set dressing.</figcaption>
+      </figure>
+      <div class="field">
+        <span class="label">Basis</span>
+        <code>direct:</code> Navbar only on home with in-page anchors; no links to secondary routes from nav/hero; BusinessFinder/Resume/Sanaflower diverge in fonts/tokens/titles while Courses already nearly matches home tokens.
+      </div>
+      <div class="field">
+        <span class="label">Rationale</span>
+        Turns buried work into credibility. Solves discoverability and brand orphaning in one system instead of redesigning every route.
+      </div>
+      <div class="field">
+        <span class="label">Downsides</span>
+          Some routes may be intentionally private (PIN-gated Sanaflower) — the rail needs curation, not a dump of every URL.
+      </div>
+    </article>
+
+    <article class="idea" id="i5">
+      <div class="idea-head">
+        <span class="rank">5</span>
+        <h3>Mobile Services Reel</h3>
+        <div class="badges">
+          <span class="badge">Motion / interaction</span>
+          <span class="badge conf-high">Confidence 89%</span>
+          <span class="badge">Complexity Medium</span>
+        </div>
+      </div>
+      <div class="field">
+        <span class="label">Description</span>
+        Desktop Services is the signature scrub; mobile currently nukes it (<code>transform: none !important</code>, vertical stack). Ship a mobile-native reel: snap swipe, gold progress rail, peek of the next card — preserve “this section is special,” not the desktop mechanic.
+      </div>
+      <div class="field">
+        <span class="label">Basis</span>
+        <code>direct:</code> Services uses a 340vh sticky horizontal GSAP scrub on desktop; mobile CSS collapses height/sticky/track and disables transforms. Grounding names this as a signature-interaction gap.
+      </div>
+      <div class="field">
+        <span class="label">Rationale</span>
+        Many first visits are mobile. A designed fallback is the difference between “polished studio” and “desktop-only demo.”
+      </div>
+      <div class="field">
+        <span class="label">Downsides</span>
+        Touch UX and reduced-motion need care; don’t recreate a 340vh trap on phones.
+      </div>
+    </article>
+
+    <article class="idea" id="i6">
+      <div class="idea-head">
+        <span class="rank">6</span>
+        <h3>Branded Loading Ident</h3>
+        <div class="badges">
+          <span class="badge">Motion / interaction</span>
+          <span class="badge conf-high">Confidence 93%</span>
+          <span class="badge">Complexity Low</span>
+        </div>
+      </div>
+      <div class="field">
+        <span class="label">Description</span>
+        Replace the plain “Loading…” Suspense fallback with a short studio ident — logo/mark resolving through gold glass, or a micro pulse of the existing Hero blob. Every lazy route already hits this surface.
+      </div>
+      <div class="field">
+        <span class="label">Basis</span>
+        <code>direct:</code> <code>App.jsx</code> LoadingFallback is centered text only wrapping Home and secondary routes; motion dossier notes no spinner/skeleton/branded animation despite a heavy motion stack elsewhere.
+      </div>
+      <div class="field">
+        <span class="label">Rationale</span>
+        Highest-frequency, lowest-effort polish. Stops the quality cliff at the exact moment users wait.
+      </div>
+      <div class="field">
+        <span class="label">Downsides</span>
+        Keep it short; a long branded wait becomes worse than plain text.
+      </div>
+    </article>
+
+    <article class="idea" id="i7">
+      <div class="idea-head">
+        <span class="rank">7</span>
+        <h3>Survey Review Ceremony</h3>
+        <div class="badges">
+          <span class="badge">Section rhythm</span>
+          <span class="badge conf-med">Confidence 78%</span>
+          <span class="badge">Complexity Medium</span>
+        </div>
+      </div>
+      <div class="field">
+        <span class="label">Description</span>
+        Don’t rebuild the whole wizard as a theatrical stage yet. Elevate the review (and success) step into a distinct ceremony: different lighting/density, engagement-brief layout, clearer “this is your solution snapshot” moment before submit — the tailor’s fitting mirror, not another dimmer glass card.
+      </div>
+      <div class="field">
+        <span class="label">Basis</span>
+        <code>direct:</code> Survey is a rich six-step flow inside one fixed glass card; review items reuse the same glass family with only opacity changes. <code>external:</code> survey-as-conversion-artifact pattern from portfolio research. Verifier: full “ceremony wrapper” was weak; scoped review/success upgrade is sound.
+      </div>
+      <div class="field">
+        <span class="label">Rationale</span>
+        Last screen before commitment currently under-signals importance. A sharper review moment upgrades conversion feel without rewriting the whole wizard.
+      </div>
+      <div class="field">
+        <span class="label">Downsides</span>
+        Scope creep toward a full diagnostic product. Keep the first pass visual, not a new data model.
+      </div>
+    </article>
+  </section>
+
+  <section id="rejection">
+    <h2>Rejection Summary</h2>
+    <table class="reject">
+      <thead>
+        <tr><th>#</th><th>Idea</th><th>Reason rejected</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Playfair Scarcity Device (standalone)</td><td>Weak — evidence supports decide/remove more than “use Playfair”; folded into Named Accent Legend / type decision</td></tr>
+        <tr><td>2</td><td>Shared Atmosphere Layer</td><td>Refuted — adds abstraction without solving stronger token/nav/shell problems</td></tr>
+        <tr><td>3</td><td>House Motion Grammar + Leitmotif (standalone)</td><td>Weak as a big-bang system; partial value absorbed into Loading Ident + Mobile Reel</td></tr>
+        <tr><td>4</td><td>Variable-Weight Services Cards</td><td>Weak — no grounded priority model for which offerings deserve more weight</td></tr>
+        <tr><td>5</td><td>Scroll Budget Reallocation</td><td>Weak — density imbalance is real but “budget is backwards” needs funnel evidence</td></tr>
+        <tr><td>6</td><td>Process Uncarded Blueprint (standalone)</td><td>Duplicate of stronger Editorial Chapter Scroll (Process chapter role)</td></tr>
+        <tr><td>7</td><td>Type System One Exception (standalone)</td><td>Folded into Named Accent Legend typography decision</td></tr>
+        <tr><td>8</td><td>Full Survey Stage rebuild</td><td>Downgraded — narrower Review Ceremony is better grounded</td></tr>
+        <tr><td>9</td><td>Generic “prettier cards / more animations”</td><td>Below ambition floor / listicle</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer class="composition-signal">
+    Composed 2026-07-09 by ce-ideate from user prompt “Go through the front facing design and recommend some visually appealing changes to make?” · run <code>cad45ec5</code>
+  </footer>
+</div>
+</body>
+</html>
