@@ -14,10 +14,10 @@ const initialCvData = {
   },
   profile: "Full-Stack Developer with 5+ years building production mobile and web applications. Specialise in Flutter mobile development, Python APIs (FastAPI), and AWS serverless architectures. Currently focused on IoT/security systems, building mobile apps for alarm panel control and designing public APIs for third-party integrations.",
   skills: {
-    "Mobile": ["Android", "Flutter", "React Native"],
+    "Mobile": ["Android", "Flutter", "React Native", "Ionic"],
     "Frontend": ["Angular", "React", "Svelte", "Next.js"],
-    "Backend": ["Node.js", "Python (FastAPI)", "Serverless", "C#", "Java"],
-    "Cloud & Data": ["AWS", "DynamoDB", "MongoDB", "Kafka", "Metabase"]
+    "Backend": ["Node.js", "Python (FastAPI)", "C#", "Java"],
+    "Cloud & Data": ["AWS", "PostgreSQL", "MySQL", "DynamoDB", "MongoDB", "Kafka", "Metabase", "Serverless"]
   },
   experience: [
     {

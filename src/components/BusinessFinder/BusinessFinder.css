@@ -1,0 +1,622 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;800&family=Inconsolata:wght@300;400;500&display=swap');
+
+.business-finder {
+  --bf-bg: #0d0d0d;
+  --bf-surface: #151515;
+  --bf-surface2: #1e1e1e;
+  --bf-border: #2a2a2a;
+  --bf-accent: #e8ff3b;
+  --bf-accent2: #3bffb0;
+  --bf-text: #f0f0f0;
+  --bf-muted: #666;
+  --bf-danger: #ff4444;
+
+  background: var(--bf-bg);
+  color: var(--bf-text);
+  font-family: 'Inconsolata', monospace;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  isolation: isolate;
+}
+
+.business-finder::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(232, 255, 59, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 255, 59, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.business-finder__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.business-finder header {
+  margin-bottom: 48px;
+  animation: bf-fadeDown 0.6s ease both;
+}
+
+.business-finder .bf-tag {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--bf-accent);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.business-finder .bf-tag::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--bf-accent);
+}
+
+.business-finder .bf-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.business-finder .bf-title span {
+  color: var(--bf-accent);
+}
+
+.business-finder .bf-subtitle {
+  color: var(--bf-muted);
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.business-finder .bf-dev-banner {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--bf-accent2);
+  border: 1px solid rgba(59, 255, 176, 0.35);
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  background: rgba(59, 255, 176, 0.06);
+}
+
+.business-finder .bf-key-banner {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--bf-accent);
+  border: 1px solid rgba(232, 255, 59, 0.35);
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  background: rgba(232, 255, 59, 0.08);
+}
+
+.business-finder .bf-key-banner code {
+  font-size: 11px;
+  padding: 1px 6px;
+  background: var(--bf-surface2);
+  border: 1px solid var(--bf-border);
+  border-radius: 2px;
+}
+
+.business-finder .bf-dev-banner code {
+  font-size: 11px;
+  padding: 1px 6px;
+  background: var(--bf-surface2);
+  border: 1px solid var(--bf-border);
+  border-radius: 2px;
+}
+
+.business-finder .bf-help {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--bf-muted);
+  line-height: 1.55;
+}
+
+.business-finder .bf-help summary {
+  cursor: pointer;
+  color: var(--bf-text);
+  letter-spacing: 0.04em;
+}
+
+.business-finder .bf-help summary:hover {
+  color: var(--bf-accent);
+}
+
+.business-finder .bf-help ul {
+  margin: 10px 0 0 1.1rem;
+  padding: 0;
+}
+
+.business-finder .bf-help li {
+  margin-bottom: 8px;
+}
+
+.business-finder .bf-help code {
+  font-size: 11px;
+  padding: 1px 5px;
+  background: var(--bf-surface2);
+  border: 1px solid var(--bf-border);
+  border-radius: 2px;
+  color: var(--bf-accent2);
+}
+
+.business-finder .bf-config-panel {
+  background: var(--bf-surface);
+  border: 1px solid var(--bf-border);
+  padding: 28px;
+  margin-bottom: 24px;
+  animation: bf-fadeUp 0.6s 0.1s ease both;
+}
+
+.business-finder .bf-config-panel label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--bf-muted);
+  margin-bottom: 8px;
+}
+
+.business-finder .bf-api-input-wrap {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.business-finder input[type='text'],
+.business-finder input[type='number'],
+.business-finder select {
+  background: var(--bf-surface2);
+  border: 1px solid var(--bf-border);
+  color: var(--bf-text);
+  font-family: 'Inconsolata', monospace;
+  font-size: 14px;
+  padding: 10px 14px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.business-finder input[type='text']:focus,
+.business-finder input[type='number']:focus,
+.business-finder select:focus {
+  border-color: var(--bf-accent);
+}
+
+.business-finder select option {
+  background: var(--bf-surface2);
+}
+
+.business-finder .bf-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.business-finder .bf-search-criteria-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bf-muted);
+  margin: 0 0 12px;
+}
+
+.business-finder .bf-field-hint {
+  margin: 8px 0 0;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--bf-muted);
+}
+
+.business-finder .bf-grid-3 {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .business-finder .bf-grid-2,
+  .business-finder .bf-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .business-finder .bf-api-input-wrap {
+    flex-direction: column;
+  }
+
+  .business-finder .bf-actions-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.business-finder .bf-field {
+  margin-bottom: 16px;
+}
+
+.business-finder button {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  padding: 12px 24px;
+  transition: all 0.2s;
+}
+
+.business-finder .bf-btn-primary {
+  background: var(--bf-accent);
+  color: #0d0d0d;
+  width: 100%;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.business-finder .bf-btn-primary:hover:not(:disabled) {
+  background: #f5ff70;
+  transform: translateY(-1px);
+}
+
+.business-finder .bf-btn-primary:disabled {
+  background: var(--bf-border);
+  color: var(--bf-muted);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.business-finder .bf-actions-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.business-finder .bf-btn-secondary {
+  background: transparent;
+  color: var(--bf-text);
+  border: 1px solid var(--bf-border);
+  padding: 8px 16px;
+  font-size: 12px;
+}
+
+.business-finder .bf-btn-secondary:hover:not(:disabled) {
+  border-color: var(--bf-accent);
+  color: var(--bf-accent);
+}
+
+.business-finder .bf-btn-secondary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.business-finder .bf-btn-export {
+  background: var(--bf-accent2);
+  color: #0d0d0d;
+  padding: 8px 20px;
+  font-size: 12px;
+}
+
+.business-finder .bf-btn-export:hover {
+  background: #6fffcb;
+}
+
+.business-finder .bf-btn-export:disabled {
+  background: var(--bf-border);
+  color: var(--bf-muted);
+  cursor: not-allowed;
+}
+
+.business-finder .bf-btn-export--json {
+  background: #3bb0ff;
+  color: #0d0d0d;
+}
+
+.business-finder .bf-btn-export--json:hover {
+  background: #6cc4ff;
+}
+
+.business-finder .bf-status-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  margin-top: 12px;
+  border-left: 3px solid var(--bf-border);
+  color: var(--bf-muted);
+  min-height: 40px;
+  transition: all 0.3s;
+}
+
+.business-finder .bf-status-bar.bf-loading {
+  border-color: var(--bf-accent);
+  color: var(--bf-accent);
+}
+
+.business-finder .bf-status-bar.bf-success {
+  border-color: var(--bf-accent2);
+  color: var(--bf-accent2);
+}
+
+.business-finder .bf-status-bar.bf-error {
+  border-color: var(--bf-danger);
+  color: var(--bf-danger);
+}
+
+.business-finder .bf-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: bf-spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+.business-finder .bf-results-section {
+  animation: bf-fadeUp 0.4s ease both;
+}
+
+.business-finder .bf-results-section.bf-hidden {
+  display: none;
+}
+
+.business-finder .bf-results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.business-finder .bf-results-count {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.business-finder .bf-results-count .bf-accent-num {
+  color: var(--bf-accent);
+}
+
+.business-finder .bf-filtered-note {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--bf-muted);
+}
+
+.business-finder .bf-export-row {
+  display: flex;
+  gap: 8px;
+}
+
+.business-finder .bf-filters-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.business-finder .bf-filters-bar-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bf-muted);
+  margin-right: 4px;
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .business-finder .bf-filters-bar-label {
+    width: auto;
+    margin-right: 8px;
+  }
+}
+
+.business-finder .bf-filter-input {
+  max-width: 240px;
+}
+
+.business-finder .bf-filter-select {
+  max-width: 200px;
+}
+
+.business-finder .bf-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--bf-border);
+}
+
+.business-finder table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.business-finder thead {
+  background: var(--bf-surface);
+  border-bottom: 1px solid var(--bf-border);
+}
+
+.business-finder th {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bf-muted);
+  padding: 12px 16px;
+  text-align: left;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.business-finder .bf-sort-btn {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+}
+
+.business-finder .bf-sort-btn:hover {
+  color: var(--bf-accent);
+}
+
+.business-finder .bf-sort-btn:focus-visible {
+  outline: 2px solid var(--bf-accent);
+  outline-offset: 3px;
+}
+
+.business-finder th.bf-sorted {
+  color: var(--bf-accent);
+}
+
+.business-finder td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--bf-border);
+  vertical-align: top;
+  max-width: 200px;
+}
+
+.business-finder tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.business-finder tbody tr {
+  background: var(--bf-bg);
+  transition: background 0.15s;
+}
+
+.business-finder tbody tr:hover {
+  background: var(--bf-surface);
+}
+
+.business-finder .bf-badge {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border: 1px solid var(--bf-border);
+  color: var(--bf-muted);
+  white-space: nowrap;
+}
+
+.business-finder .bf-link {
+  color: var(--bf-accent2);
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.business-finder .bf-link:hover {
+  text-decoration: underline;
+}
+
+.business-finder .bf-rating {
+  color: var(--bf-accent);
+  font-weight: 600;
+}
+
+.business-finder .bf-rating-meta {
+  color: var(--bf-muted);
+  font-size: 11px;
+}
+
+.business-finder .bf-no-data {
+  color: var(--bf-muted);
+  font-style: italic;
+}
+
+.business-finder .bf-address-cell {
+  font-size: 12px;
+  color: var(--bf-muted);
+}
+
+.business-finder .bf-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.business-finder .bf-page-info {
+  font-size: 12px;
+  color: var(--bf-muted);
+}
+
+.business-finder .bf-page-ellipsis {
+  color: var(--bf-muted);
+}
+
+.business-finder .bf-status-open {
+  font-size: 11px;
+}
+
+.business-finder .bf-status-open--perm {
+  color: var(--bf-danger);
+}
+
+.business-finder .bf-status-open--yes {
+  color: var(--bf-accent2);
+}
+
+.business-finder .bf-status-open--no {
+  color: var(--bf-muted);
+}
+
+@keyframes bf-fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bf-fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bf-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

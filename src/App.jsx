@@ -14,6 +14,10 @@ const DayNightCycle = lazy(() => import('./components/DayNightCycle/DayNightCycl
 const Sanaflower = lazy(() => import('./components/Sanaflower/Sanaflower'));
 const PinModal = lazy(() => import('./components/Sanaflower/PinModal'));
 const Resume = lazy(() => import('./components/Resume/Resume'));
+const PrivacyPolicy = lazy(() => import('./components/Sojourn/PrivacyPolicy'));
+const BusinessFinder = lazy(() => import('./components/BusinessFinder/BusinessFinder'));
+const CoursesCatalog = lazy(() => import('./components/Courses/CoursesCatalog'));
+const CourseViewer = lazy(() => import('./components/Courses/CourseViewer'));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -95,6 +99,31 @@ function App() {
           <Route path="/resume" element={
             <Suspense fallback={<LoadingFallback />}>
               <Resume />
+            </Suspense>
+          } />
+          <Route path="/sojourn/privacy-policy" element={
+            <Suspense fallback={<LoadingFallback />}>
+              <PrivacyPolicy />
+            </Suspense>
+          } />
+          <Route path="/business-finder" element={
+            <Suspense fallback={<LoadingFallback />}>
+              <BusinessFinder />
+            </Suspense>
+          } />
+          <Route path="/bsuiness-finder" element={
+            <Suspense fallback={<LoadingFallback />}>
+              <BusinessFinder />
+            </Suspense>
+          } />
+          <Route path="/courses" element={
+            <Suspense fallback={<LoadingFallback />}>
+              <CoursesCatalog />
+            </Suspense>
+          } />
+          <Route path="/courses/:slug" element={
+            <Suspense fallback={<LoadingFallback />}>
+              <CourseViewer />
             </Suspense>
           } />
         </Routes>
