@@ -20,15 +20,12 @@ const SurveyWizard = () => {
         company: ''
     });
 
-    // Service options with descriptions (AI card first, then core offerings — matches Solutions section)
     const serviceOptions = [
-        { value: 'AI Implementation & Integration', label: 'AI Implementation & Integration', desc: 'Strategy, tooling & integration with SLAs' },
-        { value: 'Web Development', label: 'Web Development', desc: 'Modern websites & web apps' },
-        { value: 'Mobile Apps', label: 'Mobile Apps', desc: 'iOS & Android applications' },
-        { value: 'System Architecture', label: 'System Architecture', desc: 'Scalable designs for enterprise ops' },
-        { value: 'Digital Marketing', label: 'Digital Marketing', desc: 'SEO, ads, content strategy' },
-        { value: 'Cloud Solutions', label: 'Cloud Solutions', desc: 'Infrastructure & migration' },
-        { value: 'Consultation', label: 'Consultation', desc: 'Strategy & planning' }
+        { value: 'Leads falling through WhatsApp or email', label: 'Leads falling through WhatsApp or email', desc: 'Replies and follow-up are getting missed' },
+        { value: 'Jobs, stock, or bookings in spreadsheets', label: 'Jobs, stock, or bookings in spreadsheets', desc: 'The work is tracked somewhere the team does not trust' },
+        { value: 'Invoicing and admin eating the week', label: 'Invoicing and admin eating the week', desc: 'Chasing, filing, and retyping' },
+        { value: 'A system that does not talk to the rest', label: 'A system that does not talk to the rest', desc: 'Sage, Xero, Pastel, email, or something you already paid for' },
+        { value: 'Not sure yet', label: 'Not sure yet', desc: 'Help us name the workflow' }
     ];
 
     const timelineOptions = [
@@ -40,7 +37,7 @@ const SurveyWizard = () => {
     ];
 
     const budgetOptions = [
-        { value: 'under50k', label: 'Under R50,000' },
+        { value: 'under50k', label: 'Under R50,000', desc: 'One workflow, not a platform or a mobile app' },
         { value: '50-150k', label: 'R50,000 - R150,000' },
         { value: '150-300k', label: 'R150,000 - R300,000' },
         { value: '300plus', label: 'R300,000+' },
@@ -56,12 +53,15 @@ const SurveyWizard = () => {
         'Manufacturing',
         'Real Estate',
         'Hospitality',
+        'Logistics',
+        'Trades and field service',
+        'Professional services',
         'Non-profit',
         'Other'
     ];
 
     const stepTitles = [
-        'Choose Your Solution',
+        'What is stuck',
         'Project Timeline',
         'Budget Range',
         'Project Details',
@@ -207,8 +207,8 @@ const SurveyWizard = () => {
         <section id="survey" className="survey-section">
             <div className="survey-container">
                 <div className="survey-header">
-                    <h2>Start Your Journey</h2>
-                    <p>Tell us about your vision, and we'll help you build it.</p>
+                    <h2>Tell us what is stuck</h2>
+                    <p>We reply with a scoped first version, not a slide deck.</p>
                 </div>
 
                 <div className="survey-card">
@@ -234,7 +234,7 @@ const SurveyWizard = () => {
                                 transition={{ duration: 0.3 }}
                                 className="survey-step"
                             >
-                                <h3>What solution are you looking for?</h3>
+                                <h3>What is stuck?</h3>
                                 <p className="step-subtitle">Select all that apply</p>
                                 <div className="options-grid">
                                     {serviceOptions.map(service => (
@@ -302,7 +302,7 @@ const SurveyWizard = () => {
                                 className="survey-step"
                             >
                                 <h3>What's your budget range?</h3>
-                                <p className="step-subtitle">This helps us tailor our proposal to your needs</p>
+                                <p className="step-subtitle">This sets the size of the first version.</p>
                                 <div className="options-list">
                                     {budgetOptions.map(budget => (
                                         <div
@@ -310,7 +310,8 @@ const SurveyWizard = () => {
                                             className={`option-list-item ${formData.budget === budget.value ? 'selected' : ''}`}
                                             onClick={() => setFormData({ ...formData, budget: budget.value })}
                                         >
-                                            {budget.label}
+                                            <span className="option-main">{budget.label}</span>
+                                            {budget.desc && <span className="option-sub">{budget.desc}</span>}
                                         </div>
                                     ))}
                                 </div>
@@ -334,7 +335,7 @@ const SurveyWizard = () => {
                                 transition={{ duration: 0.3 }}
                                 className="survey-step"
                             >
-                                <h3>Tell us about your project</h3>
+                                <h3>Which task should we look at?</h3>
                                 <div className="input-group">
                                     <div className="field-wrapper">
                                         <label>Project Description *</label>
@@ -342,7 +343,7 @@ const SurveyWizard = () => {
                                             name="description"
                                             value={formData.description}
                                             onChange={handleChange}
-                                            placeholder="Describe your goals, target audience, and key features..."
+                                            placeholder="Which task is stuck, which system it sits in, and how many hours it takes each week. If you want automation, name the job it should do."
                                             rows="5"
                                         ></textarea>
                                         <span className="char-count">{formData.description.length} characters</span>
@@ -462,7 +463,7 @@ const SurveyWizard = () => {
                                     <div className="review-section">
                                         <div className="review-item">
                                             <div className="review-header">
-                                                <span className="review-title">Services</span>
+                                                <span className="review-title">What is stuck</span>
                                                 <button className="btn-edit" onClick={() => goToStep(0)}>
                                                     <FaEdit /> Edit
                                                 </button>

@@ -11,26 +11,26 @@ import './Process.css';
 const processSteps = [
     {
         icon: FaSearch,
-        title: 'AI Readiness Assessment',
-        description: 'We evaluate your data, systems, and business processes to identify high-impact AI opportunities.',
+        title: 'Find the manual job',
+        description: 'We sit with the work as it happens today: who does it, where it lives, and what it costs in hours.',
         color: '#3B82F6'
     },
     {
         icon: FaDraftingCompass,
-        title: 'Solution Design & Roadmap',
-        description: 'We architect a tailored AI solution with clear milestones, SLAs, and measurable KPIs.',
+        title: 'Scope a first version',
+        description: 'You get one workflow, a rand range, and a date. Support is written into that scope.',
         color: '#EAB308'
     },
     {
         icon: FaCogs,
-        title: 'Build & Integrate',
-        description: 'Our team develops, trains, and integrates AI models into your platforms — web, mobile, or cloud.',
+        title: 'Build it with the people who do the work',
+        description: 'The first version is a web system, a phone client, or a link to tools you already run, shaped with the people who will use it.',
         color: '#10B981'
     },
     {
         icon: FaRocket,
-        title: 'Deploy, Monitor & Optimize',
-        description: 'We deploy your AI solution with ongoing monitoring, SLA-backed support, and continuous model optimization.',
+        title: 'Hand it over and stay',
+        description: 'We train the team, fix what launch turns up, and take the next workflow only if the first one paid for itself.',
         color: '#C0A062'
     }
 ];
@@ -56,7 +56,7 @@ const Process = () => {
                         Our <span className="highlight">Process</span>
                     </h2>
                     <p className="process-subtitle">
-                        A proven methodology that transforms your business with intelligent, AI-driven solutions
+                        One workflow at a time, in rands, with a date.
                     </p>
                 </motion.div>
 
@@ -130,6 +130,18 @@ const Process = () => {
                             );
                         })}
                     </div>
+                </div>
+
+                <div className="process-scope">
+                    <h3>A typical first version</h3>
+                    <p className="process-scope-note">A typical scope, not a case study.</p>
+                    <ul>
+                        <li>One workflow: jobs, bookings, stock, customers, or the admin between them.</li>
+                        <li>A few weeks to a first version the team can use.</li>
+                        <li>Priced in the same rand bands as the form below. Under R50,000 is one workflow, not a platform and not a mobile app.</li>
+                        <li>Automation only when it removes a named task, such as filing, chasing, or a first reply.</li>
+                        <li>Customer data stays where we agree in writing. We will tell you if any of it is stored outside South Africa.</li>
+                    </ul>
                 </div>
             </div>
         </section>

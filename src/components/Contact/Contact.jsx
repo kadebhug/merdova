@@ -219,7 +219,7 @@ const Contact = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <h2>Get in Touch</h2>
-                    <p>Ready to explore what AI can do for your business? Contact us directly or use our solutions wizard above.</p>
+                    <p>We are in Durban. Describe the workflow that is stuck and we will reply about a first version of that. You can also use the form above.</p>
 
                     <div className="contact-info">
                         <div className="info-item">

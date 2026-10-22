@@ -38,6 +38,53 @@
     line-height: 1.7;
 }
 
+.process-scope {
+    margin: 80px auto 0;
+    max-width: 900px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 40px;
+}
+
+.process-scope h3 {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+.process-scope-note {
+    color: var(--primary-color);
+    margin-bottom: 24px;
+}
+
+.process-scope ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.process-scope li {
+    color: #ccc;
+    line-height: 1.6;
+    padding-left: 1.25rem;
+    position: relative;
+}
+
+.process-scope li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary-color);
+}
+
 .process-steps-wrapper {
     position: relative;
 }
@@ -270,6 +317,15 @@
 
     .step-connector {
         height: 40px;
+    }
+
+    .process-scope {
+        padding: 28px 22px;
+        margin-top: 48px;
+    }
+
+    .process-scope h3 {
+        font-size: 1.5rem;
     }
 }
 

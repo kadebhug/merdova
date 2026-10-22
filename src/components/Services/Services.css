@@ -1,15 +1,14 @@
 .services-section {
     position: relative;
-    height: 340vh;
-    /* Height determines scroll length */
+    height: auto;
     background-color: var(--bg-color);
     z-index: 2;
+    padding: 120px 0;
 }
 
 .sticky-container {
-    position: sticky;
-    top: 0;
-    height: 100vh;
+    position: relative;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,22 +18,34 @@
 .section-title {
     text-align: center;
     font-size: 3rem;
-    margin-bottom: 40px;
+    margin-bottom: 16px;
     font-weight: 700;
     padding-top: 20px;
 }
 
+.services-note {
+    text-align: center;
+    color: #ccc;
+    max-width: 720px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+    padding: 0 24px;
+}
+
 .services-overflow {
     width: 100%;
-    overflow: hidden;
+    overflow: visible;
     padding: 20px 0;
 }
 
 .services-track {
     display: flex;
+    flex-wrap: wrap;
     gap: 40px;
-    padding-left: 5vw;
-    /* Start slightly off-screen or centered */
+    justify-content: center;
+    padding: 20px 5vw 40px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .service-card {
@@ -46,9 +57,11 @@
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-    min-width: 350px;
-    /* Fixed width for horizontal scroll */
-    height: 400px;
+    min-width: 280px;
+    max-width: 380px;
+    flex: 1;
+    height: auto;
+    min-height: 320px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -115,8 +128,6 @@
 
     .services-track {
         flex-direction: column;
-        transform: none !important;
-        /* Disable framer motion transform on mobile via CSS override if needed, but JS handles it better usually. For now, let's keep it simple or use media query in JS. */
         padding: 20px;
         gap: 20px;
     }

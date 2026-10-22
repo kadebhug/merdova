@@ -77,7 +77,7 @@
 }
 
 .highlight {
-    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(to right, #C0A062, #EAB308);
     background-size: 100% 100%;
     background-clip: text;
     -webkit-background-clip: text;

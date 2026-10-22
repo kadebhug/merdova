@@ -1,85 +1,29 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { FaBrain, FaLaptopCode, FaMobileAlt, FaCloud, FaBullhorn, FaNetworkWired, FaHandshake } from 'react-icons/fa';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { FaClipboardList, FaComments, FaLink } from 'react-icons/fa';
 import './Services.css';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const servicesData = [
     {
-        icon: <FaBrain />,
-        title: 'AI Implementation & Integration',
-        description: 'Help your business adopt AI responsibly — from strategy and tooling to integration with your existing systems, with clear SLAs on delivery and support.'
+        icon: <FaClipboardList />,
+        title: 'Business systems',
+        description: 'Jobs, bookings, stock, clients, and invoicing, built around the way your team already works.'
     },
     {
-        icon: <FaLaptopCode />,
-        title: 'Web Development',
-        description: 'Stunning, responsive websites tailored to your brand identity and business goals.'
+        icon: <FaComments />,
+        title: 'Customer workflows',
+        description: 'Leads, replies, and follow-up, including WhatsApp, in a pipeline your team will actually open.'
     },
     {
-        icon: <FaMobileAlt />,
-        title: 'Mobile Apps',
-        description: 'Native and cross-platform mobile applications that deliver seamless user experiences.'
-    },
-    {
-        icon: <FaCloud />,
-        title: 'Cloud Solutions',
-        description: 'Scalable cloud infrastructure, migration, and management services for modern businesses.'
-    },
-    {
-        icon: <FaBullhorn />,
-        title: 'Digital Marketing',
-        description: 'Data-driven marketing strategies to grow your audience and increase conversion.'
-    },
-    {
-        icon: <FaNetworkWired />,
-        title: 'System Architecture',
-        description: 'Robust and scalable system designs to support your enterprise operations.'
-    },
-    {
-        icon: <FaHandshake />,
-        title: 'Consulting',
-        description: 'Expert advice to help you navigate the digital landscape and make informed decisions.'
+        icon: <FaLink />,
+        title: 'Automation on your tools',
+        description: 'Connect Sage, Xero, Pastel, email, or spreadsheets. Take one repetitive task off the week.'
     }
 ];
 
 const Services = () => {
-    const sectionRef = useRef(null);
-    const trackRef = useRef(null);
-
-    useLayoutEffect(() => {
-        const ctx = gsap.context(() => {
-            const track = trackRef.current;
-
-            // Calculate total width to scroll
-            // We want to scroll the track to the left
-            // Distance = track width - viewport width (or container width)
-
-            // Note: In React, we might need to wait for render or use a function to get width
-            // But with useLayoutEffect it should be fine.
-
-            // Horizontal Scroll
-            gsap.to(track, {
-                x: () => -(track.scrollWidth - window.innerWidth + 100), // +100 for some padding
-                ease: "none",
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: "top top",
-                    end: "bottom bottom",
-                    scrub: 1,
-                    invalidateOnRefresh: true,
-                }
-            });
-
-        }, sectionRef);
-
-        return () => ctx.revert();
-    }, []);
-
     return (
-        <section ref={sectionRef} id="services" className="services-section">
+        <section id="services" className="services-section">
             <div className="sticky-container">
                 <motion.h2
                     className="section-title"
@@ -87,10 +31,13 @@ const Services = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                 >
-                    Our <span className="highlight">Solutions</span>
+                    What we <span className="highlight">build</span>
                 </motion.h2>
+                <p className="services-note">
+                    Built as a web system, a phone client, or a connection to the software you already use.
+                </p>
                 <div className="services-overflow">
-                    <div ref={trackRef} className="services-track">
+                    <div className="services-track">
                         {servicesData.map((service, index) => (
                             <div className="service-card" key={index}>
                                 <div className="service-icon">{service.icon}</div>

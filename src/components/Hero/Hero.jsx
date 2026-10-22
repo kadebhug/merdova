@@ -206,13 +206,13 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
                 >
-                    We Build <span className="highlight-container">
+                    Software that runs <span className="highlight-container">
                         <span
                             className="highlight"
                             ref={highlightRef}
                             onMouseEnter={handleHighlightHover}
                             onMouseLeave={handleHighlightLeave}
-                        >AI-Powered Solutions</span>
+                        >the work</span>
                         <svg
                             className="underline-svg"
                             viewBox="0 0 300 15"
@@ -234,7 +234,7 @@ const Hero = () => {
                                 </linearGradient>
                             </defs>
                         </svg>
-                    </span>
+                    </span> you already do.
                 </motion.h1>
 
                 <motion.p
@@ -242,7 +242,7 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                 >
-                    Merdova helps businesses implement and integrate AI to drive real outcomes — from intelligent platforms to automated workflows and data-driven growth.
+                    Merdova designs custom systems for South African businesses that have outgrown spreadsheets and WhatsApp threads. First version scoped to one workflow. Automation where it saves hours, not an AI programme.
                 </motion.p>
 
                 <motion.div
@@ -251,8 +251,8 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
                 >
-                    <a href="#survey" className="btn btn-primary" onClick={handleStartProjectClick}>Start Your Journey</a>
-                    <a href="#services" className="btn btn-secondary" onClick={handleExploreServicesClick}>Explore Solutions</a>
+                    <a href="#survey" className="btn btn-primary" onClick={handleStartProjectClick}>Tell us what&apos;s stuck</a>
+                    <a href="#services" className="btn btn-secondary" onClick={handleExploreServicesClick}>See what we build</a>
                 </motion.div>
             </div>
         </section>
