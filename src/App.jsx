@@ -18,6 +18,8 @@ const PrivacyPolicy = lazy(() => import('./components/Sojourn/PrivacyPolicy'));
 const BusinessFinder = lazy(() => import('./components/BusinessFinder/BusinessFinder'));
 const CoursesCatalog = lazy(() => import('./components/Courses/CoursesCatalog'));
 const CourseViewer = lazy(() => import('./components/Courses/CourseViewer'));
+const Proof = lazy(() => import('./components/Proof/Proof'));
+const Faq = lazy(() => import('./components/Faq/Faq'));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -38,6 +40,8 @@ const Home = () => (
       <Hero />
       <Services />
       <Process />
+      <Proof />
+      <Faq />
       <SurveyWizard />
       <Contact />
     </div>

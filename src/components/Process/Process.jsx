@@ -1,134 +1,89 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion';
-import { 
-    FaSearch, 
-    FaDraftingCompass, 
-    FaCogs, 
-    FaRocket
-} from 'react-icons/fa';
+import React from 'react';
+import { motion as Motion } from 'framer-motion';
 import './Process.css';
 
-const processSteps = [
+const steps = [
     {
-        icon: FaSearch,
-        title: 'AI Readiness Assessment',
-        description: 'We evaluate your data, systems, and business processes to identify high-impact AI opportunities.',
-        color: '#3B82F6'
+        when: 'Days 1–3',
+        title: 'Audit',
+        text: 'We map one workflow with the people who run it, then estimate the hours and rand it costs you each month.'
     },
     {
-        icon: FaDraftingCompass,
-        title: 'Solution Design & Roadmap',
-        description: 'We architect a tailored AI solution with clear milestones, SLAs, and measurable KPIs.',
-        color: '#EAB308'
+        when: 'Day 5',
+        title: 'Fixed quote',
+        text: 'Scope, price, and milestones are locked in writing. There is no hourly billing and no open-ended discovery.'
     },
     {
-        icon: FaCogs,
-        title: 'Build & Integrate',
-        description: 'Our team develops, trains, and integrates AI models into your platforms — web, mobile, or cloud.',
-        color: '#10B981'
+        when: 'Days 6–18',
+        title: 'Build and integrate',
+        text: 'We connect the workflow to your existing tools. You see a working demo on your own process in week two.'
     },
     {
-        icon: FaRocket,
-        title: 'Deploy, Monitor & Optimize',
-        description: 'We deploy your AI solution with ongoing monitoring, SLA-backed support, and continuous model optimization.',
-        color: '#C0A062'
+        when: 'Days 19–21',
+        title: 'Handover',
+        text: 'Training, documentation, and credentials come with the build, plus 30 days of support.'
+    }
+];
+
+const comparisons = [
+    {
+        title: 'Hiring a developer',
+        text: 'Recruiting takes months. You pay a salary, tools, and management for one person, and the knowledge can leave with them.'
+    },
+    {
+        title: 'A generalist agency',
+        text: 'Discovery stays open and is billed by the hour. The first invoice often pays for a strategy document before any workflow runs.'
+    },
+    {
+        title: 'Off-the-shelf software',
+        text: 'You add another login. It still has to be forced to talk to Sage, WhatsApp, and the spreadsheet the branch actually uses.'
     }
 ];
 
 const Process = () => {
-    const sectionRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: sectionRef,
-        offset: ["start end", "end start"]
-    });
-
     return (
-        <section ref={sectionRef} id="process" className="process-section">
-            <div className="process-container">
-                <motion.div
-                    className="process-header"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6 }}
-                >
+        <section id="process" className="process-section">
+            <div className="landing-wrap">
+                <div className="process-header">
+                    <p className="section-kicker">How it works</p>
                     <h2 className="process-title">
-                        Our <span className="highlight">Process</span>
+                        A sprint with dates, not a <span className="gold-text">phase called discovery</span>
                     </h2>
                     <p className="process-subtitle">
-                        A proven methodology that transforms your business with intelligent, AI-driven solutions
+                        Twenty-one days from kickoff to handover. You know the price before the build starts.
                     </p>
-                </motion.div>
+                </div>
 
-                <div className="process-steps-wrapper">
-                    <div className="process-steps">
-                        {processSteps.map((step, index) => {
-                            const IconComponent = step.icon;
-                            const stepProgress = useTransform(
-                                scrollYProgress,
-                                [
-                                    (index * 0.25),
-                                    ((index + 1) * 0.25)
-                                ],
-                                [0, 100]
-                            );
-                            const connectorHeight = useMotionTemplate`${stepProgress}%`;
+                <div className="process-steps">
+                    {steps.map((step, index) => (
+                        <Motion.article
+                            key={step.title}
+                            className="process-step"
+                            initial={{ opacity: 0, y: 24 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-80px' }}
+                            transition={{ duration: 0.45, delay: index * 0.08 }}
+                        >
+                            <p className="step-when">{step.when}</p>
+                            <h3>{step.title}</h3>
+                            <p>{step.text}</p>
+                        </Motion.article>
+                    ))}
+                </div>
 
-                            return (
-                                <motion.div
-                                    key={index}
-                                    className="process-step"
-                                    initial={{ opacity: 0, y: 50 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, margin: "-100px" }}
-                                    transition={{ 
-                                        duration: 0.6, 
-                                        delay: index * 0.15,
-                                        ease: [0.25, 0.46, 0.45, 0.94]
-                                    }}
-                                >
-                                    <motion.div 
-                                        className="step-content"
-                                        whileHover={{ y: -5 }}
-                                        transition={{ duration: 0.3 }}
-                                    >
-                                        <motion.div 
-                                            className="step-icon-wrapper"
-                                            style={{ '--step-color': step.color }}
-                                            whileHover={{ scale: 1.1, rotate: 5 }}
-                                            transition={{ duration: 0.3 }}
-                                        >
-                                            <div className="step-icon">
-                                                <IconComponent />
-                                            </div>
-                                            <div className="step-number">0{index + 1}</div>
-                                        </motion.div>
-
-                                        <div className="step-text">
-                                            <h3 className="step-title">{step.title}</h3>
-                                            <p className="step-description">{step.description}</p>
-                                        </div>
-                                    </motion.div>
-
-                                    {index < processSteps.length - 1 && (
-                                        <div className="step-connector-wrapper">
-                                            <div 
-                                                className="step-connector"
-                                                style={{ '--step-color': step.color }}
-                                            >
-                                                <motion.div 
-                                                    className="step-connector-progress"
-                                                    style={{ 
-                                                        height: connectorHeight,
-                                                        backgroundColor: step.color
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>
-                                    )}
-                                </motion.div>
-                            );
-                        })}
+                <div className="compare-block">
+                    <h3>What you are comparing it with</h3>
+                    <div className="compare-grid">
+                        {comparisons.map((item) => (
+                            <article key={item.title}>
+                                <h4>{item.title}</h4>
+                                <p>{item.text}</p>
+                            </article>
+                        ))}
+                        <article className="compare-ours">
+                            <h4>The Merdova sprint</h4>
+                            <p>Fixed price. 21 days. Built around the tools you already pay for. You own the result.</p>
+                        </article>
                     </div>
                 </div>
             </div>
@@ -137,4 +92,3 @@ const Process = () => {
 };
 
 export default Process;
-

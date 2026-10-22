@@ -1,128 +1,203 @@
-.services-section {
-    position: relative;
-    height: 340vh;
-    /* Height determines scroll length */
-    background-color: var(--bg-color);
-    z-index: 2;
+.outcomes-section,
+.usecases-section,
+.sprint-section {
+    padding: 96px 0;
+    background: var(--bg-color);
 }
 
-.sticky-container {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
+.usecases-section {
+    background: linear-gradient(180deg, #0B1121 0%, #10192e 100%);
 }
 
-.section-title {
-    text-align: center;
-    font-size: 3rem;
-    margin-bottom: 40px;
-    font-weight: 700;
-    padding-top: 20px;
+.outcomes-section h2,
+.usecases-section h2,
+.sprint-section h2 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.1;
+    margin-bottom: 16px;
 }
 
-.services-overflow {
-    width: 100%;
-    overflow: hidden;
-    padding: 20px 0;
+.section-lead {
+    color: #c9d1de;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    max-width: 42rem;
+    margin-bottom: 36px;
 }
 
-.services-track {
-    display: flex;
-    gap: 40px;
-    padding-left: 5vw;
-    /* Start slightly off-screen or centered */
+.pain-grid,
+.usecase-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
 }
 
-.service-card {
-    background: var(--glass-bg);
+.pain-card,
+.usecase-card,
+.price-card {
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--glass-border);
-    padding: 40px 30px;
-    border-radius: 20px;
-    text-align: center;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    min-width: 350px;
-    /* Fixed width for horizontal scroll */
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    border-radius: 18px;
+    padding: 24px;
 }
 
-.service-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.service-card:hover::before {
-    opacity: 1;
-}
-
-.service-card:hover {
-    border-color: var(--primary-color);
-    box-shadow: 0 10px 30px rgba(192, 160, 98, 0.15);
-    transform: translateY(-10px);
-}
-
-.service-icon {
-    font-size: 4rem;
+.pain-card span {
+    display: block;
     color: var(--primary-color);
-    margin-bottom: 30px;
-    transition: transform 0.3s ease;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    margin-bottom: 10px;
 }
 
-.service-card:hover .service-icon {
-    transform: scale(1.1);
-    color: var(--secondary-color);
+.pain-card h3,
+.usecase-card h3 {
+    font-size: 1.35rem;
+    margin-bottom: 10px;
 }
 
-.service-card h3 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    color: #fff;
-}
-
-.service-card p {
-    color: #ccc;
+.pain-card p,
+.usecase-card p {
+    color: #c5cdd8;
     line-height: 1.6;
+}
+
+.usecase-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 16px;
+    color: #0B1121;
+    background: linear-gradient(135deg, var(--primary-color), #EAB308);
     font-size: 1.1rem;
 }
 
-@media screen and (max-width: 768px) {
-    .services-section {
-        height: auto;
-        /* Disable horizontal scroll on mobile if preferred, or keep it */
+.also-line {
+    margin-top: 28px;
+    color: #b7c0ce;
+    max-width: 46rem;
+    line-height: 1.6;
+}
+
+.sprint-layout {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 40px;
+    align-items: start;
+}
+
+.include-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.include-list li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    color: #e8edf5;
+    line-height: 1.45;
+}
+
+.include-list svg {
+    color: var(--accent-color);
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.retainer-note {
+    color: #b7c0ce;
+    line-height: 1.6;
+    max-width: 36rem;
+}
+
+.price-card {
+    background: rgba(11, 17, 33, 0.9);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+    position: sticky;
+    top: 96px;
+}
+
+.price-kicker,
+.price-from {
+    color: var(--primary-color);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+}
+
+.price-amount {
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 5vw, 4.2rem);
+    line-height: 1;
+    margin: 8px 0 12px;
+}
+
+.price-meta,
+.price-guarantee,
+.price-audit {
+    color: #c5cdd8;
+    line-height: 1.55;
+}
+
+.price-guarantee {
+    margin: 16px 0;
+    color: #f8fafc;
+}
+
+.price-cta {
+    width: 100%;
+    margin-bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 26px;
+    border-radius: 50px;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--primary-color), #EAB308);
+    color: #0B1121;
+    box-shadow: 0 10px 20px rgba(192, 160, 98, 0.22);
+}
+
+.price-cta:hover {
+    transform: translateY(-2px);
+}
+
+.price-whatsapp {
+    display: block;
+    text-align: center;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.price-whatsapp:hover {
+    text-decoration: underline;
+}
+
+.price-audit {
+    font-size: 0.92rem;
+}
+
+@media screen and (max-width: 860px) {
+    .pain-grid,
+    .usecase-grid,
+    .sprint-layout {
+        grid-template-columns: 1fr;
     }
 
-    .sticky-container {
-        position: relative;
-        height: auto;
-        display: block;
+    .price-card {
+        position: static;
     }
 
-    .services-track {
-        flex-direction: column;
-        transform: none !important;
-        /* Disable framer motion transform on mobile via CSS override if needed, but JS handles it better usually. For now, let's keep it simple or use media query in JS. */
-        padding: 20px;
-        gap: 20px;
-    }
-
-    .service-card {
-        min-width: 100%;
-        height: auto;
+    .outcomes-section,
+    .usecases-section,
+    .sprint-section {
+        padding: 72px 0;
     }
 }
