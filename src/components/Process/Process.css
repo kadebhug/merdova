@@ -186,6 +186,41 @@
     transition: height 0.1s ease;
 }
 
+.process-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+}
+
+.process-audit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 30px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, var(--primary-color), #EAB308);
+    color: #0B1121;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    box-shadow: 0 10px 20px rgba(192, 160, 98, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.process-audit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(192, 160, 98, 0.4);
+}
+
+.process-audit-btn:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 3px;
+}
+
+.process-audit-btn:active {
+    transform: translateY(1px);
+}
+
 /* Mobile Responsive */
 @media screen and (max-width: 968px) {
     .process-section {

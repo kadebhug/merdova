@@ -205,13 +205,30 @@
 
 .footer-submit-btn:not(:disabled):hover {
     transform: translateX(5px);
-    box-shadow: 0 5px 20px rgba(0, 242, 255, 0.4);
+    box-shadow: 0 5px 20px rgba(192, 160, 98, 0.35);
 }
 
-.success-message {
-    display: block;
-    color: #3c3;
-    font-size: 0.95rem;
+.footer-submit-btn:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 3px;
+}
+
+.form-banner {
+    padding: 14px 16px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.form-banner-error {
+    background: rgba(255, 68, 68, 0.12);
+    color: #ffb4b4;
+    border: 1px solid rgba(255, 68, 68, 0.4);
+}
+
+.form-banner-success {
+    background: rgba(16, 185, 129, 0.12);
+    color: #b7f0d8;
+    border: 1px solid rgba(16, 185, 129, 0.4);
 }
 
 .footer-copyright {

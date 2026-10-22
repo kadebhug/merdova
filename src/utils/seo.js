@@ -4,8 +4,8 @@
  */
 
 const defaultSEO = {
-  title: 'Merdova | AI Solutions — Implement & Integrate AI For Your Business',
-  description: 'Merdova helps businesses implement and integrate AI to drive real outcomes. AI-powered web platforms, smart mobile solutions, cloud infrastructure, AI-driven marketing, and strategic consulting — all backed by transparent SLAs.',
+  title: 'Merdova | Custom Software and AI Automation in South Africa',
+  description: 'Merdova builds AI workflow automations, WhatsApp-to-ERP integrations, custom operations portals, and offline-ready field apps for South African businesses. Book a free workflow audit.',
   url: 'https://merdova.com/',
   image: 'https://merdova.com/og-image.png',
 };

@@ -48,7 +48,7 @@
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 30px;
+    gap: 22px;
 }
 
 .nav-links {
@@ -109,7 +109,7 @@
     padding: 8px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 980px) {
     .menu-icon {
         display: block;
     }

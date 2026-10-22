@@ -1,68 +1,33 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { FaBrain, FaLaptopCode, FaMobileAlt, FaCloud, FaBullhorn, FaNetworkWired, FaHandshake } from 'react-icons/fa';
+import { FaBolt, FaWhatsapp, FaThLarge, FaMobileAlt, FaCloud } from 'react-icons/fa';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { services } from '../landing/offer';
 import './Services.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const servicesData = [
-    {
-        icon: <FaBrain />,
-        title: 'AI Implementation & Integration',
-        description: 'Help your business adopt AI responsibly — from strategy and tooling to integration with your existing systems, with clear SLAs on delivery and support.'
-    },
-    {
-        icon: <FaLaptopCode />,
-        title: 'Web Development',
-        description: 'Stunning, responsive websites tailored to your brand identity and business goals.'
-    },
-    {
-        icon: <FaMobileAlt />,
-        title: 'Mobile Apps',
-        description: 'Native and cross-platform mobile applications that deliver seamless user experiences.'
-    },
-    {
-        icon: <FaCloud />,
-        title: 'Cloud Solutions',
-        description: 'Scalable cloud infrastructure, migration, and management services for modern businesses.'
-    },
-    {
-        icon: <FaBullhorn />,
-        title: 'Digital Marketing',
-        description: 'Data-driven marketing strategies to grow your audience and increase conversion.'
-    },
-    {
-        icon: <FaNetworkWired />,
-        title: 'System Architecture',
-        description: 'Robust and scalable system designs to support your enterprise operations.'
-    },
-    {
-        icon: <FaHandshake />,
-        title: 'Consulting',
-        description: 'Expert advice to help you navigate the digital landscape and make informed decisions.'
-    }
-];
+const serviceIcons = {
+    bolt: FaBolt,
+    whatsapp: FaWhatsapp,
+    portal: FaThLarge,
+    mobile: FaMobileAlt,
+    cloud: FaCloud,
+};
 
 const Services = () => {
     const sectionRef = useRef(null);
     const trackRef = useRef(null);
 
     useLayoutEffect(() => {
-        const ctx = gsap.context(() => {
+        const mm = gsap.matchMedia();
+
+        mm.add('(min-width: 769px) and (prefers-reduced-motion: no-preference)', () => {
             const track = trackRef.current;
 
-            // Calculate total width to scroll
-            // We want to scroll the track to the left
-            // Distance = track width - viewport width (or container width)
-
-            // Note: In React, we might need to wait for render or use a function to get width
-            // But with useLayoutEffect it should be fine.
-
-            // Horizontal Scroll
             gsap.to(track, {
-                x: () => -(track.scrollWidth - window.innerWidth + 100), // +100 for some padding
+                x: () => -(track.scrollWidth - window.innerWidth + 100),
                 ease: "none",
                 scrollTrigger: {
                     trigger: sectionRef.current,
@@ -72,10 +37,9 @@ const Services = () => {
                     invalidateOnRefresh: true,
                 }
             });
+        });
 
-        }, sectionRef);
-
-        return () => ctx.revert();
+        return () => mm.revert();
     }, []);
 
     return (
@@ -87,17 +51,23 @@ const Services = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                 >
-                    Our <span className="highlight">Solutions</span>
+                    What we <span className="highlight">build</span>
                 </motion.h2>
+                <p className="section-intro">Five offers. Each one replaces a specific kind of manual work.</p>
                 <div className="services-overflow">
                     <div ref={trackRef} className="services-track">
-                        {servicesData.map((service, index) => (
-                            <div className="service-card" key={index}>
-                                <div className="service-icon">{service.icon}</div>
+                        {services.map((service) => {
+                            const Icon = serviceIcons[service.icon];
+                            return (
+                            <div className="service-card" key={service.title}>
+                                <div className="service-icon">{Icon ? <Icon aria-hidden="true" /> : null}</div>
                                 <h3>{service.title}</h3>
                                 <p>{service.description}</p>
+                                <p className="service-fit"><span>Best for</span> {service.bestFor}</p>
+                                <p className="service-outcome"><span>You leave with</span> {service.outcome}</p>
                             </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
             </div>

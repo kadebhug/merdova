@@ -34,8 +34,8 @@
     padding: 50px 40px 40px;
     position: relative;
     overflow: hidden;
-    min-height: 650px;
-    height: 650px;
+    min-height: 0;
+    height: auto;
     display: flex;
     flex-direction: column;
 }
@@ -91,27 +91,31 @@
 /* Options Grid (Service Selection) */
 .options-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 15px;
-    margin-bottom: auto;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 22px;
 }
 
 .option-card {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--glass-border);
-    padding: 25px 15px;
+    padding: 16px 14px;
     border-radius: 12px;
-    text-align: center;
+    text-align: left;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    font-family: inherit;
+    color: inherit;
+    width: 100%;
 }
 
 .option-label {
     font-weight: 600;
-    font-size: 1.05rem;
+    font-size: 0.98rem;
+    line-height: 1.35;
 }
 
 .option-desc {
@@ -174,7 +178,7 @@
 
 .option-list-item.selected {
     border-color: var(--primary-color);
-    background: rgba(0, 242, 255, 0.1);
+    background: rgba(192, 160, 98, 0.12);
 }
 
 .option-list-item.selected .option-main {
@@ -411,7 +415,7 @@ select.error {
 .btn-next:not(:disabled):hover,
 .btn-submit:not(:disabled):hover {
     transform: translateX(5px);
-    box-shadow: 0 5px 20px rgba(0, 242, 255, 0.4);
+    box-shadow: 0 5px 20px rgba(192, 160, 98, 0.35);
 }
 
 .btn-prev {
@@ -486,7 +490,7 @@ select.error {
     .survey-card {
         padding: 40px 25px 25px;
         height: auto;
-        min-height: 600px;
+        min-height: 0;
     }
 
     .survey-header h2 {
@@ -544,7 +548,7 @@ select.error {
     .survey-card {
         padding: 35px 20px 20px;
         height: auto;
-        min-height: 550px;
+        min-height: 0;
     }
 
     .options-grid {
@@ -567,4 +571,91 @@ select.error {
         width: 100%;
         text-align: center;
     }
+}
+
+.choice-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.choice-group {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    min-inline-size: 0;
+}
+
+.choice-group legend {
+    margin-bottom: 8px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.choice-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.choice-pill {
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.choice-pill:hover {
+    border-color: var(--primary-color);
+}
+
+.choice-pill.selected {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #0B1121;
+    font-weight: 600;
+}
+
+.choice-pill:focus-visible,
+.option-card:focus-visible,
+.btn-next:focus-visible,
+.btn-prev:focus-visible,
+.btn-submit:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 3px;
+}
+
+.summary-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 auto 22px;
+    max-width: 600px;
+}
+
+.summary-chips span {
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    padding: 6px 12px;
+    color: #e8e0d0;
+    font-size: 0.82rem;
+    line-height: 1.35;
+}
+
+.form-banner {
+    max-width: 600px;
+    margin: 8px auto 0;
+    padding: 14px 16px;
+    border-radius: 10px;
+}
+
+.form-banner-error {
+    background: rgba(255, 68, 68, 0.12);
+    color: #ffb4b4;
+    border: 1px solid rgba(255, 68, 68, 0.4);
 }

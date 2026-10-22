@@ -117,8 +117,8 @@ const Contact = () => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
                 >
-                    <h3>Short on Time?</h3>
-                    <p>Send us a quick message and we'll get back to you.</p>
+                    <h3>Send a short note</h3>
+                    <p>If you would rather not use the audit form, write here. We reply within one business day.</p>
                     
                     <form onSubmit={handleContactSubmit} className="footer-contact-form">
                         <div className="footer-form-row">
@@ -127,7 +127,7 @@ const Contact = () => {
                                 <input
                                     type="text"
                                     name="name"
-                                    placeholder="John Doe"
+                                    placeholder="Thabo Nkosi"
                                     value={contactForm.name}
                                     onChange={handleContactChange}
                                     className={contactErrors.name ? 'error' : ''}
@@ -139,7 +139,7 @@ const Contact = () => {
                                 <input
                                     type="email"
                                     name="email"
-                                    placeholder="john@example.com"
+                                    placeholder="thabo@company.co.za"
                                     value={contactForm.email}
                                     onChange={handleContactChange}
                                     className={contactErrors.email ? 'error' : ''}
@@ -152,7 +152,7 @@ const Contact = () => {
                             <input
                                 type="tel"
                                 name="phone"
-                                placeholder="+27 12 345 6789"
+                                placeholder="+27 82 555 0142"
                                 value={contactForm.phone}
                                 onChange={handleContactChange}
                                 className={contactErrors.phone ? 'error' : ''}
@@ -163,7 +163,7 @@ const Contact = () => {
                             <label>Message *</label>
                             <textarea
                                 name="message"
-                                placeholder="Tell us about your project or question..."
+                                placeholder="What is stuck today, and which systems does it touch?"
                                 value={contactForm.message}
                                 onChange={handleContactChange}
                                 rows="4"
@@ -173,28 +173,14 @@ const Contact = () => {
                         </div>
                         
                         {contactErrors.submit && (
-                            <div className="error-message" style={{ 
-                                background: '#fee', 
-                                color: '#c33', 
-                                padding: '15px', 
-                                borderRadius: '5px', 
-                                marginBottom: '15px',
-                                border: '1px solid #fcc'
-                            }}>
+                            <div className="form-banner form-banner-error">
                                 {contactErrors.submit}
                             </div>
                         )}
                         
                         {contactSuccess && (
-                            <div className="success-message" style={{ 
-                                background: '#efe', 
-                                color: '#3c3', 
-                                padding: '15px', 
-                                borderRadius: '5px', 
-                                marginBottom: '15px',
-                                border: '1px solid #cfc'
-                            }}>
-                                Message sent successfully! We'll get back to you soon.
+                            <div className="form-banner form-banner-success">
+                                Message sent. We will reply within one business day.
                             </div>
                         )}
                         
@@ -218,21 +204,21 @@ const Contact = () => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
                 >
-                    <h2>Get in Touch</h2>
-                    <p>Ready to explore what AI can do for your business? Contact us directly or use our solutions wizard above.</p>
+                    <h2>Talk to us directly</h2>
+                    <p>The audit form is the fastest way to get a fixed-scope answer. You can also email or call the Durban studio.</p>
 
                     <div className="contact-info">
                         <div className="info-item">
                             <FaEnvelope className="icon" />
-                            <span>hello@merdova.com</span>
+                            <a href="mailto:hello@merdova.com">hello@merdova.com</a>
                         </div>
                         <div className="info-item">
                             <FaPhone className="icon" />
-                            <span>+27834653896</span>
+                            <a href="tel:+27834653896">+27 83 465 3896</a>
                         </div>
                         <div className="info-item">
                             <FaMapMarkerAlt className="icon" />
-                            <span>61 Berriedale road, Durban</span>
+                            <span>61 Berriedale Road, Durban</span>
                         </div>
                     </div>
                 </motion.div>

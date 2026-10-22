@@ -8,6 +8,8 @@ const Navbar = lazy(() => import('./components/Layout/Navbar'));
 const Hero = lazy(() => import('./components/Hero/Hero'));
 const Services = lazy(() => import('./components/Services/Services'));
 const Process = lazy(() => import('./components/Process/Process'));
+const Proof = lazy(() => import('./components/Proof/Proof'));
+const Faq = lazy(() => import('./components/Faq/Faq'));
 const SurveyWizard = lazy(() => import('./components/Survey/SurveyWizard'));
 const Contact = lazy(() => import('./components/Contact/Contact'));
 const DayNightCycle = lazy(() => import('./components/DayNightCycle/DayNightCycle'));
@@ -37,8 +39,10 @@ const Home = () => (
       <Navbar />
       <Hero />
       <Services />
+      <Proof />
       <Process />
       <SurveyWizard />
+      <Faq />
       <Contact />
     </div>
   </Suspense>

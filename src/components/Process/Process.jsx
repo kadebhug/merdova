@@ -6,41 +6,41 @@ import {
     FaCogs, 
     FaRocket
 } from 'react-icons/fa';
+import { processCopy, processSteps } from '../landing/offer';
+import { useLenis } from '../Layout/ScrollManager';
 import './Process.css';
 
-const processSteps = [
-    {
-        icon: FaSearch,
-        title: 'AI Readiness Assessment',
-        description: 'We evaluate your data, systems, and business processes to identify high-impact AI opportunities.',
-        color: '#3B82F6'
-    },
-    {
-        icon: FaDraftingCompass,
-        title: 'Solution Design & Roadmap',
-        description: 'We architect a tailored AI solution with clear milestones, SLAs, and measurable KPIs.',
-        color: '#EAB308'
-    },
-    {
-        icon: FaCogs,
-        title: 'Build & Integrate',
-        description: 'Our team develops, trains, and integrates AI models into your platforms — web, mobile, or cloud.',
-        color: '#10B981'
-    },
-    {
-        icon: FaRocket,
-        title: 'Deploy, Monitor & Optimize',
-        description: 'We deploy your AI solution with ongoing monitoring, SLA-backed support, and continuous model optimization.',
-        color: '#C0A062'
-    }
-];
+const stepIcons = [FaSearch, FaDraftingCompass, FaCogs, FaRocket];
+const stepColors = ['#3B82F6', '#EAB308', '#10B981', '#C0A062'];
 
 const Process = () => {
     const sectionRef = useRef(null);
+    const lenis = useLenis();
     const { scrollYProgress } = useScroll({
         target: sectionRef,
         offset: ["start end", "end start"]
     });
+
+    const connectorProgress = [
+        useTransform(scrollYProgress, [0, 0.25], [0, 100]),
+        useTransform(scrollYProgress, [0.25, 0.5], [0, 100]),
+        useTransform(scrollYProgress, [0.5, 0.75], [0, 100]),
+        useTransform(scrollYProgress, [0.75, 1], [0, 100]),
+    ];
+    const connectorHeights = [
+        useMotionTemplate`${connectorProgress[0]}%`,
+        useMotionTemplate`${connectorProgress[1]}%`,
+        useMotionTemplate`${connectorProgress[2]}%`,
+        useMotionTemplate`${connectorProgress[3]}%`,
+    ];
+
+    const handleAuditClick = (event) => {
+        event.preventDefault();
+        const surveyElement = document.getElementById('survey');
+        if (surveyElement && lenis) {
+            lenis.scrollTo(surveyElement, { offset: -88 });
+        }
+    };
 
     return (
         <section ref={sectionRef} id="process" className="process-section">
@@ -53,26 +53,17 @@ const Process = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <h2 className="process-title">
-                        Our <span className="highlight">Process</span>
+                        {processCopy.titleBefore}<span className="highlight">{processCopy.titleEmphasis}</span>
                     </h2>
                     <p className="process-subtitle">
-                        A proven methodology that transforms your business with intelligent, AI-driven solutions
+                        {processCopy.subtitle}
                     </p>
                 </motion.div>
 
                 <div className="process-steps-wrapper">
                     <div className="process-steps">
                         {processSteps.map((step, index) => {
-                            const IconComponent = step.icon;
-                            const stepProgress = useTransform(
-                                scrollYProgress,
-                                [
-                                    (index * 0.25),
-                                    ((index + 1) * 0.25)
-                                ],
-                                [0, 100]
-                            );
-                            const connectorHeight = useMotionTemplate`${stepProgress}%`;
+                            const IconComponent = stepIcons[index];
 
                             return (
                                 <motion.div
@@ -94,14 +85,13 @@ const Process = () => {
                                     >
                                         <motion.div 
                                             className="step-icon-wrapper"
-                                            style={{ '--step-color': step.color }}
+                                            style={{ '--step-color': stepColors[index] }}
                                             whileHover={{ scale: 1.1, rotate: 5 }}
                                             transition={{ duration: 0.3 }}
                                         >
                                             <div className="step-icon">
                                                 <IconComponent />
                                             </div>
-                                            <div className="step-number">0{index + 1}</div>
                                         </motion.div>
 
                                         <div className="step-text">
@@ -114,13 +104,13 @@ const Process = () => {
                                         <div className="step-connector-wrapper">
                                             <div 
                                                 className="step-connector"
-                                                style={{ '--step-color': step.color }}
+                                                style={{ '--step-color': stepColors[index] }}
                                             >
                                                 <motion.div 
                                                     className="step-connector-progress"
                                                     style={{ 
-                                                        height: connectorHeight,
-                                                        backgroundColor: step.color
+                                                        height: connectorHeights[index],
+                                                        backgroundColor: stepColors[index]
                                                     }}
                                                 />
                                             </div>
@@ -130,6 +120,12 @@ const Process = () => {
                             );
                         })}
                     </div>
+                </div>
+
+                <div className="process-cta">
+                    <a href="#survey" className="process-audit-btn" onClick={handleAuditClick}>
+                        {processCopy.cta}
+                    </a>
                 </div>
             </div>
         </section>

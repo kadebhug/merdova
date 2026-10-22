@@ -28,7 +28,7 @@ const Navbar = () => {
       if (targetId === '#hero') {
         lenis.scrollTo(0, { immediate: true });
       } else {
-        lenis.scrollTo(targetId);
+        lenis.scrollTo(targetId, { offset: -88 });
       }
     } else {
       // Fallback if lenis isn't ready
@@ -65,19 +65,22 @@ const Navbar = () => {
 
         <ul id="nav-menu" className={`nav-menu ${isOpen ? 'active' : ''}`} role="menubar">
           <li className="nav-item" role="none">
-            <a href="#hero" className="nav-links" role="menuitem" onClick={(e) => handleNavClick(e, '#hero')}>Home</a>
+            <a href="#services" className="nav-links" role="menuitem" onClick={(e) => handleNavClick(e, '#services')}>Solutions</a>
           </li>
           <li className="nav-item" role="none">
-            <a href="#services" className="nav-links" role="menuitem" onClick={(e) => handleNavClick(e, '#services')}>Solutions</a>
+            <a href="#proof" className="nav-links" role="menuitem" onClick={(e) => handleNavClick(e, '#proof')}>Proof</a>
           </li>
           <li className="nav-item" role="none">
             <a href="#process" className="nav-links" role="menuitem" onClick={(e) => handleNavClick(e, '#process')}>Process</a>
           </li>
           <li className="nav-item" role="none">
-            <a href="#survey" className="nav-links nav-cta" role="menuitem" onClick={(e) => handleNavClick(e, '#survey')}>Get Started</a>
+            <a href="#faq" className="nav-links" role="menuitem" onClick={(e) => handleNavClick(e, '#faq')}>FAQ</a>
           </li>
           <li className="nav-item" role="none">
             <a href="#contact" className="nav-links" role="menuitem" onClick={(e) => handleNavClick(e, '#contact')}>Contact</a>
+          </li>
+          <li className="nav-item" role="none">
+            <a href="#survey" className="nav-links nav-cta" role="menuitem" onClick={(e) => handleNavClick(e, '#survey')}>Book Free Audit</a>
           </li>
         </ul>
       </div>

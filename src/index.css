@@ -31,6 +31,15 @@ html {
   box-sizing: border-box;
 }
 
+#services,
+#proof,
+#process,
+#survey,
+#faq,
+#contact {
+  scroll-margin-top: 88px;
+}
+
 body {
   background-color: var(--bg-color);
   color: var(--text-color);

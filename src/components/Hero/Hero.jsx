@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLenis } from '../Layout/ScrollManager';
+import { heroCopy, trustItems } from '../landing/offer';
 import './Hero.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,18 +17,18 @@ const Hero = () => {
     const lenis = useLenis();
 
     useLayoutEffect(() => {
-        const ctx = gsap.context(() => {
-            // Pin the hero section
+        const mm = gsap.matchMedia();
+
+        mm.add('(min-width: 769px) and (prefers-reduced-motion: no-preference)', () => {
             ScrollTrigger.create({
                 trigger: heroRef.current,
                 start: "top top",
-                end: "+=100%", // Pin for 100% of viewport height
+                end: "+=100%",
                 pin: true,
-                pinSpacing: false, // Allow next section to overlap
+                pinSpacing: false,
                 scrub: true,
             });
 
-            // Animate content out
             gsap.to(contentRef.current, {
                 y: -100,
                 opacity: 0,
@@ -40,7 +41,6 @@ const Hero = () => {
                 }
             });
 
-            // Parallax blobs
             gsap.to([blob1Ref.current, blob2Ref.current], {
                 y: 200,
                 scrollTrigger: {
@@ -50,9 +50,9 @@ const Hero = () => {
                     scrub: true,
                 }
             });
-        }, heroRef);
+        });
 
-        return () => ctx.revert();
+        return () => mm.revert();
     }, []);
 
     React.useEffect(() => {
@@ -61,6 +61,7 @@ const Hero = () => {
         const blob2 = blob2Ref.current;
 
         if (!hero || !blob1 || !blob2) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
         // Mouse position state
         let mouseX = -1000;
@@ -201,18 +202,20 @@ const Hero = () => {
             </div>
 
             <div className="hero-content" ref={contentRef}>
+                <p className="hero-eyebrow">{heroCopy.eyebrow}</p>
                 <motion.h1
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
                 >
-                    We Build <span className="highlight-container">
+                    {heroCopy.headlineBefore}
+                    <span className="highlight-container">
                         <span
                             className="highlight"
                             ref={highlightRef}
                             onMouseEnter={handleHighlightHover}
                             onMouseLeave={handleHighlightLeave}
-                        >AI-Powered Solutions</span>
+                        >{heroCopy.headlineEmphasis}</span>
                         <svg
                             className="underline-svg"
                             viewBox="0 0 300 15"
@@ -235,6 +238,7 @@ const Hero = () => {
                             </defs>
                         </svg>
                     </span>
+                    {heroCopy.headlineAfter}
                 </motion.h1>
 
                 <motion.p
@@ -242,7 +246,7 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                 >
-                    Merdova helps businesses implement and integrate AI to drive real outcomes — from intelligent platforms to automated workflows and data-driven growth.
+                    {heroCopy.subtext}
                 </motion.p>
 
                 <motion.div
@@ -251,10 +255,16 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
                 >
-                    <a href="#survey" className="btn btn-primary" onClick={handleStartProjectClick}>Start Your Journey</a>
-                    <a href="#services" className="btn btn-secondary" onClick={handleExploreServicesClick}>Explore Solutions</a>
+                    <a href="#survey" className="btn btn-primary" onClick={handleStartProjectClick}>{heroCopy.primaryCta}</a>
+                    <a href="#services" className="btn btn-secondary" onClick={handleExploreServicesClick}>{heroCopy.secondaryCta}</a>
                 </motion.div>
             </div>
+
+            <ul className="hero-trust" aria-label="Delivery standards">
+                {trustItems.map((item) => (
+                    <li key={item}>{item}</li>
+                ))}
+            </ul>
         </section>
     );
 };
